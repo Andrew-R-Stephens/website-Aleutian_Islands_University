@@ -20,7 +20,7 @@ function connect() {
     return con;
 }
 
-async function testQuery() {
+export async function testQuery() {
     const con = connect();
 
     con.query("SELECT * FROM Person", function (err, result, fields) {
@@ -30,5 +30,3 @@ async function testQuery() {
         console.log(result);
     });
 }
-
-testQuery();
