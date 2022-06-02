@@ -2,6 +2,10 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TestComponent from "./TestComponent";
+import {QueryClient, QueryClientProvider} from "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -20,7 +24,10 @@ function App() {
           Learn React!
         </a>
 
-        <TestComponent></TestComponent>
+        <QueryClientProvider client={queryClient}>
+          <TestComponent/>
+          <ReactQueryDevtools/>
+        </QueryClientProvider>
       </header>
     </div>
   );
