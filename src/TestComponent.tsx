@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import ReactHtmlParser from 'html-react-parser';
 
 class TestComponent extends Component {
 
@@ -21,7 +22,7 @@ class TestComponent extends Component {
 
     render() {
         return (
-            <p>{this.state.persons}</p>
+            <div>{ ReactHtmlParser(this.state.persons) }</div>
         )
     }
 
