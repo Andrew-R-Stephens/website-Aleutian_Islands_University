@@ -1,35 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Fragment} from 'react';
 import './App.css';
-import TestComponent from "./TestComponent";
-import {QueryClient, QueryClientProvider} from "react-query";
-import {ReactQueryDevtools} from "react-query/devtools";
-
-const queryClient = new QueryClient();
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import ErrorPage from "./pages/ErrorPage";
+import AppNavBanner from "./AppNavBanner";
+import AppImageBanner from "./AppImageBanner";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React!
-        </a>
-
-        <QueryClientProvider client={queryClient}>
-          <TestComponent/>
-          <ReactQueryDevtools/>
-        </QueryClientProvider>
+      <Fragment>
+          <div className={"App"} >
+              <AppImageBanner/>
+              <AppNavBanner/>
+          </div>
+      </Fragment>
+    /*<div className="App">
+      <header>
+        <Router>
+            <Routes>
+                <Route path={"/"} element={<Home/>} />
+                <Route path={"/about"} element={<About/>} />
+                <Route path={"/login"} element={<Login/>} />
+                <Route path={"/profile"} element={<Profile/>} />
+                <Route path={"/!*"} element={<ErrorPage/>} />
+            </Routes>
+        </Router>
       </header>
-    </div>
+    </div>*/
   );
 }
 

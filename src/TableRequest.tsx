@@ -1,14 +1,21 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import axios from 'axios';
 import ReactHtmlParser from 'html-react-parser';
+import './App.css';
 
-class TestComponent extends Component {
+class TableRequest extends Component {
 
     state = {
-        persons: ""
+        persons: "<p>This is a fragment placeholder</p>"
     }
 
+    /*
     componentDidMount() {
+
+    }
+    */
+
+    doQuery() {
         //console.log(testQuery());
         axios.get(process.env.REACT_APP_API_URL+"/queries.php")
             .then(res => {
@@ -16,16 +23,19 @@ class TestComponent extends Component {
                 this.setState({ persons });
                 console.log(persons)
             }).catch(function(err) {
-                console.log(err.message);
+            console.log(err.message);
         })
     }
 
     render() {
         return (
-            <div>{ ReactHtmlParser(this.state.persons) }</div>
+            <div>
+                { ReactHtmlParser(this.state.persons) }
+                <button onMouseDown={() => this.doQuery()}>Do Query!</button>
+            </div>
         )
     }
 
 }
 
-export default TestComponent;
+export default TableRequest;
