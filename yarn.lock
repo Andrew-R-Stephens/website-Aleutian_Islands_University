@@ -9078,7 +9078,7 @@
   "resolved" "https://registry.npmjs.org/querystringify/-/querystringify-2.2.0.tgz"
   "version" "2.2.0"
 
-"raf@3.4.1":
+"raf@^3.4.1", "raf@3.4.1":
   "integrity" "sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA=="
   "resolved" "https://registry.npmjs.org/raf/-/raf-3.4.1.tgz"
   "version" "3.4.1"
@@ -9134,6 +9134,14 @@
     "promise" "8.0.2"
     "raf" "3.4.1"
     "whatwg-fetch" "3.0.0"
+
+"react-collapsed@^3.3.2":
+  "integrity" "sha512-P3YmP0k3Z7LaELQP2CbXjWSjiaNEIBvvxFUAJToJwztMFrTdHe9v7vQMz3FtMTyxLDJc9eGdNA8qMxCe9Aj3tg=="
+  "resolved" "https://registry.npmjs.org/react-collapsed/-/react-collapsed-3.3.2.tgz"
+  "version" "3.3.2"
+  dependencies:
+    "raf" "^3.4.1"
+    "tiny-warning" "^1.0.3"
 
 "react-dev-utils@^7.0.1":
   "integrity" "sha512-zJnqqb0x6gd63E3xoz5pXAxBPNaW75Hyz7GgQp0qPhMroBCRQtRvG67AoTZZY1z4yCYVJQZAfQJFdnea0Ujbug=="
@@ -10671,6 +10679,11 @@
   "integrity" "sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q="
   "resolved" "https://registry.npmjs.org/timsort/-/timsort-0.3.0.tgz"
   "version" "0.3.0"
+
+"tiny-warning@^1.0.3":
+  "integrity" "sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA=="
+  "resolved" "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
+  "version" "1.0.3"
 
 "tmp@^0.0.33":
   "integrity" "sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw=="

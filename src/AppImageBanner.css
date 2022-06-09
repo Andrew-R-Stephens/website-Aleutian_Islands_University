@@ -1,4 +1,8 @@
-img.bg {
+header {
+    background-color: #989898;
+}
+
+header.img {
     max-height: 10%;
     margin-left: auto;
     top: 0;

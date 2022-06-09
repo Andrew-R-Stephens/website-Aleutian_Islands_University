@@ -9,19 +9,13 @@ class TableRequest extends Component {
         persons: "<p>This is a fragment placeholder</p>"
     }
 
-    /*
-    componentDidMount() {
-
-    }
-    */
-
     doQuery() {
+
         //console.log(testQuery());
         axios.get(process.env.REACT_APP_API_URL+"/queries.php")
             .then(res => {
                 const persons = res.data;
                 this.setState({ persons });
-                console.log(persons)
             }).catch(function(err) {
             console.log(err.message);
         })

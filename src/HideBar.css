@@ -1,0 +1,7 @@
+.collapsible .content {
+    background-color: #eeeeee;
+}
+.collapsible .header {
+    background-color: #dddddd;
+    cursor: pointer;
+}

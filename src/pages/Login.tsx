@@ -1,10 +1,23 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import '../App.css';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import SideBar from "../HideBar";
+import {Link} from "react-router-dom";
+import NavButton from "../NavButton";
 
 function Login() {
+
     return (
-        <div>This is the Login Page</div>
+        <Fragment>
+            <ul>
+                <li><Link to={"/"}>Home</Link></li>
+                <li><Link to={"/about"}>About</Link></li>
+                <li><Link to={"/login"}>Login</Link></li>
+            </ul>
+            <SideBar/>
+            <NavButton title = {"Login to Profile"} url = {"/Profile"}>
+                <p>This is the Login page.</p>
+            </NavButton>
+        </Fragment>
     );
 }
 
