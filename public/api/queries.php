@@ -1,23 +1,13 @@
 <?php header("Access-Control-Allow-Origin: *");
+
 require ("connect.php");
+/** @var $conn */
 
 $table = "Users";
 
-// Create table in database
-$sql = "CREATE TABLE IF NOT EXISTS {$table} (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    firstName varchar(20),
-    lastName varchar(20)
-    );";
-
-/** @var $conn */
-if(doQuery($conn, $sql) === false){
-    echo "Error creating table: " . $conn->error . "<br>";
-    exit();
-}
-
 echo "<p>Getting id 1</p>";
 $sql = "SELECT * FROM {$table} WHERE (id = 1);";
+
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     echo "<table><tr><th>ID</th><th>First Name</th><th>Last Name</th></tr>";
@@ -50,13 +40,7 @@ if (mysqli_num_rows($result) > 0) {
     }
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "<table/>";
 }
 
-function doQuery($conn, $sql) {
-    $result = ($conn->query($sql) === TRUE);
-
-    return $result;
-}
-
-mysqli_close($conn);
+//mysqli_close($conn);

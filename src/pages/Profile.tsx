@@ -1,8 +1,11 @@
 import React, {Fragment} from 'react';
-import '../App.css';
+import '../components/App.css';
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 
-function Profile() {
+function Profile(props:any) {
+
+    const {userID} = props;
+
     return (
         <Fragment>
             <ul>

@@ -1,9 +1,9 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 import ReactHtmlParser from 'html-react-parser';
-import './App.css';
+import './RequestTable.css';
 
-class TableRequest extends Component {
+class RequestTable extends Component {
 
     state = {
         persons: "<p>This is a fragment placeholder</p>"
@@ -13,8 +13,8 @@ class TableRequest extends Component {
 
         //console.log(testQuery());
         axios.get(process.env.REACT_APP_API_URL+"/queries.php")
-            .then(res => {
-                const persons = res.data;
+            .then(response => {
+                const persons = response.data;
                 this.setState({ persons });
             }).catch(function(err) {
             console.log(err.message);
@@ -32,4 +32,4 @@ class TableRequest extends Component {
 
 }
 
-export default TableRequest;
+export default RequestTable;

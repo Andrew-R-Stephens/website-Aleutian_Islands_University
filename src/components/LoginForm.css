@@ -1,0 +1,17 @@
+.login {
+    background-color: whitesmoke;
+    display: grid;
+    place-items: center;
+}
+
+.login form {
+    text-align: center;
+}
+
+.login tr {
+    background-color: whitesmoke;
+}
+
+.submit td {
+    text-align: center;
+}

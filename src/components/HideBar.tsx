@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import "./HideBar.css"
 import useCollapse from "react-collapsed";
-import TableRequest from "./TableRequest";
+import RequestTable from "./RequestTable";
 
 function HideBar() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
@@ -10,13 +10,13 @@ function HideBar() {
         <Fragment>
             <div className="collapsible">
                 <div {...getToggleProps()}>
-                    {isExpanded ? 'Collapse' : 'Expand'}
+                    <button>
+                        {isExpanded ? 'Collapse' : 'Expand'}
+                    </button>
                 </div>
                 <div className="header" {...getCollapseProps()}>
                     <div>
-                        <code>Now you can see the hidden content. <br/><br/>
-                            Click again to hide...</code>
-                        <TableRequest/>
+                        <RequestTable/>
                     </div>
                 </div>
             </div>

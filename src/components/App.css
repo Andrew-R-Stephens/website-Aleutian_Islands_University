@@ -1,5 +1,3 @@
-@import "tables.css";
-
 .App {
   text-align: center;
 }
@@ -19,6 +17,7 @@
 }
 
 .App-logo {
+  background-color: transparent;
   height: 10vmin;
   pointer-events: none;
 }

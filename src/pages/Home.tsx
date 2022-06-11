@@ -1,16 +1,9 @@
 import React, {Fragment} from 'react';
-import '../App.css';
-import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import logo from "../logo.svg";
+import {Link} from "react-router-dom";
+import logo from "../res/logo.svg";
 import {QueryClient, QueryClientProvider} from "react-query";
-import TableRequest from "../TableRequest";
 import {ReactQueryDevtools} from "react-query/devtools";
-import AppImageBanner from "../AppImageBanner";
-import AppNavBanner from "../AppNavBanner";
-import About from "./About";
-import Login from "./Login";
-import Profile from "./Profile";
-import ErrorPage from "./ErrorPage";
+import Table from "../components/RequestTable";
 
 const queryClient = new QueryClient();
 
@@ -23,14 +16,14 @@ function Home() {
                 <li><Link to={"/login"}>Login</Link></li>
             </ul>
 
-            <header>
+            <div className={'App'}>
                 <img src={logo} className="App-logo" alt="logo" />
                 <p>Please press the button below to test the query script.</p>
                 <QueryClientProvider client={queryClient}>
-                    <TableRequest/>
+                    <Table/>
                     <ReactQueryDevtools/>
                 </QueryClientProvider>
-            </header>
+            </div>
         </Fragment>
     );
 }

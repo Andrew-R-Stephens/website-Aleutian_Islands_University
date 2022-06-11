@@ -1,4 +1,4 @@
-<?php
+<?php header("Access-Control-Allow-Origin: *");
 /*
  * This php script is used to connect with the server.
  *
@@ -30,4 +30,10 @@ $sql = "USE $database";
 if(doQuery($conn, $sql) === false){
     echo "Error selecting database: " . $conn->error . "<br>";
     exit();
+}
+
+function doQuery($conn, $sql) {
+    $result = ($conn->query($sql) === TRUE);
+
+    return $result;
 }

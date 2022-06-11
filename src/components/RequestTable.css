@@ -1,0 +1,25 @@
+
+div>table {
+    background-color: lightskyblue;
+    padding: 10px;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+}
+
+table {
+    background-color: cornflowerblue;
+    width: 100%;
+}
+tr:nth-child(odd) {
+    background-color: lightskyblue;
+}
+tr:nth-child(even) {
+    background-color: lightblue;
+}
+tr:first-child {
+    background-color: cornflowerblue;
+}
+td {
+    border: none;
+}
