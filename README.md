@@ -1,46 +1,52 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 style="color: ghostwhite">ABOUT</h1>
+<p>We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance.</p>
+<p>
+    <code>Content</code>&emsp;&ensp;Capstone Project<br/>
+    <code>Where</code>&emsp;&emsp;&ensp;SUNY College at Old Westbury<br/>
+    <code>Course</code>&emsp;&emsp;Systems Design and Engineering<br/>
+    <code>Professor</code>&ensp;Naresh Gupta<br/><br/>
+    <code>Goal</code><br/>&emsp;Our final deliverable will follow the assignment's directive which has been curated by the professor. It will also represent a culmination of abilities acquired over each contributors' time in university. We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance.<br/>
+</p>
 
-## Available Scripts
+<h2 style="color: ghostwhite">CONTRIBUTORS</h2>
 
-In the project directory, you can run:
+#### Team Leader<br/>&ensp;`Andrew Stephens`
+#### Fullstack / Database<br/>&ensp;`Andrew Stephens`
+#### Back-end / Database <br/>&ensp;`Brian Mejia`, `Gwen Alessi`
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<h2 style="color: ghostwhite">FRONT-END</h2>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Framework&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;`React v18.1.0`
+#### Markdown / Style&emsp;&emsp;&emsp;&emsp;&emsp;`HTML5`, `CSS`
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<h2 style="color: ghostwhite">BACK-END</h2>
 
-### `npm run build`
+#### Scripting&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`Typescript`, `Javascript`, `PHP`
+#### RDBMS&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`MySQL`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<h2 style="color: ghostwhite">DATABASE</h2>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### DBM Utility&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`MySQL Workbench`
 
-### `npm run eject`
+<h2 style="color: ghostwhite">SERVER / HOSTING</h2>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Platform&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;`Amazon Web Services (AWS)`
+#### Service&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`EC2`
+#### Operating System&emsp;&emsp;&emsp;&emsp;&ensp;`Ubuntu`
+#### Web Server Software&emsp;&emsp;&emsp;`Apache`
+#### Elastic IP Support?&emsp;&emsp;&emsp;&emsp;`Yes - AWS Elastic IP`
+#### SSL Certified?&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`No`
+#### Registered Domain Name?&ensp;<code>Yes - <a href = "www.owsysdb.com">www.owsysdb.com</a></code>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<h2 style="color: ghostwhite">Usage and License Limitations</h2>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<p style="color: indianred"><code>LICENSE WARNING:</code> Please read and understand the included <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">GPL License</a> before attempting to use this code.</p>
+<p>This strict copyleft license is in place due to the wholesale cheating that goes on at SUNY College at Old Westbury. Please understand the License before you get yourself into trouble.</p>
+<p><b>Do NOT</b> use any of this project's content <em>(structure /or source code /or libraries /or assets /or etc.)</em>, regardless of external modification, without citing Copyright where such content is used.</p>
+<p><b>DO</b> contact <a href="mailto:asteph11@oldwestbury.edu">Andrew Stephens</a> for inquiries.</p>
