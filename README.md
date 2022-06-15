@@ -1,5 +1,5 @@
 
-<h1 style="color: ghostwhite">ABOUT</h1>
+<h1 style="color: ghostwhite">ABOUT THE PROJECT</h1>
 <p>We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance.</p>
 <p>
     <code>Content</code>&emsp;&ensp;Capstone Project<br/>
