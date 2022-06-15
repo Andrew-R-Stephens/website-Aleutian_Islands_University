@@ -1,10 +1,16 @@
-import React from 'react';
-import '../components/App.css';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import React, {Fragment} from 'react';
+import HomeNavBanner from "../components/HomeNavBanner";
 
 function ErrorPage() {
     return (
-        <div><h3>Error 404: Page not found.</h3></div>
+        <Fragment>
+            <body className={'main-content'}>
+                <HomeNavBanner urls={["/", "/about", "/login"]}
+                               names={["Home", "About", "Login"]}/>
+
+                <h3>Error 404: Page not found.</h3>
+            </body>
+        </Fragment>
     );
 }
 

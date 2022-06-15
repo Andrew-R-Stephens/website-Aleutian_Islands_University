@@ -1,13 +1,14 @@
 import React, {Fragment, useState} from 'react';
-import {useLocation} from "react-router-dom";
+import {useLocation, useRoutes} from "react-router-dom";
 import HomeNavBanner from "../components/HomeNavBanner";
 import SideBanner from "../components/SideBanner";
+import './Account.css';
 
 interface StateType {
     id: string
 }
 
-function Profile() {
+function Account() {
 
     const useLoc = useLocation() as any;
     const state:StateType = useLoc.state;
@@ -17,15 +18,15 @@ function Profile() {
             <body className={'main-content'}>
                 <HomeNavBanner urls={["/login"]}
                                names={["Logout"]}/>
-                <SideBanner urls={["/account"]}
-                            names={["Account"]}
-                            id={(state.id)}/>
+                <SideBanner urls={["/profile"]}
+                            names={["Profile"]}
+                            id={state.id}/>
                 <div className = {'main'}>
-                    <p>Profile ID to display information for: {state.id}</p>
+                    <p>Account ID to display information for: {state.id}</p>
                 </div>
             </body>
         </Fragment>
     );
 }
 
-export default Profile;
+export default Account;

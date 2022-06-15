@@ -1,61 +1,25 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import '../components/LoginForm.css';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import Login from "../pages/Login";
 
-class LoginForm extends Component {
+function LoginForm() {
 
-    constructor(props) {
-        super(props);
+    const [email, setEmail] = useState("asteph11@oldwestbury.edu");
+    const [pass, setPass] = useState("burgers");
+    const [response, setResponse] = useState("");
+    const navigate = useNavigate();
 
-        this.state = {
-            email: '',
-            pass: '',
-            response: ''
-        };
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
 
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    const handlePassChange = (event) => {
+        setPass(event.target.value);
     }
 
-    handleEmailChange(event) {
-        this.setState({
-            email: event.target.value
-        });
-    }
-
-    handlePassChange(event) {
-        this.setState({
-            pass: event.target.value
-        });
-    }
-
-    handleSubmit(event) {
-        const {email, pass} = this.state;
-        //process.env.REACT_APP_LOCAL_API_URL"+"
-        /*axios.get(process.env.REACT_APP_API_URL + "/login.php", {
-                params: {
-                    func: 'auth',
-                    email: {email},
-                    pass: {pass}
-                }
-            }).then(response => {
-                /!*if(response.request === true) {
-                    const navigate = useNavigate();
-                    navigate("/Profile", );
-                } else {*!/
-                    this.setState({
-                        email: '',
-                        pass: '',
-                        response: response.data + response.status + response.headers
-                    });
-                    alert("Incorrect username/password combination.");
-                //}
-            }).catch(function(err) {
-            console.log(err);
-        })
-        */
+    const handleSubmit = (event) => {
 
         axios.get(process.env.REACT_APP_API_URL+"/login.php", {
             params: {
@@ -64,12 +28,17 @@ class LoginForm extends Component {
                 pass
             }
         }).then(res => {
-                const response = res.data;
-                if(response !== 0) {
-                    const navigate = useNavigate();
-                    navigate("/profile");
+                const userID = res.data + "";
+                setResponse(userID);
+                if(userID !== ('0')) {
+                    console.log(userID);
+                    navigate("/account", {state: {id: userID}})
+                } else {
+                    alert("Invalid email/password combination.");
+                    setEmail("");
+                    setPass("");
+                    setResponse("");
                 }
-                //this.setState({ response });
             }).catch(function(err) {
             console.log(err.message);
         })
@@ -77,36 +46,34 @@ class LoginForm extends Component {
         event.preventDefault();
     }
 
-    render() {
-        return (
-            <Fragment>
-                <div>
-                    <form onSubmit={this.handleSubmit}>
-                        <table className = "login">
-                            <tbody>
-                                <tr>
-                                    <td><label>Email: </label></td>
-                                    <td><input type={"email"}
-                                               value={this.state.email}
-                                               onChange={this.handleEmailChange}/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><label>Password: </label></td>
-                                    <td><input type={"password"}
-                                               value={this.state.pass}
-                                               onChange={this.handlePassChange}/>
-                                    </td>
-                                </tr>
-                                <tr className={'submit'}><td colSpan={2}><input type = "submit" value={"Login"}/></td></tr>
-                            </tbody>
-                        </table>
-                    </form>
-                    <p>{this.state.response}</p>
-                </div>
-            </Fragment>
-        );
-    }
+    return (
+        <Fragment>
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <table className = "login">
+                        <tbody>
+                            <tr>
+                                <td><label>Email: </label></td>
+                                <td><input type={"email"}
+                                           value={email}
+                                           onChange={handleEmailChange}/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label>Password: </label></td>
+                                <td><input type={"password"}
+                                           value={pass}
+                                           onChange={handlePassChange}/>
+                                </td>
+                            </tr>
+                            <tr className={'submit'}><td colSpan={2}><input type = "submit" value={"Login"}/></td></tr>
+                        </tbody>
+                    </table>
+                </form>
+                <p>{response}</p>
+            </div>
+        </Fragment>
+    );
 }
 
 export default LoginForm;

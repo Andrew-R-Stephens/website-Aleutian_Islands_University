@@ -4,7 +4,6 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
 import Table from "../components/RequestTable";
 import HomeNavBanner from "../components/HomeNavBanner";
-import '../components/HomeBody.css';
 
 const queryClient = new QueryClient();
 
@@ -27,7 +26,7 @@ function Home() {
                 <div className={'App'}>
                     <p>iframe video preview streamed from vimeo.com</p>
                     <iframe width="854" height="480"
-                        src="https://player.vimeo.com/video/659049579?autoplay=1&amp;loop=1&amp;muted=1"></iframe>
+                            src="https://player.vimeo.com/video/659049579?autoplay=1&amp;loop=1&amp;muted=1"></iframe>
                 </div>
             </body>
         </Fragment>

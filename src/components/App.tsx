@@ -1,15 +1,12 @@
 import React, {Fragment} from 'react';
-import NavBanner from "./NavBanner";
+import NavRoutes from "./NavRoutes";
 import ImageBanner from "./ImageBanner";
-import {Router} from "react-router-dom";
+import './App.css';
 
 function App() {
   return (
       <Fragment>
-          <div>
-              <ImageBanner className={"Banner-logo"} />
-              <NavBanner/>
-          </div>
+          <NavRoutes/>
       </Fragment>
   );
 }

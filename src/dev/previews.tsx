@@ -3,6 +3,7 @@ import {ComponentPreview, Previews} from '@react-buddy/ide-toolbox';
 import {PaletteTree} from './palette';
 import SideBar from "../components/HideBar";
 import ImageBanner from "../components/ImageBanner";
+import SideBanner from "../components/SideBanner";
 
 const ComponentPreviews = () => {
     return (
@@ -12,6 +13,9 @@ const ComponentPreviews = () => {
             </ComponentPreview>
             <ComponentPreview path="/ImageBanner">
                 <ImageBanner/>
+            </ComponentPreview>
+            <ComponentPreview path="/SideBanner">
+                <SideBanner/>
             </ComponentPreview>
         </Previews>
     );

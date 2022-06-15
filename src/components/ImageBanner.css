@@ -4,14 +4,16 @@ header {
 }
 
 .Banner-logo {
-    content:url("../res/banner-logo.svg");
+    content:url("../res/unilogo-simple.svg");
     background-color: transparent;
-    pointer-events: none;
-    max-width: 20%;
-    max-height: 10%;
+    max-height: 150px;
     aspect-ratio: 16/9;
     margin-left: auto;
     top: 0;
+}
+
+.Banner-logo:hover {
+    cursor: pointer;
 }
 
 .Square-logo {
