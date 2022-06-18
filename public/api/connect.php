@@ -5,31 +5,35 @@
  * Precede query scripts with the requirement of this file.
  */
 
-$hostname = "localhost";
-$username = "admin";
-$password = "systemsdb";
-$database = "systemsdb";
-$port = "3306";
+function connect() {
+    $hostname = "localhost";
+    $username = "admin";
+    $password = "systemsdb";
+    $database = "systemsdb";
+    $port = "3306";
 
-$conn = new mysqli($hostname, $username, $password, $database, $port);
+    $conn = new mysqli($hostname, $username, $password, $database, $port);
 
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
 // Create database
-$sql = "CREATE DATABASE IF NOT EXISTS {$database}";
-if(doQuery($conn, $sql) === false){
-    echo "Error creating database: " . $conn->error . "<br>";
-    exit();
-}
+    $sql = "CREATE DATABASE IF NOT EXISTS {$database}";
+    if(doQuery($conn, $sql) === false){
+        echo "Error creating database: " . $conn->error . "<br>";
+        exit();
+    }
 
 // SELECT database
-$sql = "USE $database";
-if(doQuery($conn, $sql) === false){
-    echo "Error selecting database: " . $conn->error . "<br>";
-    exit();
+    $sql = "USE $database";
+    if(doQuery($conn, $sql) === false){
+        echo "Error selecting database: " . $conn->error . "<br>";
+        exit();
+    }
+
+    return $conn;
 }
 
 function doQuery($conn, $sql) {

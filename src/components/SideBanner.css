@@ -1,34 +1,49 @@
 .sidenav {
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 150px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    min-height: 85vh;
+    min-width: 150px;
+    position: absolute;
     left: 0;
-    background-color: #333333; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
+    background-color: #333333;
+    overflow-x: hidden;
+    padding-top: 8px;
 }
 
-/* The navigation menu links */
 .sidenav a {
+    background: #292929;
     padding: 8px;
     text-decoration: none;
     color: whitesmoke;
     text-align: center;
     font-size: 25px;
-
-    text-align: center;
     display: block;
 }
 
-/* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: lightgray;
+    background: #111111;
+}
+
+.item {
+    margin-top: 2px;
+}
+
+.item-last {
+    margin-top: 32px;
+}
+
+[role=inactive] {
+    border-right: 5px transparent solid;
+}
+
+[role=active] {
+    border-right: 5px lightskyblue solid;
+    pointer-events: none;
 }
 
 /* Style page content */
 .main {
     margin-left: 150px; /* Same as the width of the sidebar */
-    padding: 0px 10px;
+    padding: 0 10px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */

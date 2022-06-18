@@ -5,7 +5,7 @@ function HomeBody() {
 
     return (
         <Fragment>
-            <body className={'main-content'}><div className={'center'}>Hi there</div></body>
+            <div className={'main-content'}><div className={'center'}>Hi there</div></div>
         </Fragment>
     );
 }

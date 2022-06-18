@@ -4,6 +4,8 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 require_once ("connect.php");
 
+$conn = connect();
+
 $func = $_GET['func'];
 
 switch($func) {

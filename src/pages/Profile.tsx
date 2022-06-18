@@ -14,16 +14,18 @@ function Profile() {
 
     return (
         <Fragment>
-            <body className={'main-content'}>
-                <HomeNavBanner urls={["/login"]}
-                               names={["Logout"]}/>
-                <SideBanner urls={["/account"]}
-                            names={["Account"]}
-                            id={(state.id)}/>
+            <div className={'main-content'}>
+                <HomeNavBanner urls={[]}
+                               names={[]}/>
+                <SideBanner urls={["/account", "profile", "../student", "/login"]}
+                            names={["Account", "Profile", "Student", "Logout"]}
+                            classes={['item', 'item', 'item', 'item-last']}
+                            roles={['inactive', 'active', 'inactive', 'inactive']}
+                            id={state.id}/>
                 <div className = {'main'}>
                     <p>Profile ID to display information for: {state.id}</p>
                 </div>
-            </body>
+            </div>
         </Fragment>
     );
 }

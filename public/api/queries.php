@@ -1,6 +1,9 @@
 <?php header("Access-Control-Allow-Origin: *");
 
 require ("connect.php");
+
+$conn = connect();
+
 /** @var $conn */
 
 $table = "Users";
@@ -43,4 +46,4 @@ if (mysqli_num_rows($result) > 0) {
     echo "<table/>";
 }
 
-//mysqli_close($conn);
+mysqli_close($conn);

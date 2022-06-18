@@ -5,16 +5,19 @@ import './SideBanner.css'
 
 function SideBanner(props:any) {
 
-    const {urls = [""], names = [""], id = ""} = props;
+    const { urls = [""], names = [""], classes = [""], roles = [""], id = ""} = props;
 
     const listItems = urls.map((elem:any, index:number) =>
-        <Link key={index} to={urls[index]} state={{id}}>{names[index]}</Link>
+        <Link className={classes[index]} role={roles[index]} key={index} to={urls[index]} state={{id}} >
+            {names[index]}
+        </Link>
     );
 
     return (
         <Fragment>
             <div className="sidenav">
                 {listItems}
+                {}
             </div>
         </Fragment>
     );

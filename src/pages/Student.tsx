@@ -4,33 +4,41 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
 import Table from "../components/RequestTable";
 import HomeNavBanner from "../components/HomeNavBanner";
+import {Outlet, useLocation} from "react-router-dom";
+import SideBanner from "../components/SideBanner";
 
-const queryClient = new QueryClient();
+interface StateType {
+    id: string
+}
+function Student() {
 
-function Home() {
+    const useLoc = useLocation() as any;
+    const state:StateType = useLoc.state;
+
     return (
         <Fragment>
-            <body className={'main-content'}>
-                <HomeNavBanner urls={["/", "/about", "/login"]}
-                               names={["Home", "About", "Login"]}/>
-
-                <div className={'App'}>
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>Please press the button below to test the query script.</p>
-                    <QueryClientProvider client={queryClient}>
-                        <Table/>
-                        <ReactQueryDevtools/>
-                    </QueryClientProvider>
+            <div className={'main-content'}>
+                <HomeNavBanner urls={[]}
+                               names={[]}/>
+                <SideBanner urls={["/account", "../profile", "student", "/login"]}
+                            names={["Account", "Profile", "Student", "Logout"]}
+                            classes={['item', 'item', 'item', 'item-last']}
+                            roles={['inactive', 'inactive', 'active', 'inactive']}
+                            id={state.id}/>
+                <div className = {'main'}>
+                    <p>Account ID to display information for: {state.id}</p>
+                    <br/>
+                    <label><b>Todo:</b></label>
+                    <ul style={{margin: "auto", maxWidth: 1080, textAlign: 'start'}}>
+                        <li>Add welcome message</li>
+                        <li>Add profile image on left (simple default profile pic logo with wolf watermark)</li>
+                        <li>Display data about semester</li>
+                        <li>Display hyperlinks for registration</li>
+                    </ul>
                 </div>
-                <br/><br/><br/>
-                <div className={'App'}>
-                    <p>iframe video preview streamed from vimeo.com</p>
-                    <iframe width="854" height="480"
-                            src="https://player.vimeo.com/video/659049579?autoplay=1&amp;loop=1&amp;muted=1"></iframe>
-                </div>
-            </body>
+            </div>
         </Fragment>
     );
 }
 
-export default Home;
+export default Student;

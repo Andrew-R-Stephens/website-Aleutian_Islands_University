@@ -6,12 +6,12 @@ function Login() {
 
     return (
         <Fragment>
-            <body className={'main-content'}>
+            <div className={'main-content'}>
                 <HomeNavBanner urls={["/", "/about", "/login"]}
                                names={["Home", "About", "Login"]}/>
 
                 <LoginForm/>
-            </body>
+            </div>
         </Fragment>
     );
 }

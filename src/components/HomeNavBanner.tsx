@@ -12,7 +12,7 @@ function HomeNavBanner(props:any) {
 
     return (
         <Fragment>
-            <header>
+            <header className={'nav-header'}>
             <ul>
                 {listItems}
             </ul>

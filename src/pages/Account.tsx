@@ -1,5 +1,5 @@
-import React, {Fragment, useState} from 'react';
-import {useLocation, useRoutes} from "react-router-dom";
+import React, {Fragment} from 'react';
+import {useLocation} from "react-router-dom";
 import HomeNavBanner from "../components/HomeNavBanner";
 import SideBanner from "../components/SideBanner";
 import './Account.css';
@@ -15,16 +15,26 @@ function Account() {
 
     return (
         <Fragment>
-            <body className={'main-content'}>
-                <HomeNavBanner urls={["/login"]}
-                               names={["Logout"]}/>
-                <SideBanner urls={["/profile"]}
-                            names={["Profile"]}
+            <div className={'main-content'}>
+                <HomeNavBanner urls={[]}
+                               names={[]}/>
+                <SideBanner urls={["/account", "profile", "student", "/login"]}
+                            names={["Account", "Profile", "Student", "Logout"]}
+                            classes={['item', 'item', 'item', 'item-last']}
+                            roles={['active', 'inactive', 'inactive', 'inactive']}
                             id={state.id}/>
                 <div className = {'main'}>
                     <p>Account ID to display information for: {state.id}</p>
+                    <br/>
+                    <label><b>Todo:</b></label>
+                    <ul style={{margin: "auto", maxWidth: 1080, textAlign: 'start'}}>
+                        <li>Add welcome message</li>
+                        <li>Add profile image on left (simple default profile pic logo with wolf watermark)</li>
+                        <li>Display data about semester</li>
+                        <li>Display hyperlinks for registration</li>
+                    </ul>
                 </div>
-            </body>
+            </div>
         </Fragment>
     );
 }

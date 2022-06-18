@@ -1,16 +1,16 @@
+
 .page-footer {
+    margin-top: 50px;
+    padding-top: 50px;
     background-color: #333333;
     backface-visibility: hidden;
     color: white;
     position: relative;
     z-index: 0;
-    height: 500px;
+    min-height: 500px;
 }
 .section {
-    display: block;
-    clear: both;
     position: relative;
-    z-index: 0;
 }
 
 .center {
@@ -18,23 +18,29 @@
 }
 
 .page-footer:before {
-    background-image: url("../res/footer-texture.svg");
+    background-image: url("../res/footer-texture3.svg");
     background-position: bottom center;
-    background-repeat: repeat;
-    background-size: 1280px 20px;
+    background-repeat: repeat-x;
+    background-size: 1000px;
     content: "";
     display: block;
     height: 20px;
     left: 0;
     position: absolute;
     top: -20px;
-    filter:  ;
     width: 100%;
     z-index: 1;
 }
 
 *, :after, :before {
     box-sizing: border-box;
+}
+
+img.logo {
+    content: url("../res/unilogo-map-gray-clean.svg");
+    background-repeat: no-repeat;
+    margin-left: 150px;
+    width: 10vw;
 }
 
 /*.footer-outer {

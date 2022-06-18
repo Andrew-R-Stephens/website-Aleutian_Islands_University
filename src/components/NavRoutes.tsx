@@ -17,15 +17,19 @@ function NavRoutes() {
         <Fragment>
             <ImageBanner className={"Banner-logo"}/>
             <Routes>
-                <Route path={"/"} element={<Home/>} />
-                <Route path={"/student"} element={<Student/>} />
-                <Route path={"/about"} element={<About/>} />
-                <Route path={"/login"} element={<Login/>} />
-                <Route path={"/account"} element={<Account/>} />
-                <Route path={"/profile"} element={<Profile/>} />
-                <Route path={"/*"} element={<ErrorPage/>} />
+                <Route path={"/"} >
+                    <Route index element={<Home/>}/>
+                    <Route path={"/about"} element={<About/>} />
+                    <Route path={"/login"} element={<Login/>} />
+                    <Route path={"/account"}>
+                        <Route index element={<Account/>}/>
+                        <Route path={"profile"} element={<Profile/>} />
+                        <Route path={"student"} element={<Student/>} />
+                    </Route>
+                    <Route path={"/*"} element={<ErrorPage/>} />
+                </Route>
             </Routes>
-            <HomeFooter></HomeFooter>
+            <HomeFooter/>
         </Fragment>
     );
 }

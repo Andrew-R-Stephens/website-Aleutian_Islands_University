@@ -2,12 +2,11 @@ import React, {Fragment, useState} from 'react';
 import '../components/LoginForm.css';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import Login from "../pages/Login";
 
 function LoginForm() {
 
-    const [email, setEmail] = useState("asteph11@oldwestbury.edu");
-    const [pass, setPass] = useState("burgers");
+    const [email, setEmail] = useState("");
+    const [pass, setPass] = useState("");
     const [response, setResponse] = useState("");
     const navigate = useNavigate();
 
