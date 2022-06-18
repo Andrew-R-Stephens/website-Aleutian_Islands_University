@@ -29,7 +29,7 @@ function Account() {
                     <label><b>Todo:</b></label>
                     <ul style={{margin: "auto", maxWidth: 1080, textAlign: 'start'}}>
                         <li>Add welcome message</li>
-                        <li>Add profile image on left (simple default profile pic logo with wolf watermark)</li>
+                        <li>Add profile image on left (simple default profile pic logo with wolf  watermark)</li>
                         <li>Display data about semester</li>
                         <li>Display hyperlinks for registration</li>
                     </ul>
