@@ -1,4 +1,9 @@
 .login {
+    box-shadow: #333333 0 0 20px;
+    border-radius: 5%/10%;
+    margin: 5vh auto;
+    padding: 36px 72px;
+    width: fit-content;
     background-color: whitesmoke;
     display: grid;
     place-items: center;

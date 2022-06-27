@@ -3,7 +3,7 @@ header {
     text-align: center;
 }
 
-.Banner-logo {
+.banner-logo {
     content:url("../res/unilogo-simple.svg");
     background-color: transparent;
     max-height: 150px;
@@ -12,11 +12,11 @@ header {
     top: 0;
 }
 
-.Banner-logo:hover {
+.banner-logo:hover {
     cursor: pointer;
 }
 
-.Square-logo {
+.square-logo {
     content:url("../res/square-logo.svg");
     background-color: transparent;
     height: 10vmin;
@@ -24,12 +24,12 @@ header {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+    .app-logo {
+        animation: app-logo-spin infinite 20s linear;
     }
 }
 
-@keyframes App-logo-spin {
+@keyframes app-logo-spin {
     from {
         transform: rotate(0deg);
     }

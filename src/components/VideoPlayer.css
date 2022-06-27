@@ -1,23 +1,16 @@
-.video-container {
+.frame-outer {
     position: relative;
     overflow: hidden;
-    background-color: #333333;
-    aspect-ratio: calc(21/9);
-}
-
-.preview {
-    pointer-events: none;
-    position: absolute;
-    left: 0;
-    height: 100%;
-    border:0;
+    width: 43.125%;
+    background-color: yellow;
 }
 
 iframe {
-    border: 0;
     position: absolute;
-    width: 100%;
-    aspect-ratio: calc(21/9);
-    top: 0;
-    left: 0;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    max-height: 30vh;
+    border: 0;
 }

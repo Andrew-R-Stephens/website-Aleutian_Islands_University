@@ -4,7 +4,7 @@ import HomeNavBanner from "../components/HomeNavBanner";
 function ErrorPage() {
     return (
         <Fragment>
-            <div className={'main-content'}>
+            <div className={'main-container'}>
                 <HomeNavBanner urls={["/", "/about", "/login"]}
                                names={["Home", "About", "Login"]}/>
 

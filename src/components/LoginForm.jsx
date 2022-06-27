@@ -5,8 +5,8 @@ import axios from "axios";
 
 function LoginForm() {
 
-    const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
+    const [email, setEmail] = useState("asteph11@oldwestbury.edu");
+    const [pass, setPass] = useState("burgers");
     const [response, setResponse] = useState("");
     const navigate = useNavigate();
 
@@ -19,8 +19,8 @@ function LoginForm() {
     }
 
     const handleSubmit = (event) => {
-
-        axios.get(process.env.REACT_APP_API_URL+"/login.php", {
+        //process.env.REACT_APP_API_URL+"/login.php"
+        axios.get(process.env.REACT_APP_API_AUTH, {
             params: {
                 func: "auth",
                 email,

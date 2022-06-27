@@ -17,7 +17,6 @@ function SideBanner(props:any) {
         <Fragment>
             <div className="sidenav">
                 {listItems}
-                {}
             </div>
         </Fragment>
     );

@@ -12,6 +12,9 @@ switch($func) {
     case 'auth': {
         authorization($conn);
         break;
+    }default: {
+        echo "Error: No function matching request.";
+        break;
     }
 }
 

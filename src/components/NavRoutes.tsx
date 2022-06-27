@@ -15,7 +15,7 @@ function NavRoutes() {
 
     return (
         <Fragment>
-            <ImageBanner className={"Banner-logo"}/>
+            <ImageBanner className={"banner-logo"}/>
             <Routes>
                 <Route path={"/"} >
                     <Route index element={<Home/>}/>
@@ -26,8 +26,8 @@ function NavRoutes() {
                         <Route path={"profile"} element={<Profile/>} />
                         <Route path={"student"} element={<Student/>} />
                     </Route>
-                    <Route path={"/*"} element={<ErrorPage/>} />
                 </Route>
+                <Route path={"/*"} element={<ErrorPage/>} />
             </Routes>
             <HomeFooter/>
         </Fragment>
