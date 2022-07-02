@@ -1,11 +1,11 @@
 import React, {Fragment} from 'react';
 import {Route, Routes} from "react-router-dom";
 import Home from "../pages/Home";
-import Student from "../pages/Student";
+import Student from "../pages/account/Student";
 import About from "../pages/About";
 import Login from "../pages/Login";
-import Account from "../pages/Account";
-import Profile from "../pages/Profile";
+import Account from "../pages/account/Account";
+import Profile from "../pages/account/Profile";
 import ErrorPage from "../pages/ErrorPage";
 import './NavRoutes.css';
 import ImageBanner from "./ImageBanner";

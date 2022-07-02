@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import '../components/LoginForm.css';
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function LoginForm() {
 
@@ -19,7 +19,6 @@ function LoginForm() {
     }
 
     const handleSubmit = (event) => {
-        //process.env.REACT_APP_API_URL+"/login.php"
         axios.get(process.env.REACT_APP_API_AUTH, {
             params: {
                 func: "auth",
@@ -27,11 +26,11 @@ function LoginForm() {
                 pass
             }
         }).then(res => {
-                const userID = res.data + "";
-                setResponse(userID);
-                if(userID !== ('0')) {
-                    console.log(userID);
-                    navigate("/account", {state: {id: userID}})
+                const {id} = res.data;
+
+                setResponse(id);
+                if(id > ('0')) {
+                    navigate("/account", {state: {id}})
                 } else {
                     alert("Invalid email/password combination.");
                     setEmail("");
@@ -53,14 +52,16 @@ function LoginForm() {
                         <tbody>
                             <tr>
                                 <td><label>Email: </label></td>
-                                <td><input type={"email"}
+                                <td><input className={'inputText'}
+                                           type={"email"}
                                            value={email}
                                            onChange={handleEmailChange}/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label>Password: </label></td>
-                                <td><input type={"password"}
+                                <td><input className={'inputText'}
+                                           type={"password"}
                                            value={pass}
                                            onChange={handlePassChange}/>
                                 </td>

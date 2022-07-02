@@ -1,15 +1,15 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
-import HomeNavBanner from "../components/HomeNavBanner";
-import SideBanner from "../components/SideBanner";
+import HomeNavBanner from "../../components/HomeNavBanner";
+import SideBanner from "../../components/SideBanner";
 import './Account.css';
-import Profile from "./Profile";
-import Student from "./Student";
-import HideBar from "../components/HideBar";
-import RequestTable from "../components/RequestTable";
+import HideBar from "../../components/HideBar";
+import RequestTable from "../../components/RequestTable";
+import "../../components/RequestTable.css";
+import axios from "axios";
 
 interface StateType {
-    id: string
+    id: any
 }
 
 function Account() {
@@ -17,15 +17,39 @@ function Account() {
     const useLoc = useLocation() as any;
     const state:StateType = useLoc.state;
 
+    const [userID, setID] = useState();
+    const [firstName, setFName] = useState();
+    const [lastName, setLName] = useState();
+    const [email, setEmail] = useState();
+    const [pageIndex, setPage] = useState(0);
     const navigate = useNavigate();
+
     useEffect(() => {
         if(!state)
-        navigate('/login');
+            navigate('/login');
+
+        initUserData();
     });
 
     const pages:any = [<RequestTable/>, <HideBar/>];
 
-    const [pageIndex, setPage] = useState(0);
+    function initUserData() {
+        axios.get(process.env["REACT_APP_API_USER"] as string, {
+            params: {
+                func: "standard",
+                id : userID
+            }
+        }).then(res => {
+            const {firstName, lastName, email} = res.data;
+
+            setID(state.id);
+            setFName(firstName);
+            setLName(lastName);
+            setEmail(email);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
 
     return (
         <Fragment>
@@ -37,15 +61,23 @@ function Account() {
                                 names={["Account", "Profile", "Student", "Logout"]}
                                 classes={['item', 'item', 'item', 'item-last']}
                                 roles={['active', 'inactive', 'inactive', 'inactive']}
-                                id={state ? state.id : ""}>
+                                id={userID}>
                     </SideBanner>
                     <div className = {'inner-body'}>
                         <div className={'inner-body-constraints'}>
                             <button onClick={() => setPage(pageIndex + 1)}>Change content</button>
                             {pages[pageIndex]}
-                            <p>Account ID to display information for: {state ? state.id : ""}</p>
+                            <p>
+                                <div className={'plain'}>
+                                    <table>
+                                        <tr><td><b>Name:</b></td><td>{firstName} {lastName}</td></tr>
+                                        <tr><td><b>ID:</b></td><td>{userID}</td></tr>
+                                        <tr><td><b>Email:</b></td><td>{email}</td></tr>
+                                    </table>
+                                </div>
+                            </p>
                             <br/>
-                            <label><b>Todo:</b></label>
+                            <label><b>To Do:</b></label>
                             <ul style={{margin: "auto", maxWidth: 1080, textAlign: 'start'}}>
                                 <li>Add welcome message</li>
                                 <li>Add profile image on left (simple default profile pic logo with wolf  watermark)</li>

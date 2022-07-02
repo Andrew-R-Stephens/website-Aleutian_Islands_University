@@ -5,6 +5,7 @@
     overflow-x: hidden;
     padding-top: 8px;
     float: left;
+    z-index: 0;
 }
 
 .sidenav a {

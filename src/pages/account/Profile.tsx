@@ -1,8 +1,8 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
-import HomeNavBanner from "../components/HomeNavBanner";
-import SideBanner from "../components/SideBanner";
-import LoginForm from "../components/LoginForm";
+import HomeNavBanner from "../../components/HomeNavBanner";
+import SideBanner from "../../components/SideBanner";
+import LoginForm from "../../components/LoginForm";
 
 interface StateType {
     id: string

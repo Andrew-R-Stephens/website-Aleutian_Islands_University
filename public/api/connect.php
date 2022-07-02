@@ -21,14 +21,14 @@ function connect() {
 
 // Create database
     $sql = "CREATE DATABASE IF NOT EXISTS {$database}";
-    if(doQuery($conn, $sql) === false){
+    if(testDatabaseConnection($conn, $sql) === false){
         echo "Error creating database: " . $conn->error . "<br>";
         exit();
     }
 
 // SELECT database
     $sql = "USE $database";
-    if(doQuery($conn, $sql) === false){
+    if(testDatabaseConnection($conn, $sql) === false){
         echo "Error selecting database: " . $conn->error . "<br>";
         exit();
     }
@@ -36,7 +36,7 @@ function connect() {
     return $conn;
 }
 
-function doQuery($conn, $sql) {
+function testDatabaseConnection($conn, $sql) {
     $result = ($conn->query($sql) === TRUE);
 
     return $result;

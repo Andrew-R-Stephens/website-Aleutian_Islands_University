@@ -13,7 +13,7 @@ $sql = "SELECT * FROM {$table} WHERE (id = 1);";
 
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
-    echo "<table><tr><th>ID</th><th>First Name</th><th>Last Name</th></tr>";
+    echo "<table class='blue-sky'><tr><th>ID</th><th>First Name</th><th>Last Name</th></tr>";
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) {
         echo "<tr><td>". $row["id"]."</td><td>" . $row["firstName"]."</td><td>". $row["lastName"]. "</td></tr>";
@@ -36,7 +36,7 @@ echo "<p>Getting all id's</p>";
 $sql = "SELECT * FROM {$table};";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
-    echo "<table><tr><th>ID</th><th>First Name</th><th>Last Name</th></tr>";
+    echo "<table class='blue-sky'><tr><th>ID</th><th>First Name</th><th>Last Name</th></tr>";
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) {
         echo "<tr><td>". $row["id"]."</td><td>" . $row["firstName"]."</td><td>". $row["lastName"]. "</td></tr>";

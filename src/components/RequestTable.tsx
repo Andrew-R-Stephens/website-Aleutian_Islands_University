@@ -10,8 +10,6 @@ class RequestTable extends Component {
     }
 
     doQuery() {
-
-        //console.log(testQuery());
         axios.get(process.env.REACT_APP_API_URL+"/queries.php")
             .then(response => {
                 const persons = response.data;

@@ -1,12 +1,12 @@
 import React, {Fragment, useEffect} from 'react';
-import logo from "../res/logo.svg";
+import logo from "../../res/logo.svg";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
-import Table from "../components/RequestTable";
-import HomeNavBanner from "../components/HomeNavBanner";
+import Table from "../../components/RequestTable";
+import HomeNavBanner from "../../components/HomeNavBanner";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
-import SideBanner from "../components/SideBanner";
-import LoginForm from "../components/LoginForm";
+import SideBanner from "../../components/SideBanner";
+import LoginForm from "../../components/LoginForm";
 
 interface StateType {
     id: string
