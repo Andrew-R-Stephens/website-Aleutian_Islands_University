@@ -1,16 +1,14 @@
 .frame-outer {
     position: relative;
     overflow: hidden;
-    width: 43.125%;
-    background-color: yellow;
+    margin: auto;
+    max-height: 30vh;
+    background-color: #111111;
 }
 
 iframe {
-    position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    max-height: 30vh;
+    margin: auto;
+    width:100vw;
+    aspect-ratio: 100/43.0;
     border: 0;
 }

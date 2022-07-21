@@ -28,24 +28,26 @@ function Account() {
         if(!state)
             navigate('/login');
 
-        initUserData();
-    });
+        initUserData().then(res => console.log('Axios request succeeded.'));
+    }, []);
 
     const pages:any = [<RequestTable/>, <HideBar/>];
 
-    function initUserData() {
-        axios.get(process.env["REACT_APP_API_USER"] as string, {
+    async function initUserData() {
+        await axios.get(process.env["REACT_APP_API_USER"] as string, {
             params: {
                 func: "standard",
                 id : userID
             }
         }).then(res => {
+
             const {firstName, lastName, email} = res.data;
 
             setID(state.id);
             setFName(firstName);
             setLName(lastName);
             setEmail(email);
+
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -67,15 +69,14 @@ function Account() {
                         <div className={'inner-body-constraints'}>
                             <button onClick={() => setPage(pageIndex + 1)}>Change content</button>
                             {pages[pageIndex]}
-                            <p>
-                                <div className={'plain'}>
-                                    <table>
-                                        <tr><td><b>Name:</b></td><td>{firstName} {lastName}</td></tr>
-                                        <tr><td><b>ID:</b></td><td>{userID}</td></tr>
-                                        <tr><td><b>Email:</b></td><td>{email}</td></tr>
-                                    </table>
-                                </div>
-                            </p>
+                            <br/>
+                            <div className={'plain'}>
+                                <table><tbody>
+                                    <tr><td><b>Name:</b></td><td>{firstName} {lastName}</td></tr>
+                                    <tr><td><b>ID:</b></td><td>{userID}</td></tr>
+                                    <tr><td><b>Email:</b></td><td>{email}</td></tr>
+                                </tbody></table>
+                            </div>
                             <br/>
                             <label><b>To Do:</b></label>
                             <ul style={{margin: "auto", maxWidth: 1080, textAlign: 'start'}}>

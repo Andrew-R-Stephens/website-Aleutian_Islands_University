@@ -2,11 +2,12 @@ import React, {Fragment, useState} from 'react';
 import '../components/LoginForm.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import '../facades/user-store';
 
 function LoginForm() {
 
-    const [email, setEmail] = useState("asteph11@oldwestbury.edu");
-    const [pass, setPass] = useState("burgers");
+    const [email, setEmail] = useState('');//useState("asteph11@oldwestbury.edu");
+    const [pass, setPass] = useState('');//useState("burgers");
     const [response, setResponse] = useState("");
     const navigate = useNavigate();
 
@@ -18,8 +19,8 @@ function LoginForm() {
         setPass(event.target.value);
     }
 
-    const handleSubmit = (event) => {
-        axios.get(process.env.REACT_APP_API_AUTH, {
+    const handleSubmit = async (event) => {
+        await axios.get(process.env.REACT_APP_API_AUTH, {
             params: {
                 func: "auth",
                 email,
@@ -27,7 +28,6 @@ function LoginForm() {
             }
         }).then(res => {
                 const {id} = res.data;
-
                 setResponse(id);
                 if(id > ('0')) {
                     navigate("/account", {state: {id}})
@@ -54,6 +54,7 @@ function LoginForm() {
                                 <td><label>Email: </label></td>
                                 <td><input className={'inputText'}
                                            type={"email"}
+                                           autoComplete={'on'}
                                            value={email}
                                            onChange={handleEmailChange}/>
                                 </td>
@@ -62,6 +63,7 @@ function LoginForm() {
                                 <td><label>Password: </label></td>
                                 <td><input className={'inputText'}
                                            type={"password"}
+                                           autoComplete={'on'}
                                            value={pass}
                                            onChange={handlePassChange}/>
                                 </td>
