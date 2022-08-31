@@ -20,7 +20,7 @@
 }
 
 .page-footer:before {
-    background-image: url("../res/footer-texture3.svg");
+    background-image: url("src/res/footer-texture3.svg");
     background-position: bottom center;
     background-repeat: repeat-x;
     background-size: 1000px;
@@ -31,7 +31,7 @@
     position: absolute;
     top: -20px;
     width: 100%;
-    z-index: 0;
+    z-index: -1;
 }
 
 *, :after, :before {
@@ -39,7 +39,7 @@
 }
 
 img.logo {
-    content: url("../res/unilogo-map-gray-clean.svg");
+    content: url("src/res/unilogo-map-gray-clean.svg");
     background-repeat: no-repeat;
     margin-left: 150px;
     width: 10vw;

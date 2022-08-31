@@ -10,17 +10,16 @@ import {HashRouter} from "react-router-dom";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
 root.render(
-    <React.StrictMode>
-        <DevSupport
-            ComponentPreviews={ComponentPreviews}
-            useInitialHook={useInitial}
-        >
-            <HashRouter>
-            <App/>
-            </HashRouter>
-        </DevSupport>
-    </React.StrictMode>
+    <DevSupport
+        ComponentPreviews={ComponentPreviews}
+        useInitialHook={useInitial}
+    >
+        <HashRouter>
+        <App/>
+        </HashRouter>
+    </DevSupport>
 );
 
 // If you want to start measuring performance in your app, pass a function

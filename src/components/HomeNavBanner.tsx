@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Link} from "react-router-dom";
-import './HomeNavBanner.css';
+import '../css/HomeNavBanner.css';
 
 function HomeNavBanner(props:any) {
 

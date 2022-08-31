@@ -65,7 +65,7 @@ div .inner-footer-constraints {
 
 .inner-footer:before {
     position: absolute;
-    background-image: url("../res/footer-texture3.svg");
+    background-image: url('./../res/footer-texture3.svg');
     background-position: bottom center;
     background-repeat: repeat-x;
     background-size: 1000px;
@@ -73,7 +73,7 @@ div .inner-footer-constraints {
     display: block;
     height: 20px;
     left: 0;
-    top: -20px;
+    top: -19px;
     width: 100%;
     z-index: 0;
 }
@@ -83,7 +83,7 @@ div .inner-footer-constraints {
 }
 
 img.logo {
-    content: url("../res/unilogo-map-gray-clean.svg");
+    content: url("./../res/unilogo-map-gray-clean.svg");
     background-repeat: no-repeat;
     width: 10vw;
 }

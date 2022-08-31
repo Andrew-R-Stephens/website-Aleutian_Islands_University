@@ -3,8 +3,8 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
 import Table from "../components/RequestTable";
 import HomeNavBanner from "../components/HomeNavBanner";
-import '../components/VideoPlayer.css'
-import '../components/PrimaryLayout.css';
+import '../css/VideoPlayer.css'
+import '../css/PrimaryLayout.css';
 
 const queryClient = new QueryClient();
 

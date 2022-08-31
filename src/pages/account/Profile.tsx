@@ -2,24 +2,18 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import HomeNavBanner from "../../components/HomeNavBanner";
 import SideBanner from "../../components/SideBanner";
-import LoginForm from "../../components/LoginForm";
+import {useUserAuthStore} from "../../facades/AuthUserStore";
 
-interface StateType {
-    id: string
-}
+function Profile() {
 
-function Profile(props:any) {
-
-    const {id} = props;
-
-    const useLoc = useLocation() as any;
-    const state:StateType = useLoc.state;
+    const userStoreID = useUserAuthStore((state:any) => state.userID);
+    const [userID, setID] = useState(userStoreID);
 
     const navigate = useNavigate();
+
     useEffect(() => {
-        if(!state && !id)
-            navigate('/login');
-    });
+
+    }, []);
 
     return (
         <Fragment>
@@ -30,7 +24,7 @@ function Profile(props:any) {
                             names={["Account", "Profile", "Student", "Logout"]}
                             classes={['item', 'item', 'item', 'item-last']}
                             roles={['inactive', 'active', 'inactive', 'inactive']}
-                            id={state ? state.id : id}/>
+                            id={userID}/>
                 <div className={'main'}>
                     <div className={'main-header'}>
                         <div className={'frame-outer'}>
@@ -41,7 +35,7 @@ function Profile(props:any) {
                     <div className={'main-body'}>
                         <div className={'inner-body'}>
                             <div className={'inner-body-constraints'}>
-                                <p>Profile ID to display information for: {state ? state.id : id}</p>
+                                <p>Profile ID to display information for: {userID}</p>
                             </div>
                         </div>
                     </div>

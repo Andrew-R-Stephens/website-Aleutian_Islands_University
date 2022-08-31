@@ -1,28 +1,19 @@
-import React, {Fragment, useEffect} from 'react';
-import logo from "../../res/logo.svg";
-import {QueryClient, QueryClientProvider} from "react-query";
-import {ReactQueryDevtools} from "react-query/devtools";
-import Table from "../../components/RequestTable";
+import React, {Fragment, useEffect, useState} from 'react';
 import HomeNavBanner from "../../components/HomeNavBanner";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import SideBanner from "../../components/SideBanner";
-import LoginForm from "../../components/LoginForm";
+import {useUserAuthStore} from "../../facades/AuthUserStore";
 
-interface StateType {
-    id: string
-}
-function Student(props:any) {
+function Student() {
 
-    const {id} = props;
-
-    const useLoc = useLocation() as any;
-    const state:StateType = useLoc.state;
+    const userStoreID = useUserAuthStore((state:any) => state.userID);
+    const [userID, setID] = useState(userStoreID);
 
     const navigate = useNavigate();
+
     useEffect(() => {
-        if(!state && !id)
-            navigate('/login');
-    });
+
+    }, []);
 
     return (
         <Fragment>
@@ -33,11 +24,11 @@ function Student(props:any) {
                             names={["Account", "Profile", "Student", "Logout"]}
                             classes={['item', 'item', 'item', 'item-last']}
                             roles={['inactive', 'inactive', 'active', 'inactive']}
-                            id={state ? state.id : id}/>
+                            id={userID}/>
                 <div className = {'main-body'}>
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <p>Account ID to display information for: {state ? state.id : id}</p>
+                            <p>Account ID to display information for: {userID}</p>
                             <br/>
                             <label><b>Todo:</b></label>
                             <ul style={{margin: "auto", maxWidth: 1080, textAlign: 'start'}}>

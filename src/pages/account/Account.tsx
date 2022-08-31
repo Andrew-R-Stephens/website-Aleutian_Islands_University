@@ -2,36 +2,33 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import HomeNavBanner from "../../components/HomeNavBanner";
 import SideBanner from "../../components/SideBanner";
-import './Account.css';
+import '../../css/Account.css';
 import HideBar from "../../components/HideBar";
 import RequestTable from "../../components/RequestTable";
-import "../../components/RequestTable.css";
+import "../../css/RequestTable.css";
 import axios from "axios";
-
-interface StateType {
-    id: any
-}
+import {useUserAuthStore} from "../../facades/AuthUserStore";
 
 function Account() {
 
-    const useLoc = useLocation() as any;
-    const state:StateType = useLoc.state;
+    const userStoreID = useUserAuthStore((state:any) => state.userID);
 
-    const [userID, setID] = useState();
+    const pages:any = [<RequestTable/>, <HideBar/>];
+
+    const [userID, setID] = useState(userStoreID);
     const [firstName, setFName] = useState();
     const [lastName, setLName] = useState();
     const [email, setEmail] = useState();
+
     const [pageIndex, setPage] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(!state)
+        if(userStoreID === 0)
             navigate('/login');
 
-        initUserData().then(res => console.log('Axios request succeeded.'));
-    }, []);
-
-    const pages:any = [<RequestTable/>, <HideBar/>];
+        initUserData().then(() => console.log('Axios request succeeded.', userID, userStoreID));
+    }, [userID]);
 
     async function initUserData() {
         await axios.get(process.env["REACT_APP_API_USER"] as string, {
@@ -43,7 +40,6 @@ function Account() {
 
             const {firstName, lastName, email} = res.data;
 
-            setID(state.id);
             setFName(firstName);
             setLName(lastName);
             setEmail(email);

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import ReactHtmlParser from 'html-react-parser';
-import './RequestTable.css';
+import '../css/RequestTable.css';
 
 class RequestTable extends Component {
 

@@ -4,7 +4,7 @@ header {
 }
 
 .banner-logo {
-    content:url("../res/unilogo-simple.svg");
+    content:url("./../res/unilogo-simple.svg");
     background-color: transparent;
     max-height: 150px;
     aspect-ratio: 16/9;
@@ -17,7 +17,7 @@ header {
 }
 
 .square-logo {
-    content:url("../res/square-logo.svg");
+    content:url("./../res/square-logo.svg");
     background-color: transparent;
     height: 10vmin;
     pointer-events: none;

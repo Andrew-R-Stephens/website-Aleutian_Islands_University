@@ -1,6 +1,6 @@
 import React, { Fragment} from 'react';
 import {Link} from "react-router-dom";
-import './SideBanner.css'
+import '../css/SideBanner.css'
 
 
 function SideBanner(props:any) {

@@ -1,7 +1,19 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import LoginForm from "../components/LoginForm";
 import HomeNavBanner from "../components/HomeNavBanner";
+import {useUserAuthStore} from "../facades/AuthUserStore";
 function Login() {
+
+    const userStoreID = useUserAuthStore((state:any) => state.userID);
+    const setUserStoreID = useUserAuthStore((state:any) => state.setUserID);
+
+    const [userID, setUserID] = useState(userStoreID);
+
+    useEffect(() => {
+        setUserStoreID(0);
+        setUserID(0);
+        console.log(userID, userStoreID);
+    }, [userID])
 
     return (
         <Fragment>

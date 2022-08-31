@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
-import "./NavButton.css";
+import "../css/NavButton.css";
 
 function NavButton(props: any) {
     let navigate = useNavigate();
