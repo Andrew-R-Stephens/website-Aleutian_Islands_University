@@ -2,7 +2,8 @@ import React, {Fragment, useEffect, useState} from 'react';
 import HomeNavBanner from "../../components/HomeNavBanner";
 import {useLocation, useNavigate} from "react-router-dom";
 import SideBanner from "../../components/SideBanner";
-import {useUserAuthStore} from "../../facades/AuthUserStore";
+import {useUserAuthStore} from "../../stores/AuthUserStore";
+import StudentHistoryComparator from "../../components/StudentHistoryComparator";
 
 function Student() {
 
@@ -23,20 +24,11 @@ function Student() {
                 <SideBanner urls={["/account", "../profile", "student", "/login"]}
                             names={["Account", "Profile", "Student", "Logout"]}
                             classes={['item', 'item', 'item', 'item-last']}
-                            roles={['inactive', 'inactive', 'active', 'inactive']}
-                            id={userID}/>
+                            roles={['inactive', 'inactive', 'active', 'inactive']} />
                 <div className = {'main-body'}>
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <p>Account ID to display information for: {userID}</p>
-                            <br/>
-                            <label><b>Todo:</b></label>
-                            <ul style={{margin: "auto", maxWidth: 1080, textAlign: 'start'}}>
-                                <li>Add welcome message</li>
-                                <li>Add profile image on left (simple default profile pic logo with wolf watermark)</li>
-                                <li>Display data about semester</li>
-                                <li>Display hyperlinks for registration</li>
-                            </ul>
+                            <StudentHistoryComparator/>
                         </div>
                     </div>
                 </div>

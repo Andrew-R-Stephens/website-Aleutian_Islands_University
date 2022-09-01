@@ -5,10 +5,10 @@ import '../css/SideBanner.css'
 
 function SideBanner(props:any) {
 
-    const { urls = [""], names = [""], classes = [""], roles = [""], id = ""} = props;
+    const { urls = [""], names = [""], classes = [""], roles = [""]} = props;
 
     const listItems = urls.map((elem:any, index:number) =>
-        <Link className={classes[index]} role={roles[index]} key={index} to={urls[index]} state={{id}} >
+        <Link className={classes[index]} role={roles[index]} key={index} to={urls[index]} >
             {names[index]}
         </Link>
     );

@@ -5,7 +5,7 @@ import {ReactQueryDevtools} from "react-query/devtools";
 import {useStore} from "zustand";
 import {
     useLogin, useLogout, getID, getEmail, getFirstName, getLastName, //StoreContextProvider
-} from "../facades/user-store";
+} from "../stores/user-store";
 
 
 

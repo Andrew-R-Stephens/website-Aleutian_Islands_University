@@ -2,8 +2,8 @@ import React, {Fragment, useState} from 'react';
 import '../css/LoginForm.css';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
-import '../facades/user-store';
-import {useUserAuthStore} from "../facades/AuthUserStore";
+import '../stores/user-store';
+import {useUserAuthStore} from "../stores/AuthUserStore";
 
 function LoginForm() {
 

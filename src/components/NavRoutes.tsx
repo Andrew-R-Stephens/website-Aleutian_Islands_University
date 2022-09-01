@@ -10,7 +10,7 @@ import ErrorPage from "../pages/ErrorPage";
 import '../css/NavRoutes.css';
 import ImageBanner from "./ImageBanner";
 import HomeFooter from "./HomeFooter";
-import {AuthContext} from "../contexts/AuthContext";
+import StudentHistory from "../pages/account/StudentHistory";
 
 function NavRoutes() {
 
@@ -19,7 +19,6 @@ function NavRoutes() {
     return (
         <Fragment>
             <ImageBanner className={"banner-logo"}/>
-            <AuthContext.Provider value={{id, setID}}>
                 <Routes>
                     <Route path={"/"} >
                         <Route index element={<Home/>}/>
@@ -33,7 +32,6 @@ function NavRoutes() {
                     </Route>
                     <Route path={"/*"} element={<ErrorPage/>} />
                 </Routes>
-            </AuthContext.Provider>
             <HomeFooter/>
         </Fragment>
     );

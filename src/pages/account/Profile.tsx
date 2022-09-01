@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import HomeNavBanner from "../../components/HomeNavBanner";
 import SideBanner from "../../components/SideBanner";
-import {useUserAuthStore} from "../../facades/AuthUserStore";
+import {useUserAuthStore} from "../../stores/AuthUserStore";
 
 function Profile() {
 

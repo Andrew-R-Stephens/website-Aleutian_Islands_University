@@ -1,6 +1,61 @@
 import React, {Fragment, useEffect, useState} from "react";
 import axios from "axios";
-import {useUserAuthStore} from '../facades/AuthUserStore';
+import {useUserAuthStore} from '../stores/AuthUserStore';
+
+function StudentHistoryComparator() {
+
+    const userID = useUserAuthStore((state:any) => state.userID);
+
+    const [studentHistory, setStudentHistory] = useState([]);
+
+    useEffect(() => {
+        getStudentHistory().then(res => console.log("Completed history"));
+    }, [userID]);
+
+    async function getStudentHistory() {
+        await axios.get(process.env["REACT_APP_API_PROCEDURES"] as string, {
+            params: {
+                func: "getStudentHistory",
+                studentID: userID
+            }
+        }).then(res => {
+            const {studentHistory} = res.data;
+            setStudentHistory(studentHistory);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
+    return (
+        <Fragment>
+            <div style={{alignItems: 'center', margin: '10vmin'}}>
+                <p>This checks if a Student's History contains a course with a grade that's acceptable for fulfilling a program's course prerequisite.</p>
+                <h3>The Actual Student History:</h3>
+                <br/>
+                <table>
+                    <thead>
+                    <tr><th>Student ID</th><th>Course ID</th><th>Acquired Grade</th></tr>
+                    </thead>
+                    <tbody>
+                    {
+                        studentHistory.map((item:any, key:number) => (
+                            <tr key={key}><td>{userID}</td><td>{item.course_id}</td><td>{item.course_grade}</td></tr>
+                        ))
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </Fragment>
+    );
+}
+
+export default StudentHistoryComparator;
+
+// OLD ----------------------
+/*
+import React, {Fragment, useEffect, useState} from "react";
+import axios from "axios";
+import {useUserAuthStore} from './AuthUserStore';
 
 function StudentHistoryComparator() {
 
@@ -175,3 +230,5 @@ function GradeCheckComponent(props:any) {
 }
 
 export default StudentHistoryComparator;
+
+ */
