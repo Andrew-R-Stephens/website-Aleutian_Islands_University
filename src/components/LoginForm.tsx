@@ -36,7 +36,7 @@ function LoginForm() {
             }
         }).then(res => {
             let {id, role} = res.data;
-            role = '
+            role = '1';
 
             if(id <= '0') {
                 alert("Invalid email/password combination.");
