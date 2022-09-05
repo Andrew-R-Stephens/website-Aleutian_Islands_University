@@ -6,35 +6,42 @@ require_once("connect.php");
 
 $conn = connect();
 
+if(!isset($_GET['func'])) {
+    $out = ['error' => 'Function not set.'];
+    echo json_encode($out);
+    return;
+}
 $func = $_GET['func'];
 
 switch($func) {
     case 'isCourseGradeSatisfied': {
         isCourseGradeSatisfied($conn);
-        break;
+        return;
     }
     case 'isCourseInStudentHistory': {
         isCourseInStudentHistory($conn);
-        break;
+        return;
     }
     case 'getGradesList': {
         getGradesList($conn);
-        break;
+        return;
     }
     case 'getStudentHistory': {
         getStudentHistory($conn);
-        break;
+        return;
     }
     default: {
-    echo "Error: No function matching request.";
-    mysqli_close($conn);
-    break;
+        $out = ['error' => 'Function "'. $func .'" does not exist.'];
+        echo json_encode($out);
+        return;
     }
 }
 
 function isCourseGradeSatisfied($conn) {
     if(!(isset($_GET['studentID'], $_GET['courseID'], $_GET['courseGrade']))) {
-        echo "Incomplete request";
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
     }
 
     $studentID = $_GET['studentID'];
@@ -60,7 +67,9 @@ function isCourseGradeSatisfied($conn) {
 
 function isCourseInStudentHistory($conn) {
     if(!(isset($_GET['studentID'], $_GET['courseID']))) {
-        echo "Incomplete request";
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
     }
 
     $studentID = $_GET['studentID'];
@@ -85,7 +94,8 @@ function isCourseInStudentHistory($conn) {
 
 function getStudentHistory($conn) {
     if(!(isset($_GET['studentID']))) {
-        echo "Incomplete request";
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
         return;
     }
 

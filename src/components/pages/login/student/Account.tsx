@@ -1,17 +1,17 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
-import HomeNavBanner from "../../components/HomeNavBanner";
-import SideBanner from "../../components/SideBanner";
-import '../../css/Account.css';
-import HideBar from "../../components/HideBar";
-import RequestTable from "../../components/RequestTable";
-import "../../css/RequestTable.css";
+import {useNavigate} from "react-router-dom";
+import HomeNavBanner from "../../../HomeNavBanner";
+import SideBanner from "../../../SideBanner";
+import '../../../../css/Account.css';
+import HideBar from "../../../HideBar";
+import RequestTable from "../../../RequestTable";
+import "../../../../css/RequestTable.css";
 import axios from "axios";
-import {useUserAuthStore} from "../../stores/AuthUserStore";
+import {UserAuthStore} from "../../../../stores/AuthUserStore";
 
 function Account() {
 
-    const userStoreID = useUserAuthStore((state:any) => state.userID);
+    const userStoreID = UserAuthStore((state:any) => state.userID);
 
     const pages:any = [<RequestTable/>, <HideBar/>];
 
@@ -24,9 +24,6 @@ function Account() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(userStoreID === 0)
-            navigate('/login');
-
         initUserData().then(() => console.log('Axios request succeeded.', userID, userStoreID));
     }, [userID]);
 
@@ -55,12 +52,10 @@ function Account() {
                 <HomeNavBanner urls={[]} names={[]}/>
                 <div className={'main-body'}>
                     <SideBanner
-                        urls={["/account", "profile", "student", "/login"]}
+                        urls={["./", "./../profile", "./../student", "/login"]}
                         names={["Account", "Profile", "Student", "Logout"]}
                         classes={['item', 'item', 'item', 'item-last']}
-                        roles={['active', 'inactive', 'inactive', 'inactive']}
-                        id={userID}>
-                    </SideBanner>
+                        roles={['active', 'inactive', 'inactive', 'inactive']}/>
                     <div className = {'inner-body'}>
                         <div className={'inner-body-constraints'}>
                             <button onClick={() => setPage(pageIndex + 1)}>Change content</button>

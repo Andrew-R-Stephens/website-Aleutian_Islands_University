@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect, useState} from "react";
 import axios from "axios";
-import {useUserAuthStore} from '../stores/AuthUserStore';
+import {UserAuthStore} from '../stores/AuthUserStore';
 
 function StudentHistoryComparator() {
 
-    const userID = useUserAuthStore((state:any) => state.userID);
+    const userID = UserAuthStore((state:any) => state.userID);
 
     const [studentHistory, setStudentHistory] = useState([]);
 
@@ -19,11 +19,26 @@ function StudentHistoryComparator() {
                 studentID: userID
             }
         }).then(res => {
-            const {studentHistory} = res.data;
+            const {error, studentHistory} = res.data;
             setStudentHistory(studentHistory);
+            error ? console.log(error) : <></>;
         }).catch(function(err) {
             console.log(err.message);
         })
+    }
+
+    function createHistoryDisplay() {
+        if(studentHistory) {
+            return (studentHistory?.map((item: any, key: number) => (
+                        <tr key={key}>
+                            <td>{userID}</td>
+                            <td>{item.course_id}</td>
+                            <td>{item.course_grade}</td>
+                        </tr>
+                    )
+                )
+            );
+        }
     }
 
     return (
@@ -38,9 +53,7 @@ function StudentHistoryComparator() {
                     </thead>
                     <tbody>
                     {
-                        studentHistory.map((item:any, key:number) => (
-                            <tr key={key}><td>{userID}</td><td>{item.course_id}</td><td>{item.course_grade}</td></tr>
-                        ))
+                        createHistoryDisplay()
                     }
                     </tbody>
                 </table>

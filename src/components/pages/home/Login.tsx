@@ -1,19 +1,20 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import LoginForm from "../components/LoginForm";
-import HomeNavBanner from "../components/HomeNavBanner";
-import {useUserAuthStore} from "../stores/AuthUserStore";
+import React, {Fragment, useEffect} from 'react';
+import LoginForm from "../../LoginForm";
+import HomeNavBanner from "../../HomeNavBanner";
+import {RoleAuthStore, UserAuthStore} from "../../../stores/AuthUserStore";
+import {useNavigate} from "react-router-dom";
+
 function Login() {
 
-    const userStoreID = useUserAuthStore((state:any) => state.userID);
-    const setUserStoreID = useUserAuthStore((state:any) => state.setUserID);
-
-    const [userID, setUserID] = useState(userStoreID);
+    const setUserDefault = UserAuthStore((state:any) => state.setDefaults);
+    const setRoleDefault = RoleAuthStore((state:any) => state.setDefaultRole);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        setUserStoreID(0);
-        setUserID(0);
-        console.log(userID, userStoreID);
-    }, [userID])
+        setUserDefault();
+        setRoleDefault();
+        navigate("./")
+    }, [])
 
     return (
         <Fragment>

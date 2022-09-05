@@ -1,14 +1,15 @@
 import React, {Fragment} from 'react';
 import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
-import Table from "../components/RequestTable";
-import HomeNavBanner from "../components/HomeNavBanner";
-import '../css/VideoPlayer.css'
-import '../css/PrimaryLayout.css';
+import Table from "../../RequestTable";
+import HomeNavBanner from "../../HomeNavBanner";
+import '../../../css/VideoPlayer.css'
+import '../../../css/PrimaryLayout.css';
 
 const queryClient = new QueryClient();
 
 function Home() {
+
     return (
         <Fragment>
             <div className={'main-container'}>

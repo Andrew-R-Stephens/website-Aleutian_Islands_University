@@ -1,12 +1,6 @@
-import React, {Fragment, useContext} from 'react';
-import HomeNavBanner from "../components/HomeNavBanner";
-import {QueryClient, QueryClientProvider} from "react-query";
-import {ReactQueryDevtools} from "react-query/devtools";
-import {useStore} from "zustand";
-import {
-    useLogin, useLogout, getID, getEmail, getFirstName, getLastName, //StoreContextProvider
-} from "../stores/user-store";
-
+import React, {Fragment} from 'react';
+import HomeNavBanner from "../../HomeNavBanner";
+import {QueryClient} from "react-query";
 
 
 const queryClient = new QueryClient();
@@ -26,9 +20,7 @@ function About() {
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
                             <div>
-                                <p>This is the About page.
-                                    {/*<StoreContextProvider/>*/}
-                                </p>
+                                <p>This is the About page.</p>
                             </div>
                         </div>
                     </div>

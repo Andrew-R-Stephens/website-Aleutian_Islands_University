@@ -1,12 +1,12 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
-import HomeNavBanner from "../../components/HomeNavBanner";
-import SideBanner from "../../components/SideBanner";
-import {useUserAuthStore} from "../../stores/AuthUserStore";
+import {useNavigate} from "react-router-dom";
+import HomeNavBanner from "../../../HomeNavBanner";
+import SideBanner from "../../../SideBanner";
+import {UserAuthStore} from "../../../../stores/AuthUserStore";
 
 function Profile() {
 
-    const userStoreID = useUserAuthStore((state:any) => state.userID);
+    const userStoreID = UserAuthStore((state:any) => state.userID);
     const [userID, setID] = useState(userStoreID);
 
     const navigate = useNavigate();
@@ -20,11 +20,11 @@ function Profile() {
             <div className={'main-container'}>
                 <HomeNavBanner urls={[]}
                                names={[]}/>
-                <SideBanner urls={["/account", "profile", "../student", "/login"]}
-                            names={["Account", "Profile", "Student", "Logout"]}
-                            classes={['item', 'item', 'item', 'item-last']}
-                            roles={['inactive', 'active', 'inactive', 'inactive']}
-                            id={userID}/>
+                <SideBanner
+                    urls={["./../account", "./", "./../student", "/login"]}
+                    names={["Account", "Profile", "Student", "Logout"]}
+                    classes={['item', 'item', 'item', 'item-last']}
+                    roles={['inactive', 'active', 'inactive', 'inactive']}/>
                 <div className={'main'}>
                     <div className={'main-header'}>
                         <div className={'frame-outer'}>

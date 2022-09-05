@@ -1,15 +1,19 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import '../css/LoginForm.css';
 import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import '../stores/user-store';
-import {useUserAuthStore} from "../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
 
 function LoginForm() {
 
-    const userStoreID = useUserAuthStore((state:any) => state.userID);
-    const setUserStoreID = useUserAuthStore((state:any) => state.setUserID);
+    const userStoreID = UserAuthStore((state:any) => state.userID);
+    const roleStoreID = RoleAuthStore((state:any) => state.authRole);
+    const setUserStoreID = UserAuthStore((state:any) => state.setUserID);
+    const invalidateRole = RoleAuthStore((state:any) => state.invalidateRole);
 
+    const [userID, setUserID] = useState('0');
+    const [userRole, setUserRole] = useState('0');
     const [email, setEmail] = useState('');//useState("asteph11@oldwestbury.edu");
     const [pass, setPass] = useState('');//useState("burgers");
     const [response, setResponse] = useState("");
@@ -23,7 +27,7 @@ function LoginForm() {
         setPass(event.target.value);
     }
 
-    const handleSubmit = (event:any) => {
+    const handleSubmit = () => {
         axios.get(process.env['REACT_APP_API_AUTH'] as string, {
             params: {
                 func: "auth",
@@ -31,23 +35,29 @@ function LoginForm() {
                 pass
             }
         }).then(res => {
-                const {id} = res.data;
-                setResponse(id);
-                if(id > ('0')) {
-                    //window.location.replace('./manifest.json')
-                    setUserStoreID(id);
-                    navigate("/account", {state: {id}})
-                } else {
-                    alert("Invalid email/password combination.");
-                    setEmail("");
-                    setPass("");
-                    setResponse("-1");
-                }
-            }).catch(function(err) {
-            console.log(err.message);
+            let {id, role} = res.data;
+            role = '
+
+            if(id <= '0') {
+                alert("Invalid email/password combination.");
+                setUserID('');
+                setUserRole(AuthRole.Visitor)
+                setEmail("");
+                setPass("");
+                setResponse("-1");
+            } else {
+                setUserID(id);
+                setUserStoreID(id);
+
+                setUserRole(role);
+                invalidateRole(role);
+
+                navigate("/u");
+            }
+        }).catch(function(err) {
+        console.log(err.message);
         })
 
-        event.preventDefault();
     }
 
     return (

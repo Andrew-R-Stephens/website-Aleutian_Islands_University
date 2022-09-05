@@ -1,17 +1,17 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
-import HomeNavBanner from "../../components/HomeNavBanner";
-import SideBanner from "../../components/SideBanner";
-import '../../css/Account.css';
-import HideBar from "../../components/HideBar";
-import RequestTable from "../../components/RequestTable";
-import "../../css/RequestTable.css";
+import {useNavigate} from "react-router-dom";
+import HomeNavBanner from "../../../HomeNavBanner";
+import SideBanner from "../../../SideBanner";
+import '../../../../css/Account.css';
+import HideBar from "../../../HideBar";
+import RequestTable from "../../../RequestTable";
+import "../../../../css/RequestTable.css";
 import axios from "axios";
-import {useUserAuthStore} from "../../stores/AuthUserStore";
+import {UserAuthStore} from "../../../../stores/AuthUserStore";
 
 function StudentHistory() {
 
-    const userStoreID = useUserAuthStore((state:any) => state.userID);
+    const userStoreID = UserAuthStore((state:any) => state.userID);
 
     const pages:any = [<RequestTable/>, <HideBar/>];
 

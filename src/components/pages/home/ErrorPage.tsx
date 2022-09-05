@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import HomeNavBanner from "../components/HomeNavBanner";
+import HomeNavBanner from "../../HomeNavBanner";
 
 function ErrorPage() {
     return (

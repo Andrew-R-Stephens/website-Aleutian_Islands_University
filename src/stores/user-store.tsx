@@ -1,6 +1,5 @@
-
-import axios from "axios";
-import React, {useState, createContext, useContext} from "react";
+import React from "react";
+/*
 
 const useStore = () => {
     const [id, setID] = useState('-1');
@@ -46,14 +45,14 @@ function queryUser(id:any):any {
 }
 
 const StoreContext = React.createContext<any>(null);
-/*
+/!*
 
 export const StoreContextProvider = (children: any) => (
     <StoreContext.Provider value={children}>
         {children.getID}
     </StoreContext.Provider>
 )
-*/
+*!/
 
 export const useLogin = () => useContext(StoreContext).login;
 export const useLogout = () => useContext(StoreContext).logout;
@@ -61,3 +60,4 @@ export const getID = () => useContext(StoreContext).id;
 export const getEmail = () => useContext(StoreContext).email;
 export const getFirstName = () => useContext(StoreContext).firstName;
 export const getLastName = () => useContext(StoreContext).lastName;
+*/
