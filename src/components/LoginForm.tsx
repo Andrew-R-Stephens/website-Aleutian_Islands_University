@@ -17,6 +17,7 @@ function LoginForm() {
     const [email, setEmail] = useState('');//useState("asteph11@oldwestbury.edu");
     const [pass, setPass] = useState('');//useState("burgers");
     const [response, setResponse] = useState("");
+
     const navigate = useNavigate();
 
     const handleEmailChange = (event:any) => {
@@ -63,7 +64,7 @@ function LoginForm() {
     return (
         <Fragment>
             <div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={() => handleSubmit}>
                     <table className = "login">
                         <tbody>
                             <tr>
@@ -72,7 +73,7 @@ function LoginForm() {
                                            type={"email"}
                                            autoComplete={'on'}
                                            value={email}
-                                           onChange={handleEmailChange}/>
+                                           onChange={() => handleEmailChange}/>
                                 </td>
                             </tr>
                             <tr>
@@ -81,7 +82,7 @@ function LoginForm() {
                                            type={"password"}
                                            autoComplete={'on'}
                                            value={pass}
-                                           onChange={handlePassChange}/>
+                                           onChange={() => handlePassChange}/>
                                 </td>
                             </tr>
                             <tr className={'submit'}><td colSpan={2}><input type = "submit" value={"Login"}/></td></tr>
