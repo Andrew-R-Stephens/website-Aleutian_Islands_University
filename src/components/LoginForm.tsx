@@ -21,14 +21,16 @@ function LoginForm() {
     const navigate = useNavigate();
 
     const handleEmailChange = (event:any) => {
+        event.preventDefault();
         setEmail(event.target.value);
     };
 
     const handlePassChange = (event:any) => {
+        event.preventDefault();
         setPass(event.target.value);
     }
 
-    const handleSubmit = () => {
+    function handleSubmit(event:any) {
         axios.get(process.env['REACT_APP_API_AUTH'] as string, {
             params: {
                 func: "auth",
@@ -56,15 +58,16 @@ function LoginForm() {
                 navigate("/u");
             }
         }).catch(function(err) {
-        console.log(err.message);
+            console.log(err.message);
         })
 
+        event.preventDefault();
     }
 
     return (
         <Fragment>
             <div>
-                <form onSubmit={() => handleSubmit}>
+                <form onSubmit={event => handleSubmit(event)}>
                     <table className = "login">
                         <tbody>
                             <tr>
@@ -73,7 +76,7 @@ function LoginForm() {
                                            type={"email"}
                                            autoComplete={'on'}
                                            value={email}
-                                           onChange={() => handleEmailChange}/>
+                                           onChange={handleEmailChange}/>
                                 </td>
                             </tr>
                             <tr>
@@ -82,10 +85,10 @@ function LoginForm() {
                                            type={"password"}
                                            autoComplete={'on'}
                                            value={pass}
-                                           onChange={() => handlePassChange}/>
+                                           onChange={handlePassChange}/>
                                 </td>
                             </tr>
-                            <tr className={'submit'}><td colSpan={2}><input type = "submit" value={"Login"}/></td></tr>
+                            <tr className={'submit'}><td colSpan={2}><input type={"submit"} value={"Login"}/></td></tr>
                         </tbody>
                     </table>
                 </form>

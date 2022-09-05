@@ -67,14 +67,14 @@ export const RoleAuthStore = create(persist((set:any, get:any) => ({
 );
 
 export const UserAuthStore = create(persist((set:any, get:any) => ({
-        userID: 0,
-        setUserID: (newID:number) => {
+        userID: '0',
+        setUserID: (newID:string) => {
             set(() => ({ userID: newID }));
         },
         action: () => {
             const userID = get().userID;
         },
-        setDefaults: () => set(() => ({ userID: 0 }))
+        setDefaults: () => set(() => ({ userID: '0' }))
     }), {
         name: 'authStore',
         getStorage: () => sessionStorage

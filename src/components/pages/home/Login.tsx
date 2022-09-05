@@ -2,18 +2,15 @@ import React, {Fragment, useEffect} from 'react';
 import LoginForm from "../../LoginForm";
 import HomeNavBanner from "../../HomeNavBanner";
 import {RoleAuthStore, UserAuthStore} from "../../../stores/AuthUserStore";
-import {useNavigate} from "react-router-dom";
 
 function Login() {
 
     const setUserDefault = UserAuthStore((state:any) => state.setDefaults);
     const setRoleDefault = RoleAuthStore((state:any) => state.setDefaultRole);
-    const navigate = useNavigate();
 
     useEffect(() => {
         setUserDefault();
         setRoleDefault();
-        navigate("./")
     }, [])
 
     return (

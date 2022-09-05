@@ -17,27 +17,25 @@ const RequireRoleAuth = ( props:any ) => {
 
     const storedAuthRole = RoleAuthStore((state:any) => state.authRole as string);
     const location = useLocation();
-    const navigate = useNavigate();
 
     console.log("Role Auth working...", allowedRoles, storedAuthRole)
 
     return (
-        (allowedRoles.includes(storedAuthRole)) ? <Outlet/> : <Navigate to="/login" state={{from: location}} replace/>
+        (allowedRoles.includes(storedAuthRole)) ?
+            <Outlet/> : ( <Navigate to="/login" state={{from: location}} replace/> )
     )
 }
 
 const RequireUserAuth = () => {
 
-    const storedUserID = UserAuthStore.getState().userID; //((state:any) => state.userID as number);
+    const storedUserID = UserAuthStore.getState().userID;
     const location = useLocation();
 
     console.log("User Auth working...", storedUserID)
 
     return (
-        (storedUserID && storedUserID as number > 0) ?
-            <Outlet/> : (
-                <Navigate to="/login" state={{from: location}} replace/>
-            )
+        (storedUserID && storedUserID as string > '0') ?
+            <Outlet/> : ( <Navigate to="/login" state={{from: location}} replace/> )
     )
 }
 
