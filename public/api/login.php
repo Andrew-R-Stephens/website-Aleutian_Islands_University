@@ -22,26 +22,33 @@ switch($func) {
 function authorization($conn) {
     if(!(isset($_GET['email'], $_GET['pass']))) {
         echo "Incomplete request";
+        return;
     }
 
     $email = $_GET['email'];
     $pass = $_GET['pass'];
 
-
-    $stmt = $conn->prepare("SELECT id, firstName, lastName FROM Users WHERE (email='$email' AND pin='$pass');");
+    $stmt = $conn->prepare("CALL attemptAuth(?, ?)");
+    $stmt->bind_param("ss", $email, $pass);
     $stmt->execute();
 
-    $out_id = -1;
-    $out_fname = '';
-    $out_lname = '';
-    $stmt->bind_result($out_id, $out_fname, $out_lname);
 
-    $arr = [];
+    $out_uid = '-1';
+    $out_role = '0';
+    $out_priority = '0';
+    $stmt->bind_result($out_uid, $out_role, $out_priority);
+
+
+    $arr['uid'] = $out_uid;
+    $arr['role'] = $out_role;
+    $arr['priority'] = $out_priority;
+
     while ($stmt->fetch()) {
-        $arr['id'] = $out_id;
-        $arr['firstName'] = $out_fname;
-        $arr['lastName'] = $out_lname;
+        $arr['uid'] = $out_uid;
+        $arr['role'] = $out_role;
+        $arr['priority'] = $out_priority;
     }
+
     echo(json_encode($arr));
 
     mysqli_close($conn);

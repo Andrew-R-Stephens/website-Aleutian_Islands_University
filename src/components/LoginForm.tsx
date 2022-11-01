@@ -14,9 +14,8 @@ function LoginForm() {
 
     const [userID, setUserID] = useState('0');
     const [userRole, setUserRole] = useState('0');
-    const [email, setEmail] = useState('');//useState("asteph11@oldwestbury.edu");
-    const [pass, setPass] = useState('');//useState("burgers");
-    const [response, setResponse] = useState("");
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
 
     const navigate = useNavigate();
 
@@ -31,6 +30,7 @@ function LoginForm() {
     }
 
     function handleSubmit(event:any) {
+        //console.log("Input:", email, pass);
         axios.get(process.env['REACT_APP_API_AUTH'] as string, {
             params: {
                 func: "auth",
@@ -38,21 +38,20 @@ function LoginForm() {
                 pass
             }
         }).then(res => {
-            let {id, role} = res.data;
-            role = '1';
+            let {uid, role} = res.data;
 
-            if(id <= '0') {
+            setUserID(uid);
+            console.log("Response:",uid);
+
+            if(uid <= '0') {
                 alert("Invalid email/password combination.");
-                setUserID('');
-                setUserRole(AuthRole.Visitor)
+                setUserRole(AuthRole.Visitor);
                 setEmail("");
                 setPass("");
-                setResponse("-1");
             } else {
-                setUserID(id);
-                setUserStoreID(id);
-
                 setUserRole(role);
+
+                setUserStoreID(uid);
                 invalidateRole(role);
 
                 navigate("/u");
@@ -92,7 +91,7 @@ function LoginForm() {
                         </tbody>
                     </table>
                 </form>
-                <p color={'333333'}>{response === '-1' ? <em>Hint
+                <p color={'333333'}>{userID === '-1' ? <em>Hint
                     <br/><b>E:</b> asteph11@oldwestbury.edu
                     <br/><b>P:</b> burgers
                 </em> : ""}</p>
