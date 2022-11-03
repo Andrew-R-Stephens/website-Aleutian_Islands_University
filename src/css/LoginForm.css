@@ -9,6 +9,11 @@
     place-items: center;
 }
 
+.default form, .default table, .default tr, div>table {
+    background: transparent;
+    color: black;
+}
+
 .login form {
     text-align: center;
 }

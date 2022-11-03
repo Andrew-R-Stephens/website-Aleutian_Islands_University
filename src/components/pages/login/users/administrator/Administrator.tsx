@@ -22,7 +22,7 @@ function Administrator() {
                                names={[]}/>
                 <SideBanner
                     urls={["./../account", "./../profile", "./", "/login"]}
-                    names={["Account", "Profile", "Administrator", "Logout"]}
+                    names={["Account", "Profile", "Admin", "Logout"]}
                     classes={['item', 'item', 'item', 'item-last']}
                     roles={['inactive', 'inactive', 'active', 'inactive']} />
                 <div className = {'main-body'}>

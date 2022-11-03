@@ -1,9 +1,14 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import HomeNavBanner from "../../../../HomeNavBanner";
-import SideBanner from "../../../../SideBanner";
-import {UserAuthStore} from "../../../../../stores/AuthUserStore";
+import HomeNavBanner from "../../../HomeNavBanner";
+import SideBanner from "../../../SideBanner";
+import {UserAuthStore} from "../../../../stores/AuthUserStore";
 
+/**
+ * The public, outwards-facing data for a specific user.
+ * @param props
+ * @constructor
+ */
 function Profile(props:any) {
 
     const { sideBanner = <SideBanner/>} = props;
@@ -22,11 +27,7 @@ function Profile(props:any) {
             <div className={'main-container'}>
                 <HomeNavBanner urls={[]}
                                names={[]}/>
-                <SideBanner
-                    urls={["./../account", "./", "./../student", "/login"]}
-                    names={["Account", "Profile", "Student", "Logout"]}
-                    classes={['item', 'item', 'item', 'item-last']}
-                    roles={['inactive', 'active', 'inactive', 'inactive']}/>
+                {sideBanner}
                 <div className={'main'}>
                     <div className={'main-header'}>
                         <div className={'frame-outer'}>

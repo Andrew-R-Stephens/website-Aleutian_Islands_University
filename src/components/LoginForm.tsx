@@ -91,10 +91,25 @@ function LoginForm() {
                         </tbody>
                     </table>
                 </form>
-                <p color={'333333'}>{userID === '-1' ? <em>Hint
-                    <br/><b>E:</b> asteph11@oldwestbury.edu
-                    <br/><b>P:</b> burgers
-                </em> : ""}</p>
+                {userID === '-1' ?
+                    <table className = "default">
+                        <tbody>
+                            <tr>
+                                <td align={'center'} colSpan={3} style={{paddingBottom:10, fontSize: 24}}><label><b>Having trouble logging in?</b></label></td>
+                            </tr>
+                            <tr>
+                                <td align={'left'}><label><b>Email</b></label></td>
+                                <td align={'center'} style={{paddingRight: 16, paddingBottom: 8}}><label><b>:</b></label></td>
+                                <td align={'left'}>as****@aiuniversity.edu</td>
+                            </tr>
+                            <tr>
+                                <td align={'left'}><label><b>Password</b></label></td>
+                                <td align={'center'} style={{paddingRight: 16}}><label><b>:</b></label></td>
+                                <td align={'left'}>hoop***</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    : ""}
             </div>
         </Fragment>
     );

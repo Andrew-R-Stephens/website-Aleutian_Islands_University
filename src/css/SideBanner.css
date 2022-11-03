@@ -20,13 +20,33 @@
     user-select: none;
 }
 
-.sidenav a:hover {
+.sidenav button {
+    all:unset;
+    width:100%;
+    background: #292929;
+    padding: 8px;
+    text-decoration: none;
+    color: whitesmoke;
+    text-align: center;
+    font-size: 25px;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.sidenav a:hover, button:hover  {
     color: lightgray;
     background: #111111;
 }
 
 .item {
     margin-top: 2px;
+}
+
+.sidenav> .item-nested {
+    background: #406e8a;
+    margin-left: 8px;
+    margin-bottom: 16px;
 }
 
 .item-last {
