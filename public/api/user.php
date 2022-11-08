@@ -41,13 +41,13 @@ function getUserPersonalInformation($conn) {
     $out_birthdate = '';
     $out_addrNumber = '';
     $out_addrStreet = '';
-    $out_addCity = '';
-    $out_addState = '';
-    $out_addCountry = '';
-    $out_addZip = '';
+    $out_addrCity = '';
+    $out_addrState = '';
+    $out_addrCountry = '';
+    $out_addrZip = '';
     $stmt->bind_result(
         $out_uid, $out_ssn, $out_fname, $out_lname, $out_phoneNum, $out_gender, $out_honorific, $out_birthdate,
-        $out_addrNumber, $out_addrStreet, $out_addCity, $out_addState, $out_addCountry, $out_addZip
+        $out_addrNumber, $out_addrStreet, $out_addrCity, $out_addrState, $out_addrCountry, $out_addrZip
     );
 
     $arr['UID'] = '';
@@ -61,7 +61,7 @@ function getUserPersonalInformation($conn) {
     $arr['AddrHN'] = '';
     $arr['AddrStr'] = '';
     $arr['AddrCi'] = '';
-    $arr['AddSta']  = '';
+    $arr['AddrSta']  = '';
     $arr['AddrCo'] = '';
     $arr['AddrZip'] = '';
 
@@ -76,10 +76,10 @@ function getUserPersonalInformation($conn) {
         $arr['BDate'] = $out_birthdate;
         $arr['AddrHN'] = $out_addrNumber;
         $arr['AddrStr'] = $out_addrStreet;
-        $arr['AddrCi'] = $out_addCity;
-        $arr['AddSta'] = $out_addState;
-        $arr['AddrCo'] = $out_addCountry;
-        $arr['AddrZip'] = $out_addZip;
+        $arr['AddrCi'] = $out_addrCity;
+        $arr['AddrSta'] = $out_addrState;
+        $arr['AddrCo'] = $out_addrCountry;
+        $arr['AddrZip'] = $out_addrZip;
     }
 
     echo(json_encode($arr));

@@ -1,0 +1,24 @@
+.plain div>table {
+    background-color: ghostwhite;
+    padding: 10px;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+}
+
+.plain table {
+    background-color: transparent;
+    width: 100%;
+}
+.plain tr:nth-child(odd) {
+    background-color: transparent;
+}
+.plain tr:nth-child(even) {
+    background-color: transparent;
+}
+.plain tr:first-child {
+    background-color: transparent;
+}
+td {
+    border: none;
+}

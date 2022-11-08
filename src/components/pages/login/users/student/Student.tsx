@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import SideBanner from "../../../../SideBanner";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
 import StudentHistoryComparator from "../../../../StudentHistoryComparator";
+import DisplayAllCourses from "../../../../DisplayAllCourses";
 
 function Student() {
 
@@ -21,15 +22,15 @@ function Student() {
             <div className={'main-container'}>
                 <HomeNavBanner urls={[]}
                                names={[]}/>
-                <SideBanner
-                    urls={["./../account", "./../profile", "./", "/login"]}
-                    names={["Account", "Profile", "Student", "Logout"]}
-                    classes={['item', 'item', 'item', 'item-last']}
-                    roles={['inactive', 'inactive', 'active', 'inactive']} />
                 <div className = {'main-body'}>
+                    <SideBanner
+                        urls={["./../account", "./../profile", "./", "/login"]}
+                        names={["Account", "Profile", "Student", "Logout"]}
+                        classes={['item', 'item', 'item', 'item-last']}
+                        roles={['inactive', 'inactive', 'active', 'inactive']} />
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <StudentHistoryComparator/>
+                            <DisplayAllCourses/>
                         </div>
                     </div>
                 </div>

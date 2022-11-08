@@ -1,50 +1,79 @@
 
-div>table {
-    background-color: ghostwhite;
-    padding: 10px;
+div>.request-table {
+    background-color: #333333;
     border-radius: 5px;
     display: grid;
     place-items: center;
+    border-collapse: collapse;
 }
 
-table {
-    background-color: cornflowerblue;
+.request-table {
+    border:solid #333333 1px;
+    border-radius:10px;
     width: 100%;
 }
+
+tr {
+    max-height: 20px;
+    border: 1px solid #555555;
+}
+
 tr:nth-child(odd) {
-    background-color: lightskyblue;
+    background-color: #dddddd;
 }
 tr:nth-child(even) {
-    background-color: lightblue;
+    background-color: #cccccc;
 }
+
 th {
-    background-color: cornflowerblue;
+    white-space: nowrap;
+    background-color: #333333;
+    color: #eeeeee;
+    border: 2px solid #555555;
+    padding-right: 8px;
+    padding-left: 8px;
+    font-weight: bold;
 }
+
 td {
-    border: none;
+    font-size: 13px;
+    font-family: Verdana, serif;
+    border: 1px dotted #555666;
+    padding: 4px;
+    overflow-x: auto;
 }
 
-.plain div>table {
-    background-color: ghostwhite;
-    padding: 10px;
-    border-radius: 5px;
-    display: grid;
-    place-items: center;
+td > div {
+    background-color: transparent;
+    overflow-y: hidden;
+    height: 50px;
+    color: #333333;
 }
 
-.plain table {
-    background-color: transparent;
-    width: 100%;
+.pagination {
+    display: inline-block;
 }
-.plain tr:nth-child(odd) {
-    background-color: transparent;
+
+.pagination .page-button {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
 }
-.plain tr:nth-child(even) {
-    background-color: transparent;
+
+.pagination .page-button .active {
+    background-color: #4CAF50;
+    color: white;
 }
-.plain tr:first-child {
-    background-color: transparent;
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+.MuiTableSortLabel-root.MuiTableSortLabel-active,
+.MuiTableSortLabel-button{
+    color: #eeeeee !important;
 }
-.plain td {
-    border: none;
+
+.MuiButtonBase-root.MuiTableSortLabel-root:focus,
+.MuiButtonBase-root.MuiTableSortLabel-root:hover {
+    color: #aaaaaa !important;
 }

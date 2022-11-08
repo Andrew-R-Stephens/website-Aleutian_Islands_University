@@ -1,7 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import '../../../../css/DisplayInfo.css';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
 import '../../../../stores/user-store';
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 
@@ -23,14 +22,6 @@ function DisplayPersonalInfo(props:any) {
     const [addrSta, setAddState] = useState();
     const [addrCo, setAddCountry] = useState();
     const [addrZip, setZipCode] = useState();
-
-    const [sectionNum_about, setSectionNum_about] = useState(0);
-
-    enum Sections_About {
-        Overview=0,
-        Residence,
-        ContactInfo
-    }
 
     useEffect(() => {
         initUserData().then(() => console.log('Axios request succeeded.'));
@@ -69,38 +60,21 @@ function DisplayPersonalInfo(props:any) {
         })
     }
 
-    function updateSectionNum_about(index:number) {
-        console.log(index);
-        setSectionNum_about(Sections_About.Overview)
-    }
-
     return (
         <Fragment>
-            <div className={'display-info'}>
-                <div className={'cover'}>
-                    <div className={'profile-image'}></div>
-                    <div className={'nameplate-section'}>
-                        <div className={'nameplate'}>{firstName} {lastName}</div>
-                    </div>
-                </div>
-                <div className={'main-section'}>
-                    <div className={'options-left'}>
-                        <div className={'wrapper'}>
-                            <label className={'section-label'}>About</label>
-                            <button className={'default-button'} onClick={() => updateSectionNum_about(Sections_About.Overview)}><label className={'default-label'}>Overview</label></button>
-                            <button className={'default-button'} onClick={() => updateSectionNum_about(Sections_About.Residence)}><label className={'default-label'}>Residence</label></button>
-                            <button className={'default-button'} onClick={() => updateSectionNum_about(Sections_About.ContactInfo)}><label className={'default-label'}>Contact Info</label></button>
-                        </div>
-                    </div>
-                    <div className={'display-right'}>
-
-                    </div>
-                </div>
-
-
-            </div>
-        </Fragment>
-    );
+            <div className={'plain'}>
+            <table>
+                <tbody>
+                    <tr><td><b>Name:</b></td><td>{honorific} {firstName} {lastName}</td></tr>
+                    <tr><td><b>Gender:</b></td><td>{gender}</td></tr>
+                    <tr><td><b>Birthdate:</b></td><td>{birthdate}</td></tr>
+                    <tr><td><b>Address:</b></td><td>{addrHN} {addrStr}, {addrCi}, {addrSta}, {addrCo} {addrZip}</td></tr>
+                    <tr><td><b>Phone:</b></td><td>{phone}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </Fragment>
+                );
 }
 
 export default DisplayPersonalInfo;

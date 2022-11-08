@@ -16,6 +16,7 @@ import Faculty from "./login/users/faculty/Faculty";
 import Researcher from "./login/users/researcher/Researcher";
 import SideBanner from "../SideBanner";
 import UpdateAccount from "./login/users/UpdateAccount";
+import Academics from "./home/Academics";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -53,25 +54,25 @@ const DoRoleAuthRouting = () => {
         case AuthRole.Student: {
             console.log("Navigating to student");
             return (
-                <Navigate to="/u/student/account" state={{from: location}}/>
+                <Navigate to="/u/student/profile" state={{from: location}}/>
             )
         }
         case AuthRole.Faculty: {
             console.log("Navigating to faculty");
             return (
-                <Navigate to="/u/faculty/account" state={{from: location}}/>
+                <Navigate to="/u/faculty/profile" state={{from: location}}/>
             )
         }
         case AuthRole.Administrator: {
             console.log("Navigating to admin");
             return (
-                <Navigate to="/u/administrator/account" state={{from: location}}/>
+                <Navigate to="/u/administrator/profile" state={{from: location}}/>
             )
         }
         case AuthRole.Researcher: {
             console.log("Navigating to researcher");
             return (
-                <Navigate to="/u/researcher/account" state={{from: location}}/>
+                <Navigate to="/u/researcher/profile" state={{from: location}}/>
             )
         }
         default: {
@@ -91,6 +92,7 @@ function NavRoutes() {
                 <Routes>
                     <Route path={"/"} >
                         <Route index element={<Home/>}/>
+                        <Route path={"/academics"} element={<Academics/>} />
                         <Route path={"/about"} element={<About/>} />
                         <Route path={"/login"} element={<Login/>} />
                             <Route element={<RequireUserAuth/>}>

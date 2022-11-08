@@ -1,7 +1,8 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import HomeNavBanner from "../../../../HomeNavBanner";
-import {useNavigate} from "react-router-dom";
 import SideBanner from "../../../../SideBanner";
+import DisplayAllCourses from "../../../../DisplayAllCourses";
+import {useNavigate} from "react-router-dom";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
 
 function Administrator() {
@@ -20,15 +21,15 @@ function Administrator() {
             <div className={'main-container'}>
                 <HomeNavBanner urls={[]}
                                names={[]}/>
-                <SideBanner
-                    urls={["./../account", "./../profile", "./", "/login"]}
-                    names={["Account", "Profile", "Admin", "Logout"]}
-                    classes={['item', 'item', 'item', 'item-last']}
-                    roles={['inactive', 'inactive', 'active', 'inactive']} />
                 <div className = {'main-body'}>
+                    <SideBanner
+                        urls={["./../account", "./../profile", "./", "/login"]}
+                        names={["Account", "Profile", "Admin", "Logout"]}
+                        classes={['item', 'item', 'item', 'item-last']}
+                        roles={['inactive', 'inactive', 'active', 'inactive']} />
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <p>This is an Administrator page</p>
+                            <DisplayAllCourses/>
                         </div>
                     </div>
                 </div>

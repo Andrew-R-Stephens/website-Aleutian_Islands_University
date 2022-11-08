@@ -1,5 +1,4 @@
 div .main-container {
-    min-height: 80vh;
     height: 100%;
     padding: 0;
     text-align: center;
@@ -20,13 +19,14 @@ div .inner-header {
 div .main-body {
     text-align: center;
     display: flex;
+    min-height: 80vh;
 }
 
 div .inner-body {
     flex-grow: 1;
     position: relative;
     float: left;
-    padding: 2%;
+    /*padding: 2%;*/
 }
 
 div .inner-body-constraints {
@@ -50,7 +50,7 @@ div .inner-footer {
 }
 
 div .inner-footer-constraints {
-    margin: auto;
+    margin-left: 150px;
     max-width: 85%;
 }
 
@@ -60,7 +60,8 @@ div .inner-footer-constraints {
 }
 
 .center {
-    max-width: 1440px;
+    max-width: 100vw;
+    margin-left: 0;
 }
 
 .inner-footer:before {
@@ -85,5 +86,7 @@ div .inner-footer-constraints {
 img.logo {
     content: url("./../res/unilogo-map-gray-clean.svg");
     background-repeat: no-repeat;
-    width: 10vw;
+    min-width: 100px;
+    max-width: 250px;
+    display: block;
 }

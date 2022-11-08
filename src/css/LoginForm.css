@@ -9,9 +9,18 @@
     place-items: center;
 }
 
+fieldset {
+    border: 0;
+}
+
 .default form, .default table, .default tr, div>table {
     background: transparent;
     color: black;
+}
+
+.login .authError {
+    color:#ff0033;
+    font-size: 12px;
 }
 
 .login form {

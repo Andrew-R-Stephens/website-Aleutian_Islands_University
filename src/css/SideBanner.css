@@ -1,5 +1,6 @@
+
 .sidenav {
-    min-height: 85vh;
+    min-height: 100%;
     min-width: 150px;
     background-color: #333333;
     overflow-x: hidden;

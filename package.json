@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.12",
     "@react-buddy/ide-toolbox": "^2.2.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -14,6 +17,7 @@
     "axios": "^0.27.2",
     "ftp-deploy": "^2.4.2",
     "html-react-parser": "^3.0.4",
+    "material-ui-not-found": "^0.1.0",
     "mysql": "^2.18.1",
     "react": "^18.2.0",
     "react-collapsed": "^3.3.2",

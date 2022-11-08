@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import HomeNavBanner from "../../../HomeNavBanner";
 import SideBanner from "../../../SideBanner";
 import {UserAuthStore} from "../../../../stores/AuthUserStore";
+import DisplayPersonalInfo from "./DisplayPersonalInfo";
 
 /**
  * The public, outwards-facing data for a specific user.
@@ -27,18 +28,12 @@ function Profile(props:any) {
             <div className={'main-container'}>
                 <HomeNavBanner urls={[]}
                                names={[]}/>
-                {sideBanner}
                 <div className={'main'}>
-                    <div className={'main-header'}>
-                        <div className={'frame-outer'}>
-                            <iframe src="https://player.vimeo.com/video/659049579?h=ce8c0317ac&controls=0&title=0&byline=0&portrait=0&autoplay=1&loop=1&muted=1"
-                                    allow="autoplay; fullscreen; picture-in-picture;" ></iframe>
-                        </div>
-                    </div>
                     <div className={'main-body'}>
+                        {sideBanner}
                         <div className={'inner-body'}>
+                            <DisplayPersonalInfo uid={userID}/>
                             <div className={'inner-body-constraints'}>
-                                <p>Profile ID to display information for: {userID}</p>
                             </div>
                         </div>
                     </div>

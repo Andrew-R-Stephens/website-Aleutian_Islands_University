@@ -5,8 +5,8 @@ function ErrorPage() {
     return (
         <Fragment>
             <div className={'main-container'}>
-                <HomeNavBanner urls={["/", "/about", "/login"]}
-                               names={["Home", "About", "Login"]}/>
+                <HomeNavBanner urls={["/", "/academics", "/about", "/login"]}
+                               names={["Home", "Academics", "About", "Login"]}/>
 
                 <h3>Error 404: Page not found.</h3>
             </div>

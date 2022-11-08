@@ -16,8 +16,8 @@ function Login() {
     return (
         <Fragment>
             <div className={'main-container'}>
-                <HomeNavBanner urls={["/", "/about", "/login"]}
-                               names={["Home", "About", "Login"]}/>
+                <HomeNavBanner urls={["/", "/academics", "/about", "/login"]}
+                               names={["Home", "Academics", "About", "Login"]}/>
                 <div className={'main'}>
                     <div className={'main-header'}>
                     </div>

@@ -1,13 +1,8 @@
 import React, {Fragment} from 'react';
 import HomeNavBanner from "../../HomeNavBanner";
-import {QueryClient} from "react-query";
+import CourseCatalog from "../../CourseCatalog";
 
-
-const queryClient = new QueryClient();
-
-// const provider = StoreContextProvider;
-
-function About() {
+function Academics() {
     return (
         <Fragment>
             <div className={'main-container'}>
@@ -20,7 +15,7 @@ function About() {
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
                             <div>
-                                <p>This is the About page.</p>
+                                <CourseCatalog/>
                             </div>
                         </div>
                     </div>
@@ -30,4 +25,4 @@ function About() {
     );
 }
 
-export default About;
+export default Academics;
