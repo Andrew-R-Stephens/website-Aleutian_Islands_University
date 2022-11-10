@@ -3,14 +3,17 @@ import React from "react";
 class ProgramRequirements {
 
     PID: any;
-    programName: any;
-    totalCredits: any;
-    department: any;
-    school: any;
     groups: Group[];
 
-    constructor() {
+    constructor(data:any | null) {
         this.groups = [];
+        this.parseFullData(data);
+    }
+
+    parseFullData(data:any) {
+        data?.map((row: any, key: number) => {
+            this.parsetoGroup(row);
+        });
     }
 
     parsetoGroup(row:any) {
@@ -88,7 +91,7 @@ class Group {
 
     addCourse(course:any) {
         this.courses?.push(new Course(course));
-        console.log(this.courses);
+        //console.log(this.courses);
     }
 
     renderAdvancedCourses() {

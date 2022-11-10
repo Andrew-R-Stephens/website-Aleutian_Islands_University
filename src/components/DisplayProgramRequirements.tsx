@@ -2,51 +2,55 @@ import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
 import '../stores/user-store';
 import './../css/RequestTable.css';
-import {TablePagination, TableSortLabel} from "@mui/material";
-import ProgramReqs_1 from '../res/Program_1_ReqTest.json'
-import ProgramReqs_15 from '../res/Program_15_ReqTest.json'
 import ProgramRequirements from "./ProgramRequirements";
 
-function DisplayProgramRequirements() {
+function DisplayProgramRequirements(props:any) {
 
-    var data = ProgramReqs_15;
-    console.log(data);
-
-    const [programID, setProgramID] = useState(-1);
-
-    const[programRequirements, setProgramRequirements] = useState(new ProgramRequirements());
+    const [programID, setProgramID] = useState();
+    const [programRequirements, setProgramRequirements] = useState(new ProgramRequirements(null));
 
     useEffect(() => {
-
-    }, [])
-
-    useEffect(()=> {
-        var section = new ProgramRequirements();
-        parseData(section);
-        setProgramRequirements(section);
-        section.print();
-    }, [])
+        const {PID} = props;
+        setProgramID(PID);
+    }, [props])
 
     useEffect(()=> {
-        programRequirements.print();
+        const reqProgReq = () => requestProgramRequirements();
+        reqProgReq();
+    }, [programID])
+
+    useEffect(() => {
+        //programRequirements.print();
     }, [programRequirements])
 
-    function parseData(section: ProgramRequirements) {
-        data?.map((row: any, key: number) => {
-            section.parsetoGroup(row);
-        });
-        return ProgramRequirements;
+    async function requestProgramRequirements() {
+        console.log("attempting request");
+        await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
+            params: {
+                func: "getProgramRequirements",
+                id : programID
+            }
+        }).then(res => {
+            const {error, data} = res.data;
+            if(data) {
+                const programData = new ProgramRequirements(data);
+                setProgramRequirements(programData);
+            } else {
+                console.log("Error:", error);
+            }
+        }).catch(function(err) {
+            console.log(err.message);
+        })
     }
 
-    function renderParsedAdvanced():any {
+    function renderRequirements():any {
         return programRequirements.renderAdvanced();
     }
 
     return (
         <Fragment>
-            <h1>Display of Accounting Program</h1>
             <div style={{ width: "50vw", marginLeft: "auto", marginRight: "auto"}}>
-                {renderParsedAdvanced()}
+                {renderRequirements()}
             </div>
         </Fragment>);
 
