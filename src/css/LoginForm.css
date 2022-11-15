@@ -38,3 +38,12 @@ fieldset {
 .inputText {
     text-align: center;
 }
+
+.clickable-text {
+    cursor:pointer;
+    color:#222222;
+}
+
+.clickable-text:hover {
+    color:#aaaaaa;
+}

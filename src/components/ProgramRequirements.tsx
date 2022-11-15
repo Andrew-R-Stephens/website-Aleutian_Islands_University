@@ -12,11 +12,11 @@ class ProgramRequirements {
 
     parseFullData(data:any) {
         data?.map((row: any, key: number) => {
-            this.parsetoGroup(row);
+            this.parseToGroup(row);
         });
     }
 
-    parsetoGroup(row:any) {
+    parseToGroup(row:any) {
         if(this.groups.length === 0){
             this.PID = row.PID;
             this.groups.push(new Group(row));
@@ -60,7 +60,7 @@ class ProgramRequirements {
                         <div><label><b>Courses</b></label></div>
                         {
                             <div style={{marginLeft: "auto", marginRight: "auto"}}>
-                                {group.renderAdvancedCourses()}
+                                {group.renderCourses()}
                             </div>
                         }
                     </div>
@@ -79,25 +79,29 @@ class Group {
     courses: Course[];
 
     constructor(group:any) {
-        const {GroupID, GName, Priority, MinCredits, MinCourses, CourseID, MinGrade} = group;
+        const {GroupID, GName, Priority, MinCredits, MinCourses} = group;
         this.GID = GroupID;
         this.gName = GName;
         this.priority = Priority;
         this.minCredits = MinCredits;
         this.minCourses = MinCourses;
         this.courses = [];
-        this.addCourse({CourseID, MinGrade});
+        this.addCourse(group);
     }
 
     addCourse(course:any) {
         this.courses?.push(new Course(course));
-        //console.log(this.courses);
     }
 
-    renderAdvancedCourses() {
+    renderCourses() {
         return (<ul  style={{display: "inline-block", marginLeft: "auto", marginRight: "auto"}}>{
                 this.courses?.map((course: Course, key: number) => (
-                    <li key={key}><span style={{display: "flex"}}>{course.CID}&nbsp;<sup style={{fontSize:11}}>({course.courseCredits}cr)</sup>&nbsp;{!course.minGrade ? "" : <label>: <b>{course.minGrade}</b></label>}</span></li>
+                    <li key={key}>
+                        <span style={{display: "flex"}}>{course.CID}&nbsp;
+                            <sup style={{fontSize:11}}>({course.courseCredits}cr)</sup>&nbsp;{!course.minGrade ? "" :
+                                <label>: <b>{course.minGrade}</b></label>}
+                            </span>
+                    </li>
                 ))
             }</ul>
         )

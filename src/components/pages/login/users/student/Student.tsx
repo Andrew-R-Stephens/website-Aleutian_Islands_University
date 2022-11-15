@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import SideBanner from "../../../../SideBanner";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
 import StudentHistoryComparator from "../../../../StudentHistoryComparator";
-import DisplayAllCourses from "../../../../DisplayAllCourses";
+import CatalogDisplayCourses from "../../../../CatalogDisplayCourses";
 
 function Student() {
 
@@ -30,7 +30,7 @@ function Student() {
                         roles={['inactive', 'inactive', 'active', 'inactive']} />
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <DisplayAllCourses/>
+                            <CatalogDisplayCourses/>
                         </div>
                     </div>
                 </div>

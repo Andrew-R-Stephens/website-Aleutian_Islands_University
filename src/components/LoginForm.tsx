@@ -88,8 +88,8 @@ function LoginForm() {
         <Fragment>
             <div>
                 <form onSubmit={event => handleSubmit(event)}>
-                    <fieldset disabled={failedAttemptCount >= 5}>
-                        <table className = "login">
+                    <fieldset disabled={failedAttemptCount >= 5} className = "login">
+                        <table>
                             <tbody>
                                  <tr>
                                     <td colSpan={2}>
@@ -116,9 +116,19 @@ function LoginForm() {
                                                onChange={handlePassChange}/>
                                     </td>
                                 </tr>
-                                <tr className={'submit'}><td colSpan={2}><input type={"submit"} value={"Login"}/></td></tr>
+                                <tr className={'submit'}>
+                                    <td colSpan={2}></td>
+                                </tr>
                             </tbody>
                         </table>
+                        <div className={'submit'} style={{display:"inline-block", width:"100%", marginRight:"auto", marginLeft:"auto"}}>
+                            <div style={{marginRight:"auto", marginLeft:"auto"}}>
+                                <input type={"submit"} value={"Login"}/>
+                            </div>
+                            <div style={{fontSize:13, marginTop:32, float:"right"}}>
+                                <label className={'clickable-text'}>Can't sign in?</label>
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>

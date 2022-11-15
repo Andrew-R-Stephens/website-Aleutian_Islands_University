@@ -1,0 +1,51 @@
+[
+	{
+		"ProgramTypeID" : "B.A.",
+		"Name" : "Bachelor of Arts",
+		"ProgramLevel" : "Major",
+		"ClassType" : "Undergraduate",
+		"ClassLevel" : "Bachelors"
+	},
+	{
+		"ProgramTypeID" : "B.S.",
+		"Name" : "Bachelor of Science",
+		"ProgramLevel" : "Major",
+		"ClassType" : "Undergraduate",
+		"ClassLevel" : "Bachelors"
+	},
+	{
+		"ProgramTypeID" : "Ph.D.",
+		"Name" : "Doctor of Philosophy",
+		"ProgramLevel" : "Major",
+		"ClassType" : "Graduate",
+		"ClassLevel" : "Doctorate"
+	},
+	{
+		"ProgramTypeID" : "M.A.",
+		"Name" : "Master of Arts",
+		"ProgramLevel" : "Major",
+		"ClassType" : "Graduate",
+		"ClassLevel" : "Masters"
+	},
+	{
+		"ProgramTypeID" : "M.A.T.",
+		"Name" : "Master of Arts in Teaching",
+		"ProgramLevel" : "Major",
+		"ClassType" : "Graduate",
+		"ClassLevel" : "Masters"
+	},
+	{
+		"ProgramTypeID" : "M.S.",
+		"Name" : "Master of Science",
+		"ProgramLevel" : "Major",
+		"ClassType" : "Graduate",
+		"ClassLevel" : "Masters"
+	},
+	{
+		"ProgramTypeID" : "Minor",
+		"Name" : "Minor",
+		"ProgramLevel" : "Minor",
+		"ClassType" : "Undergraduate",
+		"ClassLevel" : "Minor"
+	}
+]

@@ -1,9 +1,9 @@
 import React from "react";
-import {red} from "@mui/material/colors";
 
 class ProgramDetails {
 
     name: any;
+    description: any;
     totalCredits: any;
     programType: any;
     departments: any[];
@@ -17,10 +17,11 @@ class ProgramDetails {
 
     parseFullData(data:any) {
         data?.map((row: any, key: number) => {
-            const { ProgramName, ProgramTypeID, MinCredits, DepartmentID, SchoolID } = row;
+            const { ProgramName, ProgramTypeID, Description, MinCredits, DepartmentID, SchoolID } = row;
             this.name = ProgramName;
             this.totalCredits = MinCredits;
             this.programType = ProgramTypeID;
+            this.description = Description;
             if (!this.departments.includes(DepartmentID)) {
                 this.departments.push(DepartmentID);
             }
@@ -39,12 +40,15 @@ class ProgramDetails {
 
     renderAdvanced():any {
         return (
-            <div>
-                <div>
-                    <h1>{this.name}, ({this.programType})</h1>
+            <div style={{}}>
+                <div style={{marginTop:32, width:"100%"}}>
+                    <label style={{fontWeight:"bold", fontSize:40}}>{this.name}, ({this.programType})</label>
                 </div>
-                <div style={{marginLeft:"auto", marginRight:"auto", padding: 16, minWidth: 200, maxWidth: 500}}>
+                <div style={{marginLeft:"auto", marginRight:"auto", padding: 16, minWidth: 200, maxWidth: 700}}>
                     <div style={{textAlign:"left"}}>
+                        <div style={{marginBottom:8}}>
+                            <p style={{textAlign:"left", fontSize: 14}}>{this.description}</p>
+                        </div>
                         <div style={{marginBottom:8}}>
                             <label style={{textAlign:"left", fontWeight: "bold", fontSize: 16}}>Total Credits: </label>
                             <label style={{textAlign:"left", fontWeight: "normal"}}>{this.totalCredits}</label>
@@ -64,7 +68,7 @@ class ProgramDetails {
                         <div style={{marginBottom:8}}>
                             <label style={{fontSize:18, fontWeight: "bold"}}>Schools</label>
                             {this.schools?.map((school: any, key: number) => (
-                                <div style={{marginBottom:2}}>
+                                <div key={key} style={{marginBottom:2}}>
                                     <div style={{textAlign: "left", marginLeft: 16}}>
                                         <div style={{display: "flex"}}>
                                             <label style={{fontSize: 14}}>{school}</label>

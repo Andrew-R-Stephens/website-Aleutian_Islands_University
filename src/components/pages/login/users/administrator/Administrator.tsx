@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import HomeNavBanner from "../../../../HomeNavBanner";
 import SideBanner from "../../../../SideBanner";
-import DisplayAllCourses from "../../../../DisplayAllCourses";
+import CatalogDisplayCourses from "../../../../CatalogDisplayCourses";
 import {useNavigate} from "react-router-dom";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
 
@@ -29,7 +29,7 @@ function Administrator() {
                         roles={['inactive', 'inactive', 'active', 'inactive']} />
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <DisplayAllCourses/>
+                            <CatalogDisplayCourses/>
                         </div>
                     </div>
                 </div>

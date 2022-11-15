@@ -1,0 +1,6 @@
+.img-arrow-select-right {
+    content:url("./../res/icon-arrow-right.svg");
+    background-color: transparent;
+    height: 25px;
+    aspect-ratio: 1/1;
+}

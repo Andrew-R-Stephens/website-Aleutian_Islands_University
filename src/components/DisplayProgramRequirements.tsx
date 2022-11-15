@@ -20,7 +20,7 @@ function DisplayProgramRequirements(props:any) {
     }, [programID])
 
     useEffect(() => {
-        //programRequirements.print();
+        programRequirements.print();
     }, [programRequirements])
 
     async function requestProgramRequirements() {

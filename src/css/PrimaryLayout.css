@@ -26,7 +26,7 @@ div .inner-body {
     flex-grow: 1;
     position: relative;
     float: left;
-    /*padding: 2%;*/
+    padding-bottom: 50px;
 }
 
 div .inner-body-constraints {

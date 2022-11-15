@@ -2,9 +2,9 @@ import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
 import '../stores/user-store';
 import './../css/RequestTable.css';
-import {TablePagination, TableSortLabel} from "@mui/material";
+import {TablePagination} from "@mui/material";
 
-function DisplayAllCourses() {
+function CatalogDisplayCourses() {
 
     const [courses, setCourses] = useState([]);
     const [courseCount, setCourseCount] = useState(0);
@@ -17,28 +17,14 @@ function DisplayAllCourses() {
     const [searchInput, setSearchInput] = useState("");
 
     useEffect(() => {
-        const getCourses = () => requestAllCourses();
+        const getCourses = () => requestSearchAllCourses();
         getCourses();
     }, [pageNumber, maxResults]);
 
-    function requestCourseCount() {
+    function requestSearchAllCourses() {
         axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getCourseCount"
-            }
-        }).then(res => {
-            let {error, count} = res.data;
-            setCourseCount(parseInt(count?count:0))
-            console.log(count);
-        }).catch(function(err) {
-            console.log(err.message);
-        })
-    }
-
-    function requestAllCourses() {
-        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
-            params: {
-                func: "getAllCourses",
+                func: "searchAllCourses",
                 pageNum: pageNumber,
                 maxResults: maxResults,
                 searchInput: searchInput
@@ -154,10 +140,19 @@ function DisplayAllCourses() {
         setSearchInput(event.target.value);
     }
 
+    const handleSearchCommit = (event:any) => {
+        if(event.key === 'Enter'){
+            event.preventDefault();
+            commitSearch();
+        }
+    }
+
     function commitSearch() {
-        const doSearch = () => requestAllCourses();
-        doSearch();
-        setPageNumber(0);
+        if(searchInput.length > 0) {
+            const doSearch = () => requestSearchAllCourses();
+            doSearch();
+            setPageNumber(0);
+        }
     }
 
     return (
@@ -165,8 +160,12 @@ function DisplayAllCourses() {
             <div>
                 <form>
                     <div style={{marginTop: 50}}>
-                        <input style={{marginRight: 16, marginBottom: 16}} type={"search"} autoComplete={'on'}
-                               value={searchInput} onChange={handleSearchChange}/>
+                        <input style={{marginRight: 16, marginBottom: 16}}
+                               type={"search"}
+                               autoComplete={'on'}
+                               value={searchInput}
+                               onChange={handleSearchChange}
+                               onKeyDown={handleSearchCommit}/>
                         <button onClick={commitSearch}><label>Search</label></button>
                     </div>
                 </form>
@@ -196,4 +195,4 @@ function DisplayAllCourses() {
     );
 }
 
-export default DisplayAllCourses;
+export default CatalogDisplayCourses;

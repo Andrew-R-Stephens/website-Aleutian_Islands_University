@@ -52,7 +52,7 @@ function DisplayProgramDetails(props:any) {
 
     return (
         <Fragment>
-            <div style={{ width: "50vw", marginLeft: "auto", marginRight: "auto"}}>
+            <div style={{marginLeft: "auto", marginRight: "auto"}}>
                 {renderDetails()}
             </div>
         </Fragment>);
