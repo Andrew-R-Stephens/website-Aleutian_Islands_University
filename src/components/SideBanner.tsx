@@ -5,7 +5,7 @@ import '../css/SideBanner.css'
 
 function SideBanner(props:any) {
 
-    const { urls = [""], names = [""], classes = [""], roles = [""], navType = [""]} = props;
+    const { urls = [""], names = [""], classes = [""], roles = [""]} = props;
 
     const listItems = urls.map((elem:any, index:number) =>
         {

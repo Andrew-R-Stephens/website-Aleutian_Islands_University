@@ -29,7 +29,6 @@ function CourseCatalog() {
         }
     }
 
-
     return (
         <Fragment>
             <div>

@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {Navigate, Outlet, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import React, {Fragment, useEffect, useState} from 'react';
+import {Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Home from "./home/Home";
 import Student from "./login/users/student/Student";
 import About from "./home/About";
@@ -17,6 +17,10 @@ import Researcher from "./login/users/researcher/Researcher";
 import SideBanner from "../SideBanner";
 import UpdateAccount from "./login/users/UpdateAccount";
 import Academics from "./home/Academics";
+import RequestTable from "../RequestTable";
+import HideBar from "../HideBar";
+import HomeNavBanner from "../HomeNavBanner";
+import DisplayAccountInfo from "./login/users/DisplayAccountInfo";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -84,6 +88,35 @@ const DoRoleAuthRouting = () => {
     }
 }
 
+export function AdministratorDashboard() {
+
+    const [pages, setPages] = useState<any[]>([]);
+
+    useEffect(() => {
+        const tempPages = [];
+        tempPages.push({url: "./../profile", name:"NA"})
+        setPages(tempPages);
+    }, [])
+
+    function display() {
+        return <div>
+            {pages.map((elem: any, index: number) => (
+                <Link to={elem.url}>
+                    {elem.name}
+                </Link>
+            ))}
+        </div>;
+    }
+
+    return (
+        <Fragment>
+            <div className="sidenav">
+                {display()}
+            </div>
+        </Fragment>
+    );
+}
+
 function NavRoutes() {
 
     return (
@@ -100,7 +133,7 @@ function NavRoutes() {
                                 <Route index element={<DoRoleAuthRouting/>}/>
                             </Route>
                         </Route>
-                        <Route path={"u"} >
+                        <Route path={"u"}>
                             <Route path={"student"} element={<RequireRoleAuth allowedRoles={[AuthRole.Student]}/>} >
                                 <Route path={"account"} element={<Account sideBanner={<SideBanner urls={["./", "./../profile", "./../student", "/login"]}
                                                                                              names={["Account", "Profile", "Student", "Logout"]}
@@ -124,7 +157,13 @@ function NavRoutes() {
                                 <Route path={"faculty"} element={<Faculty/>} />
                             </Route>
                             <Route path={"administrator"} element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>} >
-                                <Route path={"account"} element={<Account sideBanner={<SideBanner urls={["./", "./../profile", "./../administrator", "/login"]}
+                                <Route path={"account"} element={<Account dashboard={<AdministratorDashboard/>}/>} />
+                                <Route path={"profile"} element={<Profile sideBanner={<SideBanner urls={["./../account", "./profile", "./../administrator", "/login"]}
+                                                                                                  names={["Account", "Profile", "Admin", "Logout"]}
+                                                                                                  classes={['item', 'item', 'item', 'item-last']}
+                                                                                                  roles={['inactive', 'active', 'inactive', 'inactive']}/>}/>} />
+                                <Route path={"administrator"} element={<Administrator/>} />
+                                {/*<Route path={"account"} element={<Account sideBanner={<SideBanner urls={["./", "./../profile", "./../administrator", "/login"]}
                                                                                                   names={["Account", "Profile", "Admin", "Logout"]}
                                                                                                   classes={['item', 'item', 'item', 'item-last']}
                                                                                                   roles={['active', 'inactive', 'inactive', 'inactive']}/>}/>} />
@@ -132,7 +171,7 @@ function NavRoutes() {
                                                                                                 names={["Account", "Profile", "Admin", "Logout"]}
                                                                                                 classes={['item', 'item', 'item', 'item-last']}
                                                                                                 roles={['inactive', 'active', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"administrator"} element={<Administrator/>} />
+                                <Route path={"administrator"} element={<Administrator/>} />*/}
                             </Route>
                             <Route path={"researcher"} element={<RequireRoleAuth allowedRoles={[AuthRole.Researcher]}/>} >
                                 <Route path={"account"} element={<Account sideBanner={<SideBanner urls={["./", "./../profile", "./../researcher", "/login"]}
