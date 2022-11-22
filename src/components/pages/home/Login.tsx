@@ -5,6 +5,7 @@ import {RoleAuthStore, UserAuthStore} from "../../../stores/AuthUserStore";
 
 function Login() {
 
+    window.sessionStorage.removeItem("lastPage");
     const setUserDefault = UserAuthStore((state:any) => state.setDefaults);
     const setRoleDefault = RoleAuthStore((state:any) => state.setDefaultRole);
 

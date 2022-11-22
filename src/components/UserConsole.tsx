@@ -1,0 +1,164 @@
+import React, {Fragment, useEffect, useRef, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import HomeNavBanner from "./HomeNavBanner";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
+
+function UserConsole(props:any) {
+
+    const {child} = props
+
+    const lastPage = window.sessionStorage.getItem("lastPage") as any as number;
+
+    const storedAuthRole = RoleAuthStore((state:any) => state.authRole as string);
+    const role = useRef(storedAuthRole);
+    const [page, setPage] = useState<number>(lastPage ? lastPage : 0);
+    const [childPage, setChildPage] = useState<number|undefined>(-1);
+
+    const navigate = useNavigate();
+
+    const handleSelectLink = (event:any, page:number, link:string, cPage:number = -1) => {
+        event.preventDefault();
+        setPage(page);
+        setChildPage(cPage);
+        window.sessionStorage.setItem("lastPage", page as any);
+        navigate(link);
+    }
+
+    function generateByRole() {
+        switch (role.current) {
+            case AuthRole.Administrator: {
+                return administratorRoutes();
+            }
+            case AuthRole.Faculty: {
+                return facultyRoutes();
+            }
+            case AuthRole.Student: {
+                return studentRoutes();
+            }
+            case AuthRole.Researcher: {
+                return researcherRoutes();
+            }
+        }
+    }
+
+    function administratorRoutes() {
+        return (
+            <div>
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,0, './../profile')}
+                     role={page===0?'active':'inactive'}>Profile</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,1, './../account')}
+                     role={page===1?'active':'inactive'}>Account</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,2, './../console')}
+                     role={page===2?'active':'inactive'}>Admin</div>
+                <div className={'navLink-children'} id={page==2?'active':'inactive'}>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLink(event,2, './../manage-master',20)}
+                         role={childPage===20?'active':'inactive'}>Manage Master Schedule</div>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLink(event,2, './../manage-catalog',21)}
+                         role={childPage===21?'active':'inactive'}>Course Catalog</div>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLink(event,2, './../manage-users',22)}
+                         role={childPage===22?'active':'inactive'}>Manage Users</div>
+                </div>
+                <div className={'navLink item-last'} onClick={(event:any) =>
+                    handleSelectLink(event,3, '/login')}
+                     role={page===3?'active':'inactive'}>Logout</div>
+            </div>
+        );
+    }
+
+    function facultyRoutes() {
+        return (
+            <div>
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,0, './../profile')}
+                     role={page==0?'active':'inactive'}>Profile</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,1, './../account')}
+                     role={page==1?'active':'inactive'}>Account</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,2, './../console')}
+                     role={page==2?'active':'inactive'}>Faculty</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,3, '/login')}
+                     role={page==3?'active':'inactive'}>Logout</div>
+            </div>
+        );
+    }
+
+    function studentRoutes() {
+        return (
+            <div>
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,0, './../profile')}
+                     role={page==0?'active':'inactive'}>Profile</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,1, './../account')}
+                     role={page==1?'active':'inactive'}>Account</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,2, './../console')}
+                     role={page==2?'active':'inactive'}>Student</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,3, '/login')}
+                     role={page==3?'active':'inactive'}>Logout</div>
+            </div>
+        );
+    }
+
+    function researcherRoutes() {
+        return (
+            <div>
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,0, './../profile')}
+                     role={page==0?'active':'inactive'}>Profile</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,1, './../account')}
+                     role={page==1?'active':'inactive'}>Account</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,2, './../console')}
+                     role={page==2?'active':'inactive'}>Researcher</div>
+
+                <div className={'navLink'} onClick={(event:any) =>
+                    handleSelectLink(event,3, '/login')}
+                     role={page==3?'active':'inactive'}>Logout</div>
+            </div>
+        );
+    }
+
+    return (
+        <Fragment>
+            <div className={'main'}>
+                <div className={'main-header'}>
+                    <HomeNavBanner urls={[]} names={[]}/>
+                </div>
+                <div className={'main-body'}>
+                    <div className={'sidenav'}>
+                        {generateByRole()}
+                    </div>
+                    <div className={'inner-body'}>
+                        { child }
+                    </div>
+                </div>
+            </div>
+        </Fragment>
+    );
+
+
+
+}
+
+export default UserConsole;

@@ -2,6 +2,7 @@
 .sidenav {
     min-height: 100%;
     min-width: 150px;
+    width: 150px;
     background-color: #333333;
     overflow-x: hidden;
     padding-top: 8px;
@@ -9,7 +10,7 @@
     z-index: 0;
 }
 
-.sidenav a {
+.navLink {
     background: #292929;
     padding: 8px;
     text-decoration: none;
@@ -17,27 +18,73 @@
     text-align: center;
     font-size: 25px;
     display: block;
+    position: relative;
     -webkit-user-drag: none;
     user-select: none;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #333333;
+    border-top: 1px;
+    z-index: 1;
 }
 
-.sidenav button {
-    all:unset;
-    width:100%;
-    background: #292929;
-    padding: 8px;
-    text-decoration: none;
-    color: whitesmoke;
-    text-align: center;
-    font-size: 25px;
-    display: block;
-    -webkit-user-drag: none;
-    user-select: none;
-}
-
-.sidenav a:hover, button:hover  {
+.sidenav .navLink:hover, a:hover, .navLink:hover  {
     color: lightgray;
     background: #111111;
+}
+
+.navLink > .navLink-children {
+    background: #151515;
+    padding: 4px;
+    text-decoration: none;
+    color: whitesmoke;
+    text-align: center;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.navLink-children {
+    visibility: hidden;
+    text-decoration: none;
+    color: whitesmoke;
+    text-align: center;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.navLink-child {
+    z-index: 0;
+    background: #3d3d3d;
+    color: #eeeeee;
+    margin-bottom: 1px;
+    padding: 4px;
+}
+
+#inactive {
+    visibility: collapse;
+    height: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+#active {
+    z-index: 10;
+    transition: visibility 0s linear 0.2s, opacity 0.2s ease-in-out;
+    visibility: visible;
+    transition-delay: 0s;
+    opacity: 1;
+    animation: fly-in .3s ease-out;
+}
+
+@keyframes fly-in {
+    0%   {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
 }
 
 .item {
@@ -60,10 +107,12 @@
 
 [role=active] {
     border-right: 5px lightskyblue solid;
+    background-color: #19262d;
     pointer-events: none;
 }
 
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+    .navLink {font-size: 18px;}
 }

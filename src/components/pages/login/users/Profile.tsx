@@ -25,17 +25,11 @@ function Profile(props:any) {
 
     return (
         <Fragment>
-            <div className={'main-container'}>
-                <HomeNavBanner urls={[]}
-                               names={[]}/>
-                <div className={'main'}>
-                    <div className={'main-body'}>
-                        {sideBanner}
-                        <div className={'inner-body'}>
-                            <DisplayPersonalInfo uid={userID}/>
-                            <div className={'inner-body-constraints'}>
-                            </div>
-                        </div>
+            <div className={'main-body'}>
+                {/*{sideBanner}*/}
+                <div className={'inner-body'}>
+                    <DisplayPersonalInfo uid={userID}/>
+                    <div className={'inner-body-constraints'}>
                     </div>
                 </div>
             </div>

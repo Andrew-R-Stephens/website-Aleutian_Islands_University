@@ -4,7 +4,7 @@ import '../stores/user-store';
 import './../css/RequestTable.css';
 import {TablePagination} from "@mui/material";
 
-function CatalogDisplayCourses() {
+function CatalogDisplayCourses(props:any) {
 
     const [courses, setCourses] = useState([]);
     const [courseCount, setCourseCount] = useState(0);

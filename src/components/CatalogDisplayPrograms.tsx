@@ -2,10 +2,9 @@ import React, {Fragment, useEffect, useRef, useState} from 'react';
 import '../stores/user-store';
 import "./../css/CourseCatalog.css"
 import axios from "axios";
-import CatalogDisplayCourses from "./CatalogDisplayCourses";
 import DisplayProgram from "./DisplayProgram";
 
-function CatalogDisplayPrograms() {
+function CatalogDisplayPrograms(props:any) {
 
     enum ProgramsPages {
         MainMenu = 0,
@@ -29,9 +28,6 @@ function CatalogDisplayPrograms() {
     let previousProgramType = "";
 
     useEffect(() => {
-    }, [])
-
-    useEffect(() => {
         console.log("Rendering selected programs")
     }, [selectedPrograms])
 
@@ -48,19 +44,6 @@ function CatalogDisplayPrograms() {
 
         filterSelectedPrograms();
     }, [])
-
-    const BackButtonListener = ({children}:any) => {
-        const [pressed, setPressed] = React.useState(false)
-        React.useEffect(() => {
-            window.onpopstate = () => {
-                setPressed(true)
-            }
-        })
-        return (
-            console.log("Back pressed")
-        );
-    }
-
 
     async function requestAllProgramTypes() {
         await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
@@ -236,8 +219,12 @@ function CatalogDisplayPrograms() {
         }
     }
 
+    function goToMainMenu() {
+        setProgramsPage(ProgramsPages.MainMenu);
+    }
+
     function renderProgramDetails() {
-        return <DisplayProgram PID={programID}/>
+        return <DisplayProgram PID={programID} onBackPressedHandler={goToMainMenu}/>
     }
 
     function renderFilterPage() {
@@ -255,7 +242,7 @@ function CatalogDisplayPrograms() {
                                 float: "left",
                                 width: "500"
                             }}>Program Type</label></div>
-                            <select name={"programTypes"} id={"programTypes"} onChange={handleSelectProgramType}>
+                            <select name={"programTypes"} id={"programTypes"} onChange={handleSelectProgramType} defaultValue={selectedProgramType}>
                                 <option key={'-1'} value={""}>-Any-</option>
                                 {
                                     programTypes.map((item: any, key: any) => (
@@ -273,7 +260,7 @@ function CatalogDisplayPrograms() {
                                 float: "left",
                                 width: "500"
                             }}>School</label></div>
-                            <select name={"schools"} id={"schools"} onChange={handleSelectSchool}>
+                            <select name={"schools"} id={"schools"} onChange={handleSelectSchool} defaultValue={selectedSchool}>
                                 <option key={'-1'} value={""}>-Any-</option>
                                 {
                                     schools.map((item: any, key: any) => (
@@ -291,7 +278,7 @@ function CatalogDisplayPrograms() {
                                 float: "left",
                                 width: "500"
                             }}>Department</label></div>
-                            <select name={"departments"} id={"departments"} onChange={handleSelectDepartment}>
+                            <select name={"departments"} id={"departments"} onChange={handleSelectDepartment} defaultValue={selectedDepartment}>
                                 <option key={'-1'} value={""}>-Any-</option>
                                 {
                                     departments.map((item: any, key: any) => (

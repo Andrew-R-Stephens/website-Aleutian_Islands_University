@@ -4,6 +4,7 @@ import SideBanner from "../../../../SideBanner";
 import CatalogDisplayCourses from "../../../../CatalogDisplayCourses";
 import {useNavigate} from "react-router-dom";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
+import AdminConsoleHome from "./page-home/AdminConsoleHome";
 
 function Administrator() {
 
@@ -12,24 +13,13 @@ function Administrator() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-
-    }, []);
-
     return (
         <Fragment>
             <div className={'main-container'}>
-                <HomeNavBanner urls={[]}
-                               names={[]}/>
-                <div className = {'main-body'}>
-                    <SideBanner
-                        urls={["./../account", "./../profile", "./", "/login"]}
-                        names={["Account", "Profile", "Admin", "Logout"]}
-                        classes={['item', 'item', 'item', 'item-last']}
-                        roles={['inactive', 'inactive', 'active', 'inactive']} />
+                <div className={'main-body'}>
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <CatalogDisplayCourses/>
+                            <AdminConsoleHome/>
                         </div>
                     </div>
                 </div>

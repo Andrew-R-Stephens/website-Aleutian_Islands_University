@@ -3,13 +3,15 @@ div .main-container {
     padding: 0;
     text-align: center;
     background-color: #eeeeee;
+    width: 100%;
 }
 
 .main {
+    width: 100%;
 }
 
 div .main-header {
-    margin: 0;
+    margin: auto;
 }
 
 div .inner-header {

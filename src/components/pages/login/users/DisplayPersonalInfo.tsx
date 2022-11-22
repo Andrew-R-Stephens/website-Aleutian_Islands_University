@@ -10,7 +10,9 @@ function DisplayPersonalInfo(props:any) {
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const roleStoreID = RoleAuthStore((state:any) => state.authRole);
 
-    const [userID, setID] = useState(userStoreID);
+    const {externalUID} = props;
+
+    const [userID, setID] = useState(externalUID?externalUID:userStoreID);
     const [firstName, setFName] = useState();
     const [lastName, setLName] = useState();
     const [phone, setPhoneNum] = useState();

@@ -13,14 +13,16 @@ function About() {
             <div className={'main-container'}>
                 <HomeNavBanner urls={["/", "/academics", "/about", "/login"]}
                                names={["Home", "Academics", "About", "Login"]}/>
-                <div className={'main-header'}>
+                <div className={'main'}>
+                    <div className={'main-header'}>
 
-                </div>
-                <div className={'main-body'}>
-                    <div className={'inner-body'}>
-                        <div className={'inner-body-constraints'}>
-                            <div>
-                                <p>This is the About page.</p>
+                    </div>
+                    <div className={'main-body'}>
+                        <div className={'inner-body'}>
+                            <div className={'inner-body-constraints'}>
+                                <div>
+                                    <p>This is the About page.</p>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,14 +1,17 @@
 .frame-outer {
-    position: relative;
+    display: flex;
     overflow: hidden;
-    margin: auto;
-    max-height: 30vh;
-    background-color: #111111;
+    height: 30vh;
 }
 
-iframe {
-    margin: auto;
-    width:100vw;
+.banner-video-wrapper {
+    background-color: transparent;
+}
+
+.banner-video {
     aspect-ratio: 100/43.0;
     border: 0;
+    width:100vw;
+    overflow:hidden; /* for html5 browsers the html attribute is depreciated */
+    background:gold;
 }

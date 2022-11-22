@@ -1,3 +1,4 @@
+@import './TablePagination.css';
 
 div>.request-table {
     background-color: #333333;
@@ -48,32 +49,4 @@ td > div {
     overflow-y: hidden;
     height: 50px;
     color: #333333;
-}
-
-.pagination {
-    display: inline-block;
-}
-
-.pagination .page-button {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-}
-
-.pagination .page-button .active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.pagination a:hover:not(.active) {background-color: #ddd;}
-
-.MuiTableSortLabel-root.MuiTableSortLabel-active,
-.MuiTableSortLabel-button{
-    color: #eeeeee !important;
-}
-
-.MuiButtonBase-root.MuiTableSortLabel-root:focus,
-.MuiButtonBase-root.MuiTableSortLabel-root:hover {
-    color: #aaaaaa !important;
 }

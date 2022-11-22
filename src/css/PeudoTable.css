@@ -1,0 +1,65 @@
+@import './TablePagination.css';
+
+.div-table {
+    font-family: Veranda, sans-serif;
+    margin: auto;
+    display: table;
+    width: auto;
+    background-color: transparent;
+    padding: 16px;
+    border-radius: 15px;
+    border-spacing: 5px; /* cellspacing:poor IE support for  this */
+}
+.div-table-header {
+    font-size: 18px;
+    font-weight: bold;
+    display: table-row;
+    width: auto;
+    clear: both;
+    color: whitesmoke;
+    background-color: #333333;
+    border-radius: 15px;
+    padding: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 8px;
+}
+.div-table-header> .div-table-col {
+    color: whitesmoke;
+}
+
+.div-table-row {
+    font-size: 14px;
+    display: table-row;
+    width: auto;
+    clear: both;
+    background-color: #eeeeee;
+    border-radius: 15px;
+    padding: 4px;
+    margin: auto;
+}
+.div-table-row:nth-child(even) {
+    display: table-row;
+    width: auto;
+    clear: both;
+    border-color: #666666;
+    background-color: #dddddd;
+}
+
+.div-table-col {
+    margin: auto;
+    float: left; /* fix for  buggy browsers */
+    display: table-column;
+    min-width: 20ch;
+}
+
+.div-table-button {
+    all: unset;
+    border-width: 2px;
+    border-color: #333333;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #eeeeee;
+    color: #333333;
+}

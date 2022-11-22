@@ -1,11 +1,35 @@
-import React, {Fragment} from 'react';
-import {Link} from "react-router-dom";
+import React, {Fragment, useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
 import '../css/SideBanner.css'
 
 
 function SideBanner(props:any) {
 
-    const { urls = [""], names = [""], classes = [""], roles = [""]} = props;
+    console.log(props)
+
+    const [activePage, setActivePage] = useState<number>(props.page);
+    const navigate = useNavigate();
+
+    const handleSelectLink = (event:any, page:number, link:string) => {
+        event.preventDefault();
+        setActivePage(page);
+        navigate(link);
+    }
+
+    return (
+        <Fragment>
+            <div className="sidenav">
+                <div className={'navLink'} onClick={(event:any) => handleSelectLink(event,0, './../profile')} role={activePage==0?'active':'inactive'}>Profile</div>
+                <div className={'navLink'} onClick={(event:any) => handleSelectLink(event,1, './../account')} role={activePage==1?'active':'inactive'}>Account</div>
+                <div className={'navLink'} onClick={(event:any) => handleSelectLink(event,2, './../administrator')} role={activePage==2?'active':'inactive'}>Admin</div>
+                <div className={'navLink'} onClick={(event:any) => handleSelectLink(event,3, '/login')} role={activePage==3?'active':'inactive'}>Logout</div>
+            </div>
+        </Fragment>
+    );
+
+
+/*
+
 
     const listItems = urls.map((elem:any, index:number) =>
         {
@@ -23,6 +47,7 @@ function SideBanner(props:any) {
             </div>
         </Fragment>
     );
+*/
 }
 
 export default SideBanner;

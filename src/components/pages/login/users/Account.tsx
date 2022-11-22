@@ -6,12 +6,9 @@ import '../../../../css/Account.css';
 import HideBar from "../../../HideBar";
 import RequestTable from "../../../RequestTable";
 import "../../../../css/RequestTable.css";
-import axios from "axios";
 import {UserAuthStore} from "../../../../stores/AuthUserStore";
-import sideBanner from "../../../SideBanner";
 import DisplayAccountInfo from "./DisplayAccountInfo";
-import Administrator from "./administrator/Administrator";
-import NavRoutes, {AdministratorDashboard} from '../../NavRoutes';
+import DisplayPersonalInfo from "./DisplayPersonalInfo";
 
 /**
  * The private, inwards-facing data for a specific user.
@@ -21,8 +18,6 @@ import NavRoutes, {AdministratorDashboard} from '../../NavRoutes';
 function Account(props: any) {
 
     const { sideBanner = <SideBanner/>} = props;
-    const { dashboard = <AdministratorDashboard/>} = props;
-
     const userStoreID = UserAuthStore((state:any) => state.userID);
 
     const pages:any = [<RequestTable/>, <HideBar/>];
@@ -35,10 +30,7 @@ function Account(props: any) {
     return (
         <Fragment>
             <div className={'main-container'}>
-                <HomeNavBanner urls={[]} names={[]}/>
                 <div className={'main-body'}>
-                    {/*{sideBanner}*/}
-                    {dashboard}
                     <div className = {'inner-body'}>
                         <div className={'inner-body-constraints'}>
                             <DisplayAccountInfo/>

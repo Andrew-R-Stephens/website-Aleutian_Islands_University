@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import React, {Fragment, useState} from 'react';
+import {Navigate, Outlet, Route, Routes, useLocation} from "react-router-dom";
 import Home from "./home/Home";
 import Student from "./login/users/student/Student";
 import About from "./home/About";
@@ -14,13 +14,11 @@ import {AuthRole, RoleAuthStore, UserAuthStore} from "../../stores/AuthUserStore
 import Administrator from "./login/users/administrator/Administrator";
 import Faculty from "./login/users/faculty/Faculty";
 import Researcher from "./login/users/researcher/Researcher";
-import SideBanner from "../SideBanner";
-import UpdateAccount from "./login/users/UpdateAccount";
 import Academics from "./home/Academics";
-import RequestTable from "../RequestTable";
-import HideBar from "../HideBar";
-import HomeNavBanner from "../HomeNavBanner";
-import DisplayAccountInfo from "./login/users/DisplayAccountInfo";
+import UserConsole from "../UserConsole";
+import DisplayMasterSchedule from "./login/users/administrator/components/DisplayMasterSchedule";
+import CourseCatalog from "../CourseCatalog";
+import DisplayAllStudents from "./login/users/administrator/components/DisplayAllStudents";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -88,106 +86,61 @@ const DoRoleAuthRouting = () => {
     }
 }
 
-export function AdministratorDashboard() {
-
-    const [pages, setPages] = useState<any[]>([]);
-
-    useEffect(() => {
-        const tempPages = [];
-        tempPages.push({url: "./../profile", name:"NA"})
-        setPages(tempPages);
-    }, [])
-
-    function display() {
-        return <div>
-            {pages.map((elem: any, index: number) => (
-                <Link to={elem.url}>
-                    {elem.name}
-                </Link>
-            ))}
-        </div>;
-    }
-
-    return (
-        <Fragment>
-            <div className="sidenav">
-                {display()}
-            </div>
-        </Fragment>
-    );
-}
 
 function NavRoutes() {
 
     return (
         <Fragment>
             <ImageBanner className={"banner-logo"}/>
-                <Routes>
-                    <Route path={"/"} >
-                        <Route index element={<Home/>}/>
-                        <Route path={"/academics"} element={<Academics/>} />
-                        <Route path={"/about"} element={<About/>} />
-                        <Route path={"/login"} element={<Login/>} />
-                            <Route element={<RequireUserAuth/>}>
-                                <Route path={"/u"}>
-                                <Route index element={<DoRoleAuthRouting/>}/>
+            <div className={'main-container'}>
+                <div className={'main'}>
+                    <div className={'main-body'}>
+                        <Routes>
+                            <Route path={"/"}>
+                                <Route index element={<Home/>}/>
+                                <Route path={"/academics"} element={<Academics/>}/>
+                                <Route path={"/about"} element={<About/>}/>
+                                <Route path={"/login"} element={<Login/>}/>
+                                <Route element={<RequireUserAuth/>}>
+                                    <Route path={"/u"}>
+                                        <Route index element={<DoRoleAuthRouting/>}/>
+                                    </Route>
+                                </Route>
+                                <Route path={"u"}>
+                                    <Route path={"student"}
+                                           element={<RequireRoleAuth allowedRoles={[AuthRole.Student]}/>}>
+                                        <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
+                                        <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
+                                        <Route path={"console"} element={<UserConsole child={<Student/>}/>}/>
+                                    </Route>
+                                    <Route path={"faculty"}
+                                           element={<RequireRoleAuth allowedRoles={[AuthRole.Faculty]}/>}>
+                                        <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
+                                        <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
+                                        <Route path={"console"} element={<UserConsole child={<Faculty/>}/>}/>
+                                    </Route>
+                                    <Route path={"administrator"}
+                                           element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>}>
+                                        <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
+                                        <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
+                                        <Route path={"console"} element={<UserConsole child={<Administrator/>}/>}/>
+                                        <Route path={"manage-master"} element={<UserConsole child={<DisplayMasterSchedule/>}/>}/>
+                                        <Route path={"manage-catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
+                                        <Route path={"manage-users"} element={<UserConsole child={<DisplayAllStudents/>}/>}/>
+                                    </Route>
+                                    <Route path={"researcher"}
+                                           element={<RequireRoleAuth allowedRoles={[AuthRole.Researcher]}/>}>
+                                        <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
+                                        <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
+                                        <Route path={"console"} element={<UserConsole child={<Researcher/>}/>}/>
+                                    </Route>
+                                </Route>
                             </Route>
-                        </Route>
-                        <Route path={"u"}>
-                            <Route path={"student"} element={<RequireRoleAuth allowedRoles={[AuthRole.Student]}/>} >
-                                <Route path={"account"} element={<Account sideBanner={<SideBanner urls={["./", "./../profile", "./../student", "/login"]}
-                                                                                             names={["Account", "Profile", "Student", "Logout"]}
-                                                                                             classes={['item', 'item', 'item', 'item-last']}
-                                                                                             roles={['active', 'inactive', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"profile"} element={<Profile sideBanner={<SideBanner urls={["./../account", "./profile", "./../student", "/login"]}
-                                                                                                  names={["Account", "Profile", "Student", "Logout"]}
-                                                                                                  classes={['item', 'item', 'item', 'item-last']}
-                                                                                                  roles={['inactive', 'active', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"student"} element={<Student/>} />
-                            </Route>
-                            <Route path={"faculty"} element={<RequireRoleAuth allowedRoles={[AuthRole.Faculty]}/>} >
-                                <Route path={"account"} element={<Account sideBanner={<SideBanner urls={["./", "./../profile", "./../faculty", "/login"]}
-                                                                                                  names={["Account", "Profile", "Faculty", "Logout"]}
-                                                                                                  classes={['item', 'item', 'item', 'item-last']}
-                                                                                                  roles={['active', 'inactive', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"profile"} element={<Profile sideBanner={<SideBanner urls={["./../account", "./profile", "./../faculty", "/login"]}
-                                                                                                  names={["Account", "Profile", "Faculty", "Logout"]}
-                                                                                                  classes={['item', 'item', 'item', 'item-last']}
-                                                                                                  roles={['inactive', 'active', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"faculty"} element={<Faculty/>} />
-                            </Route>
-                            <Route path={"administrator"} element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>} >
-                                <Route path={"account"} element={<Account dashboard={<AdministratorDashboard/>}/>} />
-                                <Route path={"profile"} element={<Profile sideBanner={<SideBanner urls={["./../account", "./profile", "./../administrator", "/login"]}
-                                                                                                  names={["Account", "Profile", "Admin", "Logout"]}
-                                                                                                  classes={['item', 'item', 'item', 'item-last']}
-                                                                                                  roles={['inactive', 'active', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"administrator"} element={<Administrator/>} />
-                                {/*<Route path={"account"} element={<Account sideBanner={<SideBanner urls={["./", "./../profile", "./../administrator", "/login"]}
-                                                                                                  names={["Account", "Profile", "Admin", "Logout"]}
-                                                                                                  classes={['item', 'item', 'item', 'item-last']}
-                                                                                                  roles={['active', 'inactive', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"profile"} element={<Profile sideBanner={<SideBanner urls={["./../account", "./profile", "./../administrator", "/login"]}
-                                                                                                names={["Account", "Profile", "Admin", "Logout"]}
-                                                                                                classes={['item', 'item', 'item', 'item-last']}
-                                                                                                roles={['inactive', 'active', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"administrator"} element={<Administrator/>} />*/}
-                            </Route>
-                            <Route path={"researcher"} element={<RequireRoleAuth allowedRoles={[AuthRole.Researcher]}/>} >
-                                <Route path={"account"} element={<Account sideBanner={<SideBanner urls={["./", "./../profile", "./../researcher", "/login"]}
-                                                                                                  names={["Account", "Profile", "Researcher", "Logout"]}
-                                                                                                  classes={['item', 'item', 'item', 'item-last']}
-                                                                                                  roles={['active', 'inactive', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"profile"} element={<Profile sideBanner={<SideBanner urls={["./../account", "./profile", "./../researcher", "/login"]}
-                                                                                                  names={["Account", "Profile", "Researcher", "Logout"]}
-                                                                                                  classes={['item', 'item', 'item', 'item-last']}
-                                                                                                  roles={['inactive', 'active', 'inactive', 'inactive']}/>}/>} />
-                                <Route path={"researcher"} element={<Researcher/>} />
-                            </Route>
-                        </Route>
-                    </Route>
-                    <Route path={"/*"} element={<ErrorPage/>} />
-                </Routes>
+                            <Route path={"/*"} element={<ErrorPage/>}/>
+                        </Routes>
+                    </div>
+                </div>
+            </div>
             <HomeFooter/>
         </Fragment>
     );

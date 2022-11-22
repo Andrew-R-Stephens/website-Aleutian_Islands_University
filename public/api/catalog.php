@@ -54,6 +54,18 @@ switch($func) {
         getAllSchools($conn);
         return;
     }
+    case 'getAllStudents_Identifiable': {
+        getAllStudents_Identifiable($conn);
+        return;
+    }
+    case 'getMasterScheduleBySemesterID': {
+        getMasterScheduleBySemesterID($conn);
+        return;
+    }
+    case 'getSemesterIDsInRange': {
+        getSemesterIDsInRange($conn);
+        return;
+    }
     default: {
         $out = ['error' => 'Function "'. $func .'" does not exist.'];
         echo json_encode($out);
@@ -351,10 +363,11 @@ function getAllDepartments($conn) {
     $stmt = $conn->prepare("CALL getAllDepartments()");
     $stmt->execute();
 
-    $out_courses = [];
+    $out_courses = ['DepartmentID', 'Description', 'RoomID'];
     $stmt->bind_result(
         $out_courses['DepartmentID'],
-        $out_courses['Description']
+        $out_courses['Description'],
+        $out_courses['RoomID']
     );
 
     $completeArray = [];
@@ -394,6 +407,134 @@ function getAllSchools($conn) {
     }
 
     $final_arr['schools'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getMasterScheduleBySemesterID($conn) {
+    if(!(isset($_GET['semesterID']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $semesterID = $_GET['semesterID'];
+
+    $stmt = $conn->prepare("CALL getMasterScheduleBySemesterID(?)");
+    $stmt->bind_param("s", $semesterID);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['Term'],
+        $out_courses['Year'],
+        $out_courses['CRN'],
+        $out_courses['CourseID'],
+        $out_courses['DepartmentID'],
+        $out_courses['SectionID'],
+        $out_courses['CourseName'],
+        $out_courses['FacultyID'],
+        $out_courses['FirstName'],
+        $out_courses['LastName'],
+        $out_courses['BuildingID'],
+        $out_courses['RoomID'],
+        $out_courses['BuildingName'],
+        $out_courses['RoomNum'],
+        $out_courses['TimeSlotID1'],
+        $out_courses['TimeSlotID2'],
+        $out_courses['DayName1'],
+        $out_courses['DayName2'],
+        $out_courses['StartTime1'],
+        $out_courses['StartTime2'],
+        $out_courses['EndTime1'],
+        $out_courses['EndTime2']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['Sections'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAllStudents_Identifiable($conn) {
+    if(!(isset($_GET['pageNum'], $_GET['maxResults']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+
+    $pageNum = $_GET['pageNum'];
+    $maxResults = $_GET['maxResults'];
+
+    $stmt = $conn->prepare("CALL getAllStudents_Identifiable()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['UID'],
+        $out_courses['firstName'],
+        $out_courses['lastName'],
+        $out_courses['UserType']
+    );
+
+    $startIndex = $pageNum * $maxResults;
+
+    $currentIndex = 0;
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        if($currentIndex >= $startIndex && $currentIndex < ($startIndex+$maxResults)) {
+            $row = [];
+            foreach ($out_courses as $key => $val) {
+                $row[$key] = $val;
+            }
+            $completeArray[] = $row;
+        }
+        $currentIndex ++;
+    }
+
+
+    $final_arr['Students'] = $completeArray;
+    $final_arr['TotalResults'] = $stmt->num_rows;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+
+}
+
+function getSemesterIDsInRange($conn) {
+
+    $stmt = $conn->prepare("CALL getSemesterIDsInRange()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['SemesterID'],
+        $out_courses['Term'],
+        $out_courses['Year']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['SemesterIDs'] = $completeArray;
 
     echo(json_encode($final_arr));
 
