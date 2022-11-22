@@ -19,6 +19,7 @@ import UserConsole from "../UserConsole";
 import DisplayMasterSchedule from "./login/users/administrator/components/DisplayMasterSchedule";
 import CourseCatalog from "../CourseCatalog";
 import DisplayAllStudents from "./login/users/administrator/components/DisplayAllStudents";
+import Settings from "./login/users/Settings";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -86,7 +87,6 @@ const DoRoleAuthRouting = () => {
     }
 }
 
-
 function NavRoutes() {
 
     return (
@@ -121,6 +121,7 @@ function NavRoutes() {
                                     </Route>
                                     <Route path={"administrator"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>}>
+                                        <Route path={"settings"} element={<UserConsole child={<Settings/>}/>}/>
                                         <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                                         <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                                         <Route path={"console"} element={<UserConsole child={<Administrator/>}/>}/>

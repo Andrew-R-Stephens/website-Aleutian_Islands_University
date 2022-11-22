@@ -16,7 +16,7 @@
     text-decoration: none;
     color: whitesmoke;
     text-align: center;
-    font-size: 25px;
+    font-size: 22px;
     display: block;
     position: relative;
     -webkit-user-drag: none;
@@ -108,7 +108,7 @@
 [role=active] {
     border-right: 5px lightskyblue solid;
     background-color: #19262d;
-    pointer-events: none;
+    /*pointer-events: none;*/
 }
 
 @media screen and (max-height: 450px) {

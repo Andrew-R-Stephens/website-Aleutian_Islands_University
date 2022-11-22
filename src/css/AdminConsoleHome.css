@@ -1,0 +1,38 @@
+.page-bubble {
+    width:30%;
+    height: fit-content;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 0;
+    padding: 16px;
+    border-radius: 15px;
+    background-color:#cccccc;
+}
+
+.page-bubble-label {
+    font-weight: bold;
+    font-size: 20px;
+    padding-bottom: 16px;
+}
+
+.page-bubble-description {
+    font-size: 16px;
+}
+
+.page-bubble > .page-bubble-description {
+    visibility: collapse;
+    max-height: 0;
+    transition: max-height 1s linear;
+    padding: 0;
+    opacity: 0;
+}
+
+.page-bubble:hover > .page-bubble-description {
+    visibility: visible;
+    margin-top: 16px;
+    height: auto;
+    max-height: 80vh;
+    transition: visibility 0s linear 0.2s, opacity 0.2s ease-in-out, max-height 5s linear;
+    transition-delay: 0s;
+    opacity: 1;
+}
