@@ -1,15 +1,17 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import '../stores/user-store';
-import "./../css/CourseCatalog.css"
+import '../../stores/user-store';
+import "../../css/CourseCatalog.css"
 import CatalogDisplayPrograms from "./CatalogDisplayPrograms";
 import CatalogDisplayCourses from "./CatalogDisplayCourses";
+import CatalogDisplayDepartments from "./CatalogDisplayDepartments";
 
 function CourseCatalog() {
 
     enum CatalogPages {
         MainMenu = 0,
         ProgramsFilter = 1,
-        CourseFilter = 2
+        DepartmentsFilter = 2,
+        CourseFilter = 3
     }
     const [catalogPage, setCatalogPage] = useState(CatalogPages.MainMenu);
 
@@ -20,10 +22,13 @@ function CourseCatalog() {
     function renderPage() {
         switch(catalogPage) {
             case CatalogPages.ProgramsFilter:{
-                return <CatalogDisplayPrograms parentPage={catalogPage}/>
+                return <CatalogDisplayPrograms/>
             }
             case CatalogPages.CourseFilter:{
                 return <CatalogDisplayCourses/>
+            }
+            case CatalogPages.DepartmentsFilter:{
+                return <CatalogDisplayDepartments/>
             }
             default: {
                 return <div><p>The world is your oyster.</p></div>
@@ -56,7 +61,8 @@ function CourseCatalog() {
                             <label>Courses</label>
                         </div>
                     </div>
-                    <div className={'label-icon-container'}>
+                    <div className={catalogPage == CatalogPages.DepartmentsFilter ? 'label-icon-container selected': 'label-icon-container'}
+                         onClick={() => handlePageChange(CatalogPages.DepartmentsFilter)}>
                         <div style={{width:"100%", margin:"auto"}}>
                             <div className={'icon-catalog-departments icon-catalog'}/>
                         </div>
@@ -67,7 +73,9 @@ function CourseCatalog() {
                 </div>
             </div>
             <div>
-                {renderPage()}
+                <div style={{margin: 16}}>
+                    {renderPage()}
+                </div>
             </div>
         </Fragment>
     );

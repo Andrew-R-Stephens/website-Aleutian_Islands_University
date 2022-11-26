@@ -26,6 +26,14 @@ switch($func) {
         getCourseCount($conn);
         return;
     }
+    case 'getCourseDetails': {
+        getCourseDetails($conn);
+        return;
+    }
+    case 'getCoursePrerequisites': {
+        getCoursePrerequisites($conn);
+        return;
+    }
     case 'getProgramDetails': {
         getProgramDetails($conn);
         return;
@@ -50,6 +58,14 @@ switch($func) {
         getAllDepartments($conn);
         return;
     }
+    case 'getDepartmentDetails': {
+        getDepartmentDetails($conn);
+        return;
+    }
+    case 'getAllDepartment_Schools': {
+        getAllDepartment_Schools($conn);
+        return;
+    }
     case 'getAllSchools': {
         getAllSchools($conn);
         return;
@@ -64,6 +80,22 @@ switch($func) {
     }
     case 'getSemesterIDsInRange': {
         getSemesterIDsInRange($conn);
+        return;
+    }
+    case 'getAdvisorByAdvisorID': {
+        getAdvisorByAdvisorID($conn);
+        return;
+    }
+    case 'getAdvisorByStudentID': {
+        getAdvisorByStudentID($conn);
+        return;
+    }
+    case 'getAdviseesByAdvisorID': {
+        getAdviseesByAdvisorID($conn);
+        return;
+    }
+    case 'getAllAdvisees': {
+        getAllAdvisees($conn);
         return;
     }
     default: {
@@ -181,7 +213,83 @@ function getAllCourses($conn) {
     echo(json_encode($final_arr));
 
     mysqli_close($conn);
+}
 
+function getCourseDetails($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getCourseByID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['CourseID'],
+        $out_courses['Name'],
+        $out_courses['Credits'],
+        $out_courses['DepartmentID'],
+        $out_courses['Description']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['courseDetails'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getCoursePrerequisites($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getCoursePrerequisitesByCourseID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['Course'],
+        $out_courses['MasterID'],
+        $out_courses['MasterLogic'],
+        $out_courses['Master_GroupID'],
+        $out_courses['GroupID'],
+        $out_courses['GroupLogic'],
+        $out_courses['PrereqCourse'],
+        $out_courses['MinGrade']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['coursePrereqs'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
 }
 
 function getProgramDetails($conn) {
@@ -363,11 +471,14 @@ function getAllDepartments($conn) {
     $stmt = $conn->prepare("CALL getAllDepartments()");
     $stmt->execute();
 
-    $out_courses = ['DepartmentID', 'Description', 'RoomID'];
+    $out_courses = [];
     $stmt->bind_result(
         $out_courses['DepartmentID'],
         $out_courses['Description'],
-        $out_courses['RoomID']
+        $out_courses['RoomID'],
+        $out_courses['UID'],
+        $out_courses['PhoneNum'],
+        $out_courses['SchoolID']
     );
 
     $completeArray = [];
@@ -407,6 +518,33 @@ function getAllSchools($conn) {
     }
 
     $final_arr['schools'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAllDepartment_Schools($conn) {
+
+    $stmt = $conn->prepare("CALL getAllDepartment_Schools()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['DepartmentID'],
+        $out_courses['SchoolID']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['department_schools'] = $completeArray;
 
     echo(json_encode($final_arr));
 
@@ -535,6 +673,212 @@ function getSemesterIDsInRange($conn) {
     }
 
     $final_arr['SemesterIDs'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getDepartmentDetails($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getDepartmentByID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['DepartmentID'],
+        $out_courses['DepartmentDescription'],
+        $out_courses['PhoneNum'],
+        $out_courses['SchoolID'],
+        $out_courses['SchoolDescription'],
+        $out_courses['Department_BuildingName'],
+        $out_courses['Department_RoomNum'],
+        $out_courses['Chair_FirstName'],
+        $out_courses['Chair_LastName'],
+        $out_courses['Chair_PhoneNum'],
+        $out_courses['Chair_Email'],
+        $out_courses['Chair_RoomID']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['details'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAdvisorByAdvisorID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getAdvisorByAdvisorID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_advisor = [];
+    $stmt->bind_result(
+        $out_advisor['UID'],
+        $out_advisor['FirstName'],
+        $out_advisor['LastName'],
+        $out_advisor['PhoneNum'],
+        $out_advisor['Email'],
+        $out_advisor['RoomNum'],
+        $out_advisor['BuildingName'],
+        $out_advisor['StartTime'],
+        $out_advisor['EndTime'],
+        $out_advisor['Name']
+    );
+
+    $final_arr = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_advisor as $key => $val) {
+            $row[$key] = $val;
+        }
+        $final_arr['advisor'] = $row;
+    }
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAdvisorByStudentID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getAdvisorByStudentID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_advisor = [];
+    $stmt->bind_result(
+        $out_advisor['UID'],
+        $out_advisor['FirstName'],
+        $out_advisor['LastName'],
+        $out_advisor['PhoneNum'],
+        $out_advisor['Email'],
+        $out_advisor['RoomNum'],
+        $out_advisor['BuildingName'],
+        $out_advisor['StartTime'],
+        $out_advisor['EndTime'],
+        $out_advisor['Name']
+    );
+
+    $final_arr = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_advisor as $key => $val) {
+            $row[$key] = $val;
+        }
+        $final_arr['advisor'] = $row;
+    }
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAdviseesByAdvisorID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getAdviseesByAdvisorID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_advisees = [];
+    $stmt->bind_result(
+        $out_advisees['UID'],
+        $out_advisees['FirstName'],
+        $out_advisees['LastName'],
+        $out_advisees['PhoneNum'],
+        $out_advisees['Email']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_advisees as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['advisees'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAllAdvisees($conn) {
+    if(!(isset($_GET['pageNum'], $_GET['maxResults']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $pageNum = $_GET['pageNum'];
+    $maxResults = $_GET['maxResults'];
+
+    $stmt = $conn->prepare("CALL getAllAdvisees()");
+    $stmt->execute();
+
+    $out_advisees = [];
+    $stmt->bind_result(
+        $out_advisees['UID'],
+        $out_advisees['FirstName'],
+        $out_advisees['LastName'],
+        $out_advisees['PhoneNum'],
+        $out_advisees['Email']
+    );
+
+    $startIndex = $pageNum * $maxResults;
+
+    $currentIndex = 0;
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        if($currentIndex >= $startIndex && $currentIndex < ($startIndex+$maxResults)) {
+            $row = [];
+            foreach ($out_advisees as $key => $val) {
+                $row[$key] = $val;
+            }
+            $completeArray[] = $row;
+        }
+        $currentIndex ++;
+    }
+
+
+    $final_arr['advisees'] = $completeArray;
+    $final_arr['count'] = $stmt->num_rows;
 
     echo(json_encode($final_arr));
 

@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
 import '../stores/user-store';
 //import './../css/RequestTable.css';
-import ProgramDetails from "./ProgramDetails";
+import ProgramDetails from "../classes/ProgramDetails";
 import DisplayProgramDetails from "./DisplayProgramDetails";
 import DisplayProgramRequirements from "./DisplayProgramRequirements";
 
@@ -28,7 +28,7 @@ function DisplayProgram(props:any) {
                     borderRadius: 5,
                     display:"inline-block"
                 }} onClick={() => props.onBackPressedHandler(0)}>
-                    <label style={{padding:32}}> {"< "}Go Back to All Programs</label>
+                    <label style={{padding:32}}> {"< "}Go Back to Search Programs</label>
                 </div>
             </div>
             {programID ?

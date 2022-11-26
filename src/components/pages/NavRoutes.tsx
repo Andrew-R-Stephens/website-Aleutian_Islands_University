@@ -14,12 +14,18 @@ import {AuthRole, RoleAuthStore, UserAuthStore} from "../../stores/AuthUserStore
 import Administrator from "./login/users/administrator/Administrator";
 import Faculty from "./login/users/faculty/Faculty";
 import Researcher from "./login/users/researcher/Researcher";
-import Academics from "./home/Academics";
-import UserConsole from "../UserConsole";
-import DisplayMasterSchedule from "./login/users/administrator/components/DisplayMasterSchedule";
-import CourseCatalog from "../CourseCatalog";
-import DisplayAllStudents from "./login/users/administrator/components/DisplayAllStudents";
+import GeneralAcademics from "./home/GeneralAcademics";
+import UserConsole from "./login/users/UserConsole";
+import DisplayMasterSchedule from "../DisplayMasterSchedule";
+import CourseCatalog from "../catalog/CourseCatalog";
+import DisplayAllStudents from "../DisplayAllStudents";
 import Settings from "./login/users/Settings";
+import Academics from "./login/users/student/pages/Academics";
+import Registration from "./login/users/student/pages/Registration";
+import Advisement from "./login/users/student/pages/Advisement";
+import Holds from "./login/users/student/pages/Holds";
+import RegisterCourse from "./login/users/student/pages/RegisterCourse";
+import EnrollProgram from "./login/users/student/pages/EnrollProgram";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -98,7 +104,7 @@ function NavRoutes() {
                         <Routes>
                             <Route path={"/"}>
                                 <Route index element={<Home/>}/>
-                                <Route path={"/academics"} element={<Academics/>}/>
+                                <Route path={"/academics"} element={<GeneralAcademics/>}/>
                                 <Route path={"/about"} element={<About/>}/>
                                 <Route path={"/login"} element={<Login/>}/>
                                 <Route element={<RequireUserAuth/>}>
@@ -112,12 +118,30 @@ function NavRoutes() {
                                         <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                                         <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                                         <Route path={"console"} element={<UserConsole child={<Student/>}/>}/>
+                                        <Route path={"academics"} element={<UserConsole child={<Academics/>}/>}/>
+                                        <Route path={"registration"} element={<UserConsole child={<Registration/>}/>}/>
+                                        <Route path={"register-course"} element={<UserConsole child={<RegisterCourse/>}/>}/>
+                                        <Route path={"enroll-program"} element={<UserConsole child={<EnrollProgram/>}/>}/>
+                                        <Route path={"master-schedule"} element={<UserConsole child={<DisplayMasterSchedule/>}/>}/>
+                                        <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
+                                        <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
+                                        <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
+                                        <Route path={"holds"} element={<UserConsole child={<Holds/>}/>}/>
                                     </Route>
                                     <Route path={"faculty"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Faculty]}/>}>
                                         <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                                         <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                                         <Route path={"console"} element={<UserConsole child={<Faculty/>}/>}/>
+                                        <Route path={"academics"} element={<UserConsole child={<Academics/>}/>}/>
+                                        <Route path={"registration"} element={<UserConsole child={<Registration/>}/>}/>
+                                        <Route path={"register-course"} element={<UserConsole child={<RegisterCourse/>}/>}/>
+                                        <Route path={"enroll-program"} element={<UserConsole child={<EnrollProgram/>}/>}/>
+                                        <Route path={"master-schedule"} element={<UserConsole child={<DisplayMasterSchedule/>}/>}/>
+                                        <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
+                                        <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
+                                        <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
+                                        <Route path={"holds"} element={<UserConsole child={<Holds/>}/>}/>
                                     </Route>
                                     <Route path={"administrator"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>}>
@@ -125,9 +149,12 @@ function NavRoutes() {
                                         <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                                         <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                                         <Route path={"console"} element={<UserConsole child={<Administrator/>}/>}/>
-                                        <Route path={"manage-master"} element={<UserConsole child={<DisplayMasterSchedule/>}/>}/>
-                                        <Route path={"manage-catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
+                                        <Route path={"master-schedule"} element={<UserConsole child={<DisplayMasterSchedule/>}/>}/>
                                         <Route path={"manage-users"} element={<UserConsole child={<DisplayAllStudents/>}/>}/>
+                                        <Route path={"academics"} element={<UserConsole child={<Academics/>}/>}/>
+                                        <Route path={"registration"} element={<UserConsole child={<Registration/>}/>}/>
+                                        <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
+                                        <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                                     </Route>
                                     <Route path={"researcher"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Researcher]}/>}>

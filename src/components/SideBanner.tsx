@@ -2,7 +2,9 @@ import React, {Fragment, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import '../css/SideBanner.css'
 
-
+/**
+ * @deprecated Use UserConsole() instead
+ */
 function SideBanner(props:any) {
 
     console.log(props)

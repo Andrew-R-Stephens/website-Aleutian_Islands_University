@@ -1,9 +1,9 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import axios from "axios";
-import './../../../../../../css/PeudoTable.css'
-import './../../../../../../css/TablePagination.css'
+import '../css/PeudoTable.css'
+import '../css/TablePagination.css'
 import {Pagination, TablePagination} from "@mui/material";
-import {AuthRole, RoleAuthStore} from "../../../../../../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore} from "../stores/AuthUserStore";
 
 function DisplayAllUsers() {
 

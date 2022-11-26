@@ -1,39 +1,34 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import axios from "axios";
 import '../stores/user-store';
 import ProgramDetails from "../classes/ProgramDetails";
+import DepartmentDetails from "../classes/DepartmentDetails";
 
 function DisplayProgramDetails(props:any) {
 
-    const [programID, setProgramID] = useState();
-    const [programDetails, setProgramDetails] = useState<ProgramDetails>();
-
-    useEffect(() => {
-        const {PID} = props;
-        setProgramID(PID);
-    }, [props.PID])
+    const [departmentID, setDepartmentID] = useState(props.DID);
+    const [departmentDetails, setDepartmentDetails] = useState<DepartmentDetails>();
 
     useEffect(()=> {
-        const reqProgReq = () => requestProgramDetails();
-        reqProgReq();
-    }, [programID])
+        requestProgramDetails().then(r=>console.log("done"));
+    }, [departmentID])
 
     useEffect(() => {
-        programDetails?.print();
-    }, [programDetails])
+        departmentDetails?.print();
+    }, [departmentDetails])
 
     async function requestProgramDetails() {
-        console.log("attempting request", programID);
+        console.log("attempting request", departmentID);
         await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
             params: {
-                func: "getProgramDetails",
-                id: programID
+                func: "getDepartmentDetails",
+                id: departmentID
             }
         }).then(res => {
             const {error, details} = res.data;
             if(details) {
-                const programData = new ProgramDetails(details);
-                setProgramDetails(programData);
+                const departmentData = new DepartmentDetails(details);
+                setDepartmentDetails(departmentData);
             } else {
                 console.log("Error:", error);
             }
@@ -46,7 +41,7 @@ function DisplayProgramDetails(props:any) {
     }
 
     function renderDetails():any {
-        return programDetails?.renderAdvanced();
+        return departmentDetails?.renderAdvanced();
     }
 
     return (

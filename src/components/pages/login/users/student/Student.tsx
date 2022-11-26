@@ -1,10 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import HomeNavBanner from "../../../../HomeNavBanner";
 import {useNavigate} from "react-router-dom";
-import SideBanner from "../../../../SideBanner";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
-import StudentHistoryComparator from "../../../../StudentHistoryComparator";
-import CatalogDisplayCourses from "../../../../CatalogDisplayCourses";
+import StudentConsoleHome from "./pages/StudentConsoleHome";
 
 function Student() {
 
@@ -20,17 +17,10 @@ function Student() {
     return (
         <Fragment>
             <div className={'main-container'}>
-                <HomeNavBanner urls={[]}
-                               names={[]}/>
-                <div className = {'main-body'}>
-                    <SideBanner
-                        urls={["./../account", "./../profile", "./", "/login"]}
-                        names={["Account", "Profile", "Student", "Logout"]}
-                        classes={['item', 'item', 'item', 'item-last']}
-                        roles={['inactive', 'inactive', 'active', 'inactive']} />
+                <div className={'main-body'}>
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <CatalogDisplayCourses/>
+                            <StudentConsoleHome/>
                         </div>
                     </div>
                 </div>

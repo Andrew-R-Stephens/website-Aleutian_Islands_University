@@ -1,13 +1,3 @@
-.login {
-    box-shadow: #333333 0 0 20px;
-    border-radius: 5%/10%;
-    margin: 5vh auto;
-    padding: 36px 72px;
-    width: fit-content;
-    background-color: whitesmoke;
-    display: grid;
-    place-items: center;
-}
 
 fieldset {
     border: 0;
@@ -46,4 +36,45 @@ fieldset {
 
 .clickable-text:hover {
     color:#aaaaaa;
+}
+
+.div-login {
+    font-family: Veranda, sans-serif;
+    display: table;
+    background-color: transparent;
+    border-spacing: 5px;
+    box-shadow: #333333 0 0 20px;
+    border-radius: 5%/10%;
+    margin: 5vh auto;
+    padding: 36px 36px;
+    width: fit-content;
+    place-items: center;
+}
+
+.div-login-label {
+    text-align: center;
+    color: #111111;
+}
+
+.div-table-header> .div-table-col {
+    color: whitesmoke;
+}
+
+.div-login-row {
+    font-size: 14px;
+    display: table-row;
+    width: auto;
+    clear: both;
+    background-color: #eeeeee;
+    border-radius: 15px;
+    padding: 4px;
+}
+
+.div-login-col {
+    float: left;
+    margin-bottom: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table-column;
+    min-width: 20ch;
 }

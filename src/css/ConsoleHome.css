@@ -1,0 +1,126 @@
+.bubble-container {
+    display: inline-block;
+    margin: auto;
+    width: 80vw;
+}
+
+.page-bubble {
+    width: 15%;
+    min-width: 200px;
+    max-width: max-content;
+    min-height: 100px;
+    height: fit-content;
+    margin: 0 auto 16px;
+    padding: 16px;
+    border-radius: 15px;
+    background-color:#cccccc;
+}
+
+.page-bubble-label {
+    font-weight: bold;
+    font-size: 20px;
+    padding-bottom: 16px;
+}
+
+.page-bubble-description {
+    font-size: 16px;
+}
+
+.page-bubble > .page-bubble-description {
+    visibility: collapse;
+    max-height: 0;
+    transition: max-height .4s ease-out, opacity 0.4s ease-out;
+    padding: 0;
+}
+
+.page-bubble:hover > .page-bubble-description {
+    visibility: visible;
+    overflow: hidden;
+    height: auto;
+    max-height: 700px;
+    padding-top: 16px;
+    transition: visibility 0s linear 0.2s, opacity 0.5s ease-out, max-height 2s linear;
+    transition-delay: 0s;
+    opacity: 1;
+}
+
+.icon-advisement {
+    content:url("./../res/icon-advisement.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-holds {
+    content:url("./../res/icon-holds.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-academics {
+    content:url("./../res/icon-academics.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-registration {
+    content:url("./../res/icon-registration.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-semester-schedule {
+    content:url("./../res/icon-semesterschedule.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-edit-catalog {
+    content:url("./../res/icon-edit-catalog.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-edit-academics {
+    content:url("./../res/icon-edit-academics.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-edit-advisement {
+    content:url("./../res/icon-edit-advisement.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-schedule {
+    content:url("./../res/icon-schedule.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}

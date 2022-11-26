@@ -1,8 +1,8 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
-import '../stores/user-store';
-import "./../css/CourseCatalog.css"
+import '../../stores/user-store';
+import "../../css/CourseCatalog.css"
 import axios from "axios";
-import DisplayProgram from "./DisplayProgram";
+import DisplayProgram from "../DisplayProgram";
 
 function CatalogDisplayPrograms(props:any) {
 
@@ -139,20 +139,8 @@ function CatalogDisplayPrograms(props:any) {
                 }
                 <div key={key}
                      onClick={() => handleSelectProgram(program.ProgramID)}
-                     style={{
-                         textAlign: "left",
-                         marginLeft: "auto",
-                         marginRight: "auto",
-                         padding: 8,
-                         paddingLeft: 16,
-                         marginBottom: 8,
-                         display: "flex",
-                         backgroundColor: "#DEDEDE",
-                         borderStyle: "solid 1",
-                         borderRadius: 10,
-                         width: "90%"
-                     }}>
-                    <div><label style={{fontSize: 18}}>{program.ProgramName}, {program.ProgramTypeID}</label></div>
+                     className={'div-list-item'}>
+                    <div><label className={'div-list-item-content'}>{program.ProgramName}, {program.ProgramTypeID}</label></div>
                     <div style={{marginLeft:"auto", marginRight:0}}><div className={'img-arrow-select-right'}></div></div>
                 </div>
             </div>

@@ -1,13 +1,8 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import HomeNavBanner from "../../../../HomeNavBanner";
 import {useNavigate} from "react-router-dom";
-import SideBanner from "../../../../SideBanner";
-import {UserAuthStore} from "../../../../../stores/AuthUserStore";
-import StudentHistoryComparator from "../../../../StudentHistoryComparator";
-import StudentConsoleHome from "../student/pages/StudentConsoleHome";
-import FacultyConsoleHome from "./pages/FacultyConsoleHome";
+import {UserAuthStore} from "../../../../../../stores/AuthUserStore";
 
-function Faculty() {
+function Academics() {
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const [userID, setID] = useState(userStoreID);
@@ -24,7 +19,7 @@ function Faculty() {
                 <div className={'main-body'}>
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <FacultyConsoleHome/>
+                            Academics Page
                         </div>
                     </div>
                 </div>
@@ -33,4 +28,4 @@ function Faculty() {
     );
 }
 
-export default Faculty;
+export default Academics;

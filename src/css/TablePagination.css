@@ -1,6 +1,7 @@
 
 .pagination {
     display: inline-block;
+    font-family: Veranda, serif;
 }
 
 .pagination .page-button {

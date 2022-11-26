@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import axios from "axios";
-import './../../../../../../css/PeudoTable.css'
-import './../../../../../../css/TablePagination.css'
+import '../css/PeudoTable.css'
+import '../css/TablePagination.css'
 import {Pagination, TablePagination} from "@mui/material";
 
 function DisplayAllStudents() {
@@ -60,8 +60,13 @@ function DisplayAllStudents() {
         setPaginationPage(0);
     };
 
-    return <Fragment>
-
+    return (
+        <Fragment>
+            <div style={{marginBottom: 50}}>
+                <TablePagination component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={studentCount.current}
+                                 page={paginationPage} rowsPerPage={maxPaginationResults} onPageChange={handleChangePaginate}
+                                 onRowsPerPageChange={handleChangePaginationRowsPerPage}/>
+            </div>
             <div className={'div-table'}>
                 <div>
                     <div className={'div-table-header'} key={-1} style={{display:"flex"}}>
@@ -87,15 +92,11 @@ function DisplayAllStudents() {
                             </div>
                         ))
                     }
+                    </div>
                 </div>
             </div>
-        </div>
-        <div style={{marginBottom: 50}}>
-            <TablePagination component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={studentCount.current}
-                             page={paginationPage} rowsPerPage={maxPaginationResults} onPageChange={handleChangePaginate}
-                             onRowsPerPageChange={handleChangePaginationRowsPerPage}/>
-        </div>
-    </Fragment>;
+
+        </Fragment>);
 }
 
 export default DisplayAllStudents;

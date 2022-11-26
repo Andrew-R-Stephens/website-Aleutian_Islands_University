@@ -1,8 +1,10 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import '../stores/user-store';
-import './../css/RequestTable.css';
+import '../../stores/user-store';
+import '../../css/RequestTable.css';
 import {TablePagination} from "@mui/material";
+import DisplayCourseDetails from "../DisplayCourseDetails";
+import DisplayCoursePrerequisites from "../DisplayCoursePrerequisites";
 
 function CatalogDisplayCourses(props:any) {
 
@@ -15,6 +17,8 @@ function CatalogDisplayCourses(props:any) {
     const [columnSort, setColumnSort] = useState(0);
     const [sortDirection, setSortDirection] = useState(-1);
     const [searchInput, setSearchInput] = useState("");
+
+    const [selectedCourse, setSelectedCourse] = useState<string>();
 
     useEffect(() => {
         const getCourses = () => requestSearchAllCourses();
@@ -39,8 +43,8 @@ function CatalogDisplayCourses(props:any) {
         })
     }
 
-    function viewCourse(courseID: string) {
-
+    function handleViewCourse(courseID: string) {
+        setSelectedCourse(courseID);
     }
 
     enum ColumnSort {
@@ -94,15 +98,15 @@ function CatalogDisplayCourses(props:any) {
                     return 0;
 
                 }).map((item: any, key: number) => (
-                        <tr key={key}>
-                            <td className={'fit-width'}><div>
-                                    <button onClick={() => viewCourse(item.id)}><label>View</label></button>
+                        <tr className={'request-table-tr'} key={key}>
+                            <td className={'request-table-td fit-width'}><div>
+                                    <button onClick={() => handleViewCourse(item.id)}><label>View</label></button>
                             </div></td>
-                            <td className={'fit-width'}><div>{item.id}</div></td>
-                            <td className={'fit-width'}><div>{item.name}</div></td>
-                            <td className={'fit-width'}><div>{item.credits}</div></td>
-                            <td className={'fit-width'}><div>{item.department}</div></td>
-                            <td className={'fit-width'}><div>{item.description}</div></td>
+                            <td className={'request-table-td fit-width'}><div className={'request-table-div'}>{item.id}</div></td>
+                            <td className={'request-table-td fit-width'}><div className={'request-table-div'}>{item.name}</div></td>
+                            <td className={'request-table-td fit-width'}><div className={'request-table-div'}>{item.credits}</div></td>
+                            <td className={'request-table-td fit-width'}><div className={'request-table-div'}>{item.department}</div></td>
+                            <td className={'request-table-td fit-width'}><div className={'request-table-div'}>{item.description}</div></td>
                         </tr>
                     )
                 )
@@ -155,29 +159,45 @@ function CatalogDisplayCourses(props:any) {
         }
     }
 
-    return (
-        <Fragment>
-            <div>
-                <form>
-                    <div style={{marginTop: 50}}>
-                        <input style={{marginRight: 16, marginBottom: 16}}
-                               type={"search"}
-                               autoComplete={'on'}
-                               value={searchInput}
-                               onChange={handleSearchChange}
-                               onKeyDown={handleSearchCommit}/>
-                        <button onClick={commitSearch}><label>Search</label></button>
+    function displayAllCourses() {
+        return (
+            <div style={{margin: 32}}>
+                <div style={{marginTop:64}}>
+                    <h1>Course Search</h1>
+                </div>
+                <div style={{display:"flex", width:"100%"}}>
+                    <div style={{width:"100%"}}>
+                        <TablePagination
+                            style={{float:"left"}}
+                            component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={courseCount}
+                            page={pageNumber} rowsPerPage={maxResults} onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}/>
                     </div>
-                </form>
+                    <div style={{width:"100%"}}>
+                        <form style={{marginLeft:"auto", marginRight:0}}>
+                            <div style={{display:"flex", marginTop: 8}}>
+                                <div style={{marginLeft:"auto", marginRight:0, backgroundColor: "#333333", padding:16, borderRadius:15}}>
+                                    <input style={{marginRight: 8}}
+                                           type={"search"}
+                                           autoComplete={'on'}
+                                           value={searchInput}
+                                           onChange={handleSearchChange}
+                                           onKeyDown={handleSearchCommit}/>
+                                    <button onClick={commitSearch}><label>Search</label></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <table className={'request-table'}>
                     <tbody>
                     <tr>
-                        <th><label></label></th>
-                        <th><label onClick={()=>handleSort(ColumnSort.ID)}>Course ID</label></th>
-                        <th><label onClick={()=>handleSort(ColumnSort.Name)}>Name</label></th>
-                        <th><label onClick={()=>handleSort(ColumnSort.Credits)}>Credits</label></th>
-                        <th><label onClick={()=>handleSort(ColumnSort.Department)}>Department</label></th>
-                        <th><label>Description</label></th>
+                        <th className={'request-table-th'}><label></label></th>
+                        <th className={'request-table-th'}><label onClick={()=>handleSort(ColumnSort.ID)}>Course ID</label></th>
+                        <th className={'request-table-th'}><label onClick={()=>handleSort(ColumnSort.Name)}>Name</label></th>
+                        <th className={'request-table-th'}><label onClick={()=>handleSort(ColumnSort.Credits)}>Credits</label></th>
+                        <th className={'request-table-th'}><label onClick={()=>handleSort(ColumnSort.Department)}>Department</label></th>
+                        <th className={'request-table-th'}><label>Description</label></th>
                     </tr>
                     {
                         displayCourses()
@@ -185,11 +205,40 @@ function CatalogDisplayCourses(props:any) {
 
                     </tbody>
                 </table>
-                <div style={{marginBottom: 50}}>
-                    <TablePagination component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={courseCount}
-                                     page={pageNumber} rowsPerPage={maxResults} onPageChange={handleChangePage}
-                                     onRowsPerPageChange={handleChangeRowsPerPage}/>
+
+            </div>
+        );
+    }
+
+    function displaySelectedCourse() {
+        return (
+            <div style={{margin: 32}}>
+                <div style={{display:"flex", margin: "auto", width: 700}}>
+                    <div style={{
+                        marginTop: 32,
+                        marginLeft: 0,
+                        marginRight:"auto",
+                        minWidth: 150, minHeight:25,
+                        backgroundColor: "#333353",
+                        color: "whitesmoke",
+                        borderRadius: 5,
+                        display:"inline-block"
+                    }} onClick={() => setSelectedCourse("")}>
+                        <label style={{padding:32}}> {"< "}Go Back to All Courses</label>
+                    </div>
                 </div>
+                <div>
+                    <DisplayCourseDetails CID={selectedCourse}/>
+                    <DisplayCoursePrerequisites CID={selectedCourse}/>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <Fragment>
+            <div>
+                {selectedCourse?displaySelectedCourse():displayAllCourses()}
             </div>
         </Fragment>
     );

@@ -1,11 +1,9 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import '../css/LoginForm.css';
-import '../css/LoginTable.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import '../stores/user-store';
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
-import {fail} from "assert";
 
 function LoginForm() {
 
@@ -86,41 +84,41 @@ function LoginForm() {
 
     return (
         <Fragment>
-            <div>
+            <div className={'plain'}>
                 <form onSubmit={event => handleSubmit(event)}>
-                    <fieldset disabled={failedAttemptCount >= 5} className = "login">
-                        <table>
-                            <tbody>
-                                 <tr>
-                                    <td colSpan={2}>
+                    <fieldset disabled={failedAttemptCount >= 5} className = "div-login">
+                        <div className={'login-container'}>
+                            <div className={'login-body'}>
+                                <div className={'div-login-row'}>
+                                    <div className={'div-login-col'}>
                                         <label className={'authError'}>
                                             { renderError() }
                                         </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><label>Email: </label></td>
-                                    <td><input className={'inputText'}
+                                    </div>
+                                </div>
+                                <div className={'div-login-row'}>
+                                    <div className={'div-login-col'}>
+                                        <div className={'div-login-label'}>Email: </div>
+                                    </div>
+                                    <div className={'div-login-col'}><input className={'inputText'}
                                                type={"email"}
                                                autoComplete={'on'}
                                                value={email}
                                                onChange={handleEmailChange}/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><label>Password: </label></td>
-                                    <td><input className={'inputText'}
+                                    </div>
+                                </div>
+                                <div className={'div-login-row'}>
+                                    <div className={'div-login-col'}><div className={'div-login-label'}>Password: </div></div>
+                                    <div className={'div-login-col'}>
+                                        <input className={'inputText'}
                                                type={"password"}
                                                autoComplete={'on'}
                                                value={pass}
                                                onChange={handlePassChange}/>
-                                    </td>
-                                </tr>
-                                <tr className={'submit'}>
-                                    <td colSpan={2}></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className={'submit'} style={{display:"inline-block", width:"100%", marginRight:"auto", marginLeft:"auto"}}>
                             <div style={{marginRight:"auto", marginLeft:"auto"}}>
                                 <input type={"submit"} value={"Login"}/>

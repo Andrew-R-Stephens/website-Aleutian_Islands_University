@@ -13,5 +13,5 @@
     border: 0;
     width:100vw;
     overflow:hidden; /* for html5 browsers the html attribute is depreciated */
-    background:gold;
+    background:#333333;
 }

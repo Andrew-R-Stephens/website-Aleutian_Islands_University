@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import "../css/HideBar.css"
 import useCollapse from "react-collapsed";
-import RequestTable from "./RequestTable";
 
 function HideBar() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
@@ -16,7 +15,7 @@ function HideBar() {
                 </div>
                 <div className="header" {...getCollapseProps()}>
                     <div>
-                        <RequestTable/>
+
                     </div>
                 </div>
             </div>

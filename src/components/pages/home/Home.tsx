@@ -1,12 +1,7 @@
 import React, {Fragment} from 'react';
-import {QueryClient, QueryClientProvider} from "react-query";
-import {ReactQueryDevtools} from "react-query/devtools";
-import Table from "../../RequestTable";
 import HomeNavBanner from "../../HomeNavBanner";
 import '../../../css/VideoPlayer.css'
 import '../../../css/PrimaryLayout.css';
-
-const queryClient = new QueryClient();
 
 function Home() {
 

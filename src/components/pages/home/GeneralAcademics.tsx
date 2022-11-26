@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
 import HomeNavBanner from "../../HomeNavBanner";
-import CourseCatalog from "../../CourseCatalog";
+import CourseCatalog from "../../catalog/CourseCatalog";
 
-function Academics() {
+function GeneralAcademics() {
     return (
         <Fragment>
             <div className={'main-container'}>
@@ -13,7 +13,7 @@ function Academics() {
                     <div className={'main-body'}>
                         <div className={'inner-body'}>
                             <div className={'inner-body-constraints'}>
-                                <div>
+                                <div style={{margin:32}}>
                                     <CourseCatalog/>
                                 </div>
                             </div>
@@ -27,4 +27,4 @@ function Academics() {
     );
 }
 
-export default Academics;
+export default GeneralAcademics;

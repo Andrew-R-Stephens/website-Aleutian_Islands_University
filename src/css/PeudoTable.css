@@ -8,7 +8,7 @@
     background-color: transparent;
     padding: 16px;
     border-radius: 15px;
-    border-spacing: 5px; /* cellspacing:poor IE support for  this */
+    border-spacing: 5px;
 }
 .div-table-header {
     font-size: 18px;
@@ -38,7 +38,7 @@
     padding: 4px;
     margin: auto;
 }
-.div-table-row:nth-child(even) {
+.div-table-row:nth-child(odd) {
     display: table-row;
     width: auto;
     clear: both;
@@ -62,4 +62,25 @@
     padding: 8px;
     background-color: #eeeeee;
     color: #333333;
+}
+
+.div-table-button:hover {
+    background-color: #333333;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.div-list-item:hover {
+    background-color: #3d3d3d;
+}
+
+.div-table-button:hover .div-table-button-content{
+    background-color: #333333;
+    color: whitesmoke;
+}
+
+.div-mailTo:hover {
+    text-underline: #406e8a;
+    text-decoration: underline ;
+    cursor: pointer;
 }
