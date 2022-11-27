@@ -45,9 +45,10 @@ function getUserPersonalInformation($conn) {
     $out_addrState = '';
     $out_addrCountry = '';
     $out_addrZip = '';
+    $out_email = '';
     $stmt->bind_result(
         $out_uid, $out_ssn, $out_fname, $out_lname, $out_phoneNum, $out_gender, $out_honorific, $out_birthdate,
-        $out_addrNumber, $out_addrStreet, $out_addrCity, $out_addrState, $out_addrCountry, $out_addrZip
+        $out_addrNumber, $out_addrStreet, $out_addrCity, $out_addrState, $out_addrCountry, $out_addrZip, $out_email
     );
 
     $arr['UID'] = '';
@@ -64,6 +65,7 @@ function getUserPersonalInformation($conn) {
     $arr['AddrSta']  = '';
     $arr['AddrCo'] = '';
     $arr['AddrZip'] = '';
+    $arr['Email'] = '';
 
     while ($stmt->fetch()) {
         $arr['UID'] = $out_uid;
@@ -80,6 +82,7 @@ function getUserPersonalInformation($conn) {
         $arr['AddrSta'] = $out_addrState;
         $arr['AddrCo'] = $out_addrCountry;
         $arr['AddrZip'] = $out_addrZip;
+        $arr['Email'] = $out_email;
     }
 
     echo(json_encode($arr));

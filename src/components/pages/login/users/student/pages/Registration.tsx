@@ -43,15 +43,22 @@ function StudentRegistration(props:any) {
                     <label className={'page-bubble-label'}>Program Enrollment</label>
                     <div className={'page-bubble-description'}>Allows for the management of program enrollments.</div>
                 </div>
-                <div className={'page-bubble'} onClick={()=>navigate('./../holds')}>
-                    <div className={'icon-holds'}/>
-                    <label className={'page-bubble-label'}>Account Holds</label>
-                    <div className={'page-bubble-description'}>Provides an overview of active Holds which will prevent further registration.</div>
+                <div className={'page-bubble'} onClick={()=>navigate('./../semester-schedule')}>
+                    <div className={'icon-semester-schedule'}/>
+                    <label className={'page-bubble-label'}>Semester Schedule</label>
+                    <div className={'page-bubble-description'}>Displays any registered course section from both the current semester and next semester.</div>
                 </div>
                 <div className={'page-bubble'} onClick={()=>navigate('./../master-schedule')}>
                     <div className={'icon-schedule'}/>
                     <label className={'page-bubble-label'}>Master Schedule</label>
                     <div className={'page-bubble-description'}>Displays all of the Course Sections that are available for a particular semester.</div>
+                </div>
+            </div>
+            <div style={{display:"flex", marginTop:32, marginBottom:32}}>
+                <div className={'page-bubble'} onClick={()=>navigate('./../holds')}>
+                    <div className={'icon-holds'}/>
+                    <label className={'page-bubble-label'}>Account Holds</label>
+                    <div className={'page-bubble-description'}>Provides an overview of active Holds which will prevent further registration.</div>
                 </div>
                 <div className={'page-bubble'} onClick={()=>navigate('./../catalog')}>
                     <div className={'icon-catalog-courses'}/>

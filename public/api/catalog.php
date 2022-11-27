@@ -82,6 +82,10 @@ switch($func) {
         getSemesterIDsInRange($conn);
         return;
     }
+    case 'getAllAdvisors': {
+        getAllAdvisors($conn);
+        return;
+    }
     case 'getAdvisorByAdvisorID': {
         getAdvisorByAdvisorID($conn);
         return;
@@ -96,6 +100,10 @@ switch($func) {
     }
     case 'getAllAdvisees': {
         getAllAdvisees($conn);
+        return;
+    }
+    case 'getScheduleByUIDAndSemesterID': {
+        getScheduleByUIDAndSemesterID($conn);
         return;
     }
     default: {
@@ -723,6 +731,51 @@ function getDepartmentDetails($conn) {
     mysqli_close($conn);
 }
 
+function getAllAdvisors($conn) {
+    if(!(isset($_GET['pageNum'], $_GET['maxResults']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $pageNum = $_GET['pageNum'];
+    $maxResults = $_GET['maxResults'];
+
+    $stmt = $conn->prepare("CALL getAllAdvisors()");
+    $stmt->execute();
+
+    $out_advisees = [];
+    $stmt->bind_result(
+        $out_advisees['UID'],
+        $out_advisees['FirstName'],
+        $out_advisees['LastName'],
+        $out_advisees['PhoneNum'],
+        $out_advisees['Email'],
+        $out_advisees['DeoartmentID']
+    );
+
+    $startIndex = $pageNum * $maxResults;
+
+    $currentIndex = 0;
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        if($currentIndex >= $startIndex && $currentIndex < ($startIndex+$maxResults)) {
+            $row = [];
+            foreach ($out_advisees as $key => $val) {
+                $row[$key] = $val;
+            }
+            $completeArray[] = $row;
+        }
+        $currentIndex ++;
+    }
+
+    $final_arr['advisors'] = $completeArray;
+    $final_arr['count'] = $stmt->num_rows;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
 function getAdvisorByAdvisorID($conn) {
     if(!(isset($_GET['id']))) {
         $out = ['error' => 'Incomplete request.'];
@@ -858,7 +911,10 @@ function getAllAdvisees($conn) {
         $out_advisees['FirstName'],
         $out_advisees['LastName'],
         $out_advisees['PhoneNum'],
-        $out_advisees['Email']
+        $out_advisees['Email'],
+        $out_advisees['F_UID'],
+        $out_advisees['F_FirstName'],
+        $out_advisees['F_LastName']
     );
 
     $startIndex = $pageNum * $maxResults;
@@ -876,9 +932,53 @@ function getAllAdvisees($conn) {
         $currentIndex ++;
     }
 
-
     $final_arr['advisees'] = $completeArray;
     $final_arr['count'] = $stmt->num_rows;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getScheduleByUIDAndSemesterID($conn) {
+    if(!(isset($_GET['id'], $_GET['semesterID']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+    $semesterID = $_GET['semesterID'];
+
+    $stmt = $conn->prepare("CALL getScheduleByUIDAndSemesterID(?, ?)");
+    $stmt->bind_param("ss", $id, $semesterID);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['CRN'],
+        $out_schedule['CourseID'],
+        $out_schedule['SectionID'],
+        $out_schedule['FacultyID'],
+        $out_schedule['BuildingName'],
+        $out_schedule['RoomID'],
+        $out_schedule['Day1'],
+        $out_schedule['StartTime1'],
+        $out_schedule['EndTime1'],
+        $out_schedule['Day2'],
+        $out_schedule['StartTime2'],
+        $out_schedule['EndTime2']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['schedule'] = $completeArray;
 
     echo(json_encode($final_arr));
 

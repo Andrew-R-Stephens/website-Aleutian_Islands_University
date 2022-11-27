@@ -118,13 +118,23 @@ button:active{
 }
 
 .display-right {
-    display: flex;
+    display: inline-block;
     border-left: solid 1px;
     border-color: #111111;
+    width: 100%;
 }
 
-.display-right div {
-    margin: 8px 8px 32px 8px;
+.display-right-content {
+    margin: 8px 8px 8px 8px;
     display: flex;
+    color: whitesmoke;
 }
 
+[role=inactive] {
+    border-right: 5px transparent solid;
+}
+
+[role=active] {
+    border-right: 5px lightskyblue solid;
+    background-color: #19262d;
+}

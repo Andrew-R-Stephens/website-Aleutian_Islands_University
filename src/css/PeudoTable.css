@@ -4,7 +4,7 @@
     font-family: Veranda, sans-serif;
     margin: auto;
     display: table;
-    width: auto;
+    width: 100%;
     background-color: transparent;
     padding: 16px;
     border-radius: 15px;
@@ -14,7 +14,6 @@
     font-size: 18px;
     font-weight: bold;
     display: table-row;
-    width: auto;
     clear: both;
     color: whitesmoke;
     background-color: #333333;
@@ -29,18 +28,17 @@
 }
 
 .div-table-row {
+    padding: 4px;
     font-size: 14px;
     display: table-row;
-    width: auto;
     clear: both;
     background-color: #eeeeee;
     border-radius: 15px;
-    padding: 4px;
     margin: auto;
+    columns: fit-content;
 }
 .div-table-row:nth-child(odd) {
     display: table-row;
-    width: auto;
     clear: both;
     border-color: #666666;
     background-color: #dddddd;
@@ -48,9 +46,18 @@
 
 .div-table-col {
     margin: auto;
+    width: 100%;
     float: left; /* fix for  buggy browsers */
     display: table-column;
-    min-width: 20ch;
+    overflow-x: auto;
+}
+
+.div-table-col-content {
+    display: table-cell;
+}
+
+.div-table-button-wrapper {
+    display: flex;
 }
 
 .div-table-button {
@@ -83,4 +90,8 @@
     text-underline: #406e8a;
     text-decoration: underline ;
     cursor: pointer;
+}
+
+.div-table-col-segment {
+    border-left: 1px solid;
 }

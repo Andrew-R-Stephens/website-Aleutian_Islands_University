@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import SideBanner from "../../../../SideBanner";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
 import StudentHistoryComparator from "../../../../StudentHistoryComparator";
+import FacultyConsoleHome from "../faculty/pages/FacultyConsoleHome";
 
 function Researcher() {
 
@@ -19,17 +20,10 @@ function Researcher() {
     return (
         <Fragment>
             <div className={'main-container'}>
-                <HomeNavBanner urls={[]}
-                               names={[]}/>
-                <div className = {'main-body'}>
-                    <SideBanner
-                        urls={["./../account", "./../profile", "./", "/login"]}
-                        names={["Account", "Profile", "Researcher", "Logout"]}
-                        classes={['item', 'item', 'item', 'item-last']}
-                        roles={['inactive', 'inactive', 'active', 'inactive']} />
+                <div className={'main-body'}>
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <p>This is an Researcher page</p>
+                            <FacultyConsoleHome/>
                         </div>
                     </div>
                 </div>

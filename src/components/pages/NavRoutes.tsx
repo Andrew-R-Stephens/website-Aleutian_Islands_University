@@ -26,6 +26,7 @@ import Advisement from "./login/users/student/pages/Advisement";
 import Holds from "./login/users/student/pages/Holds";
 import RegisterCourse from "./login/users/student/pages/RegisterCourse";
 import EnrollProgram from "./login/users/student/pages/EnrollProgram";
+import SemesterSchedule from "./login/users/SemesterSchedule";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -127,6 +128,7 @@ function NavRoutes() {
                                         <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
                                         <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                                         <Route path={"holds"} element={<UserConsole child={<Holds/>}/>}/>
+                                        <Route path={"semester-schedule"} element={<UserConsole child={<SemesterSchedule/>}/>}/>
                                     </Route>
                                     <Route path={"faculty"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Faculty]}/>}>
@@ -142,6 +144,7 @@ function NavRoutes() {
                                         <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
                                         <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                                         <Route path={"holds"} element={<UserConsole child={<Holds/>}/>}/>
+                                        <Route path={"semester-schedule"} element={<UserConsole child={<SemesterSchedule/>}/>}/>
                                     </Route>
                                     <Route path={"administrator"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>}>
@@ -161,6 +164,8 @@ function NavRoutes() {
                                         <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                                         <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                                         <Route path={"console"} element={<UserConsole child={<Researcher/>}/>}/>
+                                        <Route path={"master-schedule"} element={<UserConsole child={<DisplayMasterSchedule/>}/>}/>
+                                        <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                                     </Route>
                                 </Route>
                             </Route>

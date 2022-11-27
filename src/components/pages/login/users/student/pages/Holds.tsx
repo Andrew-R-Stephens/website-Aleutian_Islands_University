@@ -7,9 +7,11 @@ function Holds() {
     const navigate = useNavigate();
     const [activePage, setActivePage] = useState(0);
 
+
+
     return (
         <Fragment>
-            Holds
+
         </Fragment>
     );
 

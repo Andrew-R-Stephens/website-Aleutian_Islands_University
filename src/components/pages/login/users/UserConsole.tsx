@@ -159,20 +159,34 @@ function UserConsole(props:any) {
         return (
             <div>
                 <div className={'navLink'} onClick={(event:any) =>
-                    handleSelectLink(event,0, './../profile')}
-                     role={page==0?'active':'inactive'}>Profile</div>
+                    handleSelectLink(event,0, './')}
+                     role={page===0?'active':'inactive'}>Account</div>
+
+                <div className={'navLink-children'} id={page==0?'active':'inactive'}>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLink(event,0, './../account',1)}
+                         role={childPage===1?'active':'inactive'}>Account</div>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLink(event,0, './../profile',2)}
+                         role={childPage===2?'active':'inactive'}>Profile</div>
+                </div>
 
                 <div className={'navLink'} onClick={(event:any) =>
-                    handleSelectLink(event,1, './../account')}
-                     role={page==1?'active':'inactive'}>Account</div>
+                    handleSelectLink(event,1, './../console')}
+                     role={page===1?'active':'inactive'}>Researcher</div>
 
-                <div className={'navLink'} onClick={(event:any) =>
-                    handleSelectLink(event,2, './../console')}
-                     role={page==2?'active':'inactive'}>Researcher</div>
+                <div className={'navLink-children'} id={page==1?'active':'inactive'}>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLink(event,1, './../master-schedule',14)}
+                         role={childPage===14?'active':'inactive'}>Master Schedule</div>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLink(event,1, './../catalog',14)}
+                         role={childPage===14?'active':'inactive'}>Course Catalog</div>
+                </div>
 
-                <div className={'navLink'} onClick={(event:any) =>
+                <div className={'navLink item-last'} onClick={(event:any) =>
                     handleSelectLink(event,3, '/login')}
-                     role={page==3?'active':'inactive'}>Logout</div>
+                     role={page===3?'active':'inactive'}>Logout</div>
             </div>
         );
     }
