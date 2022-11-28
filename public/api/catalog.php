@@ -106,6 +106,10 @@ switch($func) {
         getScheduleByUIDAndSemesterID($conn);
         return;
     }
+    case 'getHoldsByStudentID': {
+        getHoldsByStudentID($conn);
+        return;
+    }
     default: {
         $out = ['error' => 'Function "'. $func .'" does not exist.'];
         echo json_encode($out);
@@ -576,10 +580,10 @@ function getMasterScheduleBySemesterID($conn) {
         $out_courses['Term'],
         $out_courses['Year'],
         $out_courses['CRN'],
-        $out_courses['CourseID'],
-        $out_courses['DepartmentID'],
         $out_courses['SectionID'],
-        $out_courses['CourseName'],
+        $out_courses['CourseID'],
+        $out_courses['Name'],
+        $out_courses['DepartmentID'],
         $out_courses['FacultyID'],
         $out_courses['FirstName'],
         $out_courses['LastName'],
@@ -587,14 +591,17 @@ function getMasterScheduleBySemesterID($conn) {
         $out_courses['RoomID'],
         $out_courses['BuildingName'],
         $out_courses['RoomNum'],
-        $out_courses['TimeSlotID1'],
-        $out_courses['TimeSlotID2'],
         $out_courses['DayName1'],
+        $out_courses['DayName1Abbr'],
         $out_courses['DayName2'],
+        $out_courses['DayName2Abbr'],
         $out_courses['StartTime1'],
         $out_courses['StartTime2'],
         $out_courses['EndTime1'],
-        $out_courses['EndTime2']
+        $out_courses['EndTime2'],
+        $out_courses['SeatsMinimum'],
+        $out_courses['SeatsCapacity'],
+        $out_courses['SeatsActual']
     );
 
     $completeArray = [];
@@ -979,6 +986,43 @@ function getScheduleByUIDAndSemesterID($conn) {
     }
 
     $final_arr['schedule'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getHoldsByStudentID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getHoldsByStudentID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['UID'],
+        $out_schedule['HoldID'],
+        $out_schedule['Name'],
+        $out_schedule['Description'],
+        $out_schedule['Date']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['holds'] = $completeArray;
 
     echo(json_encode($final_arr));
 

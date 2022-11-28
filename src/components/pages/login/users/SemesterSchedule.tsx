@@ -93,12 +93,9 @@ function SemesterSchedule(props:any) {
                         <div className={'div-table-col'}><label>Faculty</label></div>
                         <div className={'div-table-col'}><label>Building</label></div>
                         <div className={'div-table-col'}><label>Room</label></div>
-                        <div className={'div-table-col'}><label>Day 1</label></div>
-                        <div className={'div-table-col'}><label>Start 1</label></div>
-                        <div className={'div-table-col'}><label>End 1</label></div>
-                        <div className={'div-table-col'}><label>Day 2</label></div>
-                        <div className={'div-table-col'}><label>Start 2</label></div>
-                        <div className={'div-table-col'}><label>End 2</label></div>
+                        <div className={'div-table-col'}><label>Day</label></div>
+                        <div className={'div-table-col'}><label>Start</label></div>
+                        <div className={'div-table-col'}><label>End</label></div>
                     </div>
                     {
                         semesterSchedule?.map((item:any) => (
@@ -116,12 +113,18 @@ function SemesterSchedule(props:any) {
                                 <div className={'div-table-col'}><label>{item.FacultyID}</label></div>
                                 <div className={'div-table-col'}><label>{item.BuildingName}</label></div>
                                 <div className={'div-table-col'}><label>{item.RoomID}</label></div>
-                                <div className={'div-table-col div-table-col-segment'}><label>{item.Day1}</label></div>
-                                <div className={'div-table-col'}><label>{item.StartTime1}</label></div>
-                                <div className={'div-table-col'}><label>{item.EndTime1}</label></div>
-                                <div className={'div-table-col div-table-col-segment'}><label>{item.Day2}</label></div>
-                                <div className={'div-table-col'}><label>{item.StartTime2}</label></div>
-                                <div className={'div-table-col'}><label>{item.EndTime2}</label></div>
+                                <div className={'div-table-col'}>
+                                    <div><label>{item.Day1}</label></div>
+                                    <div><label>{item.Day2}</label></div>
+                                </div>
+                                <div className={'div-table-col'}>
+                                    <div><label>{item.StartTime1}</label></div>
+                                    <div><label>{item.StartTime2}</label></div>
+                                </div>
+                                <div className={'div-table-col'}>
+                                    <div><label>{item.EndTime1}</label></div>
+                                    <div><label>{item.EndTime2}</label></div>
+                                </div>
                             </div>
                         ))
 

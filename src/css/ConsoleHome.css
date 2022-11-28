@@ -124,3 +124,39 @@
     padding: 8px;
     aspect-ratio: 1/1;
 }
+
+.icon-console-educator {
+    content:url("./../res/icon-educator-console.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-unofficial-transcript {
+    content:url("./../res/icon-unofficial-transcript.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-degree-audit {
+    content:url("./../res/icon-degree-audit.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-semester-grades {
+    content:url("./../res/icon-semester-grades.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}

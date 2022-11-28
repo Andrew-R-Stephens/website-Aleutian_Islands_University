@@ -1,0 +1,11 @@
+.icon-error {
+    content:url("./../res/icon-error.svg");
+    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(350deg) brightness(104%) contrast(75%);
+    background-color: transparent;
+    max-height: 50px;
+    aspect-ratio: 1/1;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}

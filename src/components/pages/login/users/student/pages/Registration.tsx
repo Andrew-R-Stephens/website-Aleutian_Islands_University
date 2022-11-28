@@ -6,31 +6,8 @@ import axios from "axios";
 function StudentRegistration(props:any) {
     const navigate = useNavigate();
 
-    /*
-
-        const[advisor, setAdvisor] = useState<any>();
-
-        useEffect(() => {
-            requestAdvisor().then(r => console.log("StudentAdvisement"));
-        }, [])
-
-        async function requestAdvisor() {
-            axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
-                params: {
-                    func: "getAdvisorByStudentID",
-                    id: props.targetStudent
-                }
-            }).then(res => {
-                let {error, advisor} = res.data;
-                setAdvisor(advisor);
-            }).catch(function(err) {
-                console.log(err.message);
-            })
-        }
-    */
-
     return <Fragment>
-        <h1>Welcome to the Student Registration</h1>
+        <h1>Student Registration</h1>
         <div  className={'bubble-container'}>
             <div style={{display:"flex", marginTop:32, marginBottom:32}}>
                 <div className={'page-bubble'} onClick={()=>navigate('./../register-course')}>
@@ -73,30 +50,6 @@ function StudentRegistration(props:any) {
 
 function FacultyRegistration(props:any) {
     const navigate = useNavigate();
-
-    /*
-
-        const[advisor, setAdvisor] = useState<any>();
-
-        useEffect(() => {
-            requestAdvisor().then(r => console.log("FacultyAdvisement"));
-        }, [])
-
-        async function requestAdvisor() {
-            axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
-                params: {
-                    func: "getAdvisorByFacultyID",
-                    id: props.targetFaculty
-                }
-            }).then(res => {
-                let {error, advisor} = res.data;
-                setAdvisor(advisor);
-            }).catch(function(err) {
-                console.log(err.message);
-            })
-        }
-    */
-
     return <Fragment>
         <h1>Welcome to the Faculty Console</h1>
         <div  className={'bubble-container'}>

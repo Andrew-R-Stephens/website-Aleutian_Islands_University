@@ -1,11 +1,11 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import axios from "axios";
 import {TablePagination} from "@mui/material";
-import "./../../../../../../css/Advisement.css"
-import "./../../../../../../css/Switch.css"
-import "./../../../../../../css/PeudoTable.css"
+import "../../../../css/Advisement.css"
+import "../../../../css/Switch.css"
+import "../../../../css/PeudoTable.css"
 
 function StudentAdvisement(props:any) {
 

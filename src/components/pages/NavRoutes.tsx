@@ -20,13 +20,16 @@ import DisplayMasterSchedule from "../DisplayMasterSchedule";
 import CourseCatalog from "../catalog/CourseCatalog";
 import DisplayAllStudents from "../DisplayAllStudents";
 import Settings from "./login/users/Settings";
-import Academics from "./login/users/student/pages/Academics";
+import Academics from "./login/users/Academics";
 import Registration from "./login/users/student/pages/Registration";
-import Advisement from "./login/users/student/pages/Advisement";
+import Advisement from "./login/users/Advisement";
 import Holds from "./login/users/student/pages/Holds";
 import RegisterCourse from "./login/users/student/pages/RegisterCourse";
 import EnrollProgram from "./login/users/student/pages/EnrollProgram";
 import SemesterSchedule from "./login/users/SemesterSchedule";
+import SemesterGrades from "./login/users/student/pages/SemesterGrades";
+import UnofficialTranscript from "./login/users/student/pages/UnofficialTranscript";
+import DegreeAudit from "./login/users/student/pages/DegreeAudit";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -129,6 +132,9 @@ function NavRoutes() {
                                         <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                                         <Route path={"holds"} element={<UserConsole child={<Holds/>}/>}/>
                                         <Route path={"semester-schedule"} element={<UserConsole child={<SemesterSchedule/>}/>}/>
+                                        <Route path={"semester-grades"} element={<UserConsole child={<SemesterGrades/>}/>}/>
+                                        <Route path={"unofficial-transcript"} element={<UserConsole child={<UnofficialTranscript/>}/>}/>
+                                        <Route path={"degree-audit"} element={<UserConsole child={<DegreeAudit/>}/>}/>
                                     </Route>
                                     <Route path={"faculty"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Faculty]}/>}>
