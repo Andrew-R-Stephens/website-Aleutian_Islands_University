@@ -3,17 +3,28 @@ import '../../../../../../css/ConsoleHome.css';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import "./../../../../../../css/Icons.css"
-import {UserAuthStore} from "../../../../../../stores/AuthUserStore";
+import {RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
 import PersonalInformationDetails from "../../../../../../classes/PersonalInformationDetails";
 
 function Holds(props:any) {
 
-    const {targetUser} = props;
+    const {targetUID, targetRole} = props;
+
     const userStoreID = UserAuthStore((state:any) => state.userID);
-    const [userID, setID] = useState(targetUser?targetUser:userStoreID);
+    const userStoreRole = RoleAuthStore((state:any) => state.authRole);
+    const [userID, setID] = useState(userStoreID);
+    const [userRole, setUserRole] = useState(userStoreRole);
 
     const [holds, setHolds] = useState<any[]>();
     const [personalInformation, setPersonalInformation] = useState<PersonalInformationDetails>();
+
+    useEffect(() => {
+        if(targetRole && targetUID) {
+            setUserRole(targetRole+"");
+            setID(targetUID);
+            console.log(targetUID, targetRole)
+        }
+    }, [targetUID && targetRole])
 
     useEffect(() => {
         requestUserPersonalInformation().then(r=>console.log("Personal Info request completed."));

@@ -46,6 +46,10 @@ function StudentAdvisement(props:any) {
 
 function FacultyAdvisement(props:any) {
 
+    const roleStoreID = RoleAuthStore((state:any) => state.authRole);
+
+    const navigate = useNavigate();
+
     enum ViewAdvisees {
         all = 0,
         self = 1
@@ -173,14 +177,17 @@ function FacultyAdvisement(props:any) {
         setViewAdviseesOption(event.target.checked ? ViewAdvisees.all : ViewAdvisees.self);
     }
 
+    function handleSelectAdvisee(uid:any) {
+        navigate('./../advisor-console', {state:{targetUID:uid, godRole:roleStoreID}});
+    }
+
     function displayAdvisees_all() {
         return (
             <div>
                 <div style={{marginBottom: 50}}>
                     <div className={'div-table'}>
                         <div>
-                            <div style={{textAlign:"left", fontSize:32, marginTop: 32, fontWeight: "bold"}}>
-                                <label>All Advisees</label></div>
+                            <div style={{textAlign:"left", fontSize:32, marginTop: 32, fontWeight: "bold"}}><label>All Advisees</label></div>
                             <TablePagination component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={adviseeCount.current}
                                              page={paginationPage} rowsPerPage={maxPaginationResults} onPageChange={handleChangePaginate}
                                              onRowsPerPageChange={handleChangePaginationRowsPerPage}/>
@@ -198,7 +205,8 @@ function FacultyAdvisement(props:any) {
                             <div className={'div-table-row'} style={{display:"flex"}}>
                                 <div className={'div-table-col'} style={{display:"flex"}}>
                                     <div className={'div-table-button-wrapper'}>
-                                        <div className={'div-table-button'}>
+                                        <div className={'div-table-button'}
+                                            onClick={() => handleSelectAdvisee(a.UID)}>
                                             <div className={'div-table-button-content'}>View</div>
                                         </div>
                                     </div>
@@ -236,7 +244,8 @@ function FacultyAdvisement(props:any) {
                                 <div className={'div-table-row'} style={{display:"flex"}}>
                                     <div className={'div-table-col'} style={{display:"flex"}}>
                                         <div className={'div-table-button-wrapper'}>
-                                            <div className={'div-table-button'}>
+                                            <div className={'div-table-button'}
+                                                 onClick={() => handleSelectAdvisee(a.UID)}>
                                                 <div className={'div-table-button-content'}>View</div>
                                             </div>
                                         </div>
@@ -361,23 +370,35 @@ function FacultyAdvisement(props:any) {
 
 function AdministratorAdvisement(props:any) {
 
+    const roleStoreID = RoleAuthStore((state:any) => state.authRole);
+
+    const navigate = useNavigate();
+
     enum ViewAdvisees {
         all = 0
+    }
+
+    enum ViewAdvisorsOrAdvisees {
+        advisees = 0,
+        advisors = 1
     }
 
     const[advisor, setAdvisor] = useState<any>(props.targetFaculty);
     const[advisees_self, setAdvisees_self] = useState<any[]>();
     const[advisees_all, setAdvisees_all] = useState<any[]>();
+    const[advisors_all, setAdvisors_all] = useState<any[]>();
 
     const adviseeCount = useRef(0);
+    const advisorCount = useRef(0);
     const [paginationPage, setPaginationPage] = useState(0);
     const [maxPaginationResults, setMaxPaginationResults] = useState(15);
 
-    const [viewAdviseesOption, setViewAdviseesOption] = useState(ViewAdvisees.all)
+    const [viewAdvisorsOption, setViewAdvisorsOption] = useState(ViewAdvisorsOrAdvisees.advisees)
 
     useEffect(() => {
         requestAdvisor().then(r => console.log("FacultyAdvisor", advisor));
         requestAllAdvisees().then(r => console.log("FacultyAdviseesAll", advisees_all));
+        requestAllAdvisors().then(r => console.log("FacultyAdvisorsAll", advisors_all));
     }, [])
 
     useEffect(() => {
@@ -385,7 +406,9 @@ function AdministratorAdvisement(props:any) {
     }, [advisor])
 
     useEffect(() => {
-        requestAllAdvisees().then(r => console.log("FacultyAdviseesAll", advisees_all));
+        viewAdvisorsOption === ViewAdvisorsOrAdvisees.advisees ?
+            requestAllAdvisees().then(r => console.log("FacultyAdviseesAll", advisees_all))
+            : requestAllAdvisors().then(r => console.log("FacultyAdvisorsAll", advisors_all));
     }, [paginationPage, maxPaginationResults])
 
     async function requestAdvisor() {
@@ -435,6 +458,23 @@ function AdministratorAdvisement(props:any) {
         })
     }
 
+    async function requestAllAdvisors() {
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "getAllAdvisors",
+                pageNum : paginationPage,
+                maxResults: maxPaginationResults
+            }
+        }).then(res => {
+            let {error, advisors, count} = res.data;
+            console.log(advisors)
+            advisorCount.current = count;
+            setAdvisors_all(advisors);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
     const handleChangePaginate = (event: any, newPage: number) => {
         event.preventDefault();
         setPaginationPage(newPage);
@@ -446,10 +486,108 @@ function AdministratorAdvisement(props:any) {
         setPaginationPage(0);
     };
 
+    const handleChangeDisplayAdvisorOrAdvisees = (choice:any) => {
+        setPaginationPage(0);
+        setMaxPaginationResults(15);
+        setViewAdvisorsOption(choice);
+    }
+
     const handleChangeDisplayAdvisees = (event:any) => {
         event.preventDefault();
-        console.log(event.target.checked)
-        setViewAdviseesOption(event.target.checked ? ViewAdvisees.all : ViewAdvisees.all);
+        setPaginationPage(0);
+        setMaxPaginationResults(15);
+    }
+
+    function handleSelectAdvisee(uid:any) {
+        navigate('./../advisor-console', {state:{targetUID:uid, godRole:roleStoreID}});
+    }
+
+    function displayAdvisees_all() {
+        return (
+            <div>
+                <div style={{marginBottom: 50}}>
+                    <div className={'div-table'}>
+                        <div>
+                            <div style={{textAlign:"left", fontSize:32, marginTop: 32, fontWeight: "bold"}}>
+                                <label>All Advisees</label></div>
+                            <TablePagination component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={adviseeCount.current}
+                                             page={paginationPage} rowsPerPage={maxPaginationResults} onPageChange={handleChangePaginate}
+                                             onRowsPerPageChange={handleChangePaginationRowsPerPage}/>
+                        </div>
+                        <div className={'div-table-header'} style={{display:"flex"}}>
+                            <div className={'div-table-col'}></div>
+                            <div className={'div-table-col'}><label>Advisee ID</label></div>
+                            <div className={'div-table-col'}><label>Advisee First</label></div>
+                            <div className={'div-table-col'}><label>Advisee Last</label></div>
+                            <div className={'div-table-col'}><label>Advisee Phone</label></div>
+                            <div className={'div-table-col'}><label>Advisee Email</label></div>
+                            <div className={'div-table-col'}><label>Advisor ID</label></div>
+                        </div>{
+                        advisees_all?.map((a:any) => (
+                            <div className={'div-table-row'} style={{display:"flex"}}>
+                                <div className={'div-table-col'} style={{display:"flex"}}>
+                                    <div className={'div-table-button-wrapper'}>
+                                        <div className={'div-table-button'}
+                                             onClick={() => handleSelectAdvisee(a.UID)}>
+                                            <div className={'div-table-button-content'}>View</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={'div-table-col'}><label>{a.UID}</label></div>
+                                <div className={'div-table-col'}><label>{a.FirstName}</label></div>
+                                <div className={'div-table-col'}><label>{a.LastName}</label></div>
+                                <div className={'div-table-col'}><label>{a.PhoneNum}</label></div>
+                                <div className={'div-table-col'}><label>{a.Email}</label></div>
+                                <div className={'div-table-col'}><label>{a.F_UID}</label></div>
+                            </div>
+                        ))
+                    }
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    function displayAdvisors_all() {
+        return (
+            <div>
+                <div style={{marginBottom: 50}}>
+                    <div className={'div-table'}>
+                        <div>
+                            <div style={{textAlign:"left", fontSize:32, marginTop: 32, fontWeight: "bold"}}><label>All Advisors</label></div>
+                            <TablePagination component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={advisorCount.current}
+                                             page={paginationPage} rowsPerPage={maxPaginationResults} onPageChange={handleChangePaginate}
+                                             onRowsPerPageChange={handleChangePaginationRowsPerPage}/>
+                        </div>
+                        <div className={'div-table-header'} style={{display:"flex"}}>
+                            <div className={'div-table-col'}></div>
+                            <div className={'div-table-col'}><label>ID</label></div>
+                            <div className={'div-table-col'}><label>First</label></div>
+                            <div className={'div-table-col'}><label>Last</label></div>
+                            <div className={'div-table-col'}><label>Phone</label></div>
+                            <div className={'div-table-col'}><label>Email</label></div>
+                        </div>{
+                        advisors_all?.map((a:any) => (
+                            <div className={'div-table-row'} style={{display:"flex"}}>
+                                <div className={'div-table-col'} style={{display:"flex"}}>
+                                    <div className={'div-table-button-wrapper'}>
+                                        <div className={'div-table-button'}>
+                                            <div className={'div-table-button-content'}>View</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={'div-table-col'}><label>{a.UID}</label></div>
+                                <div className={'div-table-col'}><label>{a.FirstName}</label></div>
+                                <div className={'div-table-col'}><label>{a.LastName}</label></div>
+                                <div className={'div-table-col'}><label>{a.PhoneNum}</label></div>
+                                <div className={'div-table-col'}><label>{a.Email}</label></div>
+                            </div>
+                        ))
+                    }
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     function handleEmail (email:string) {
@@ -457,46 +595,55 @@ function AdministratorAdvisement(props:any) {
     }
 
     return <div>
-        <div>
-            <div style={{marginBottom: 50}}>
-                <div style={{textAlign:"left", fontSize:32, marginTop: 32, fontWeight: "bold"}}><label></label>All Advisees</div>
-                <TablePagination component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={adviseeCount.current}
-                                 page={paginationPage} rowsPerPage={maxPaginationResults} onPageChange={handleChangePaginate}
-                                 onRowsPerPageChange={handleChangePaginationRowsPerPage}/>
-                <div className={'div-table'}>
-                    <div className={'div-table-header'} style={{display:"flex"}}>
-                        <div className={'div-table-col'}></div>
-                        <div className={'div-table-col'}><label>First Name</label></div>
-                        <div className={'div-table-col'}><label>Last Name</label></div>
-                        <div className={'div-table-col'}><label>Phone Number</label></div>
-                        <div className={'div-table-col'}><label>Email</label></div>
-                    </div>{
-                    advisees_all?.map((a:any) => (
-                        <div className={'div-table-row'} style={{display:"flex"}}>
-                            <div className={'div-table-col div-table-button'}><div className={'div-table-button-content'}>View</div></div>
-                            <div className={'div-table-col'}><label>{a.FirstName}</label></div>
-                            <div className={'div-table-col'}><label>{a.LastName}</label></div>
-                            <div className={'div-table-col'}><label>{a.PhoneNum}</label></div>
-                            <div className={'div-table-col'}><label>{a.Email}</label></div>
+        <div style={{margin: "auto"}}>
+            <div style={{margin: "auto", maxWidth: 700}}>
+                <div style={{maxWidth:700, marginLeft:"auto", marginRight:"auto"}}>
+                    <div style={{margin: 32, padding:16}}>
+                        <div style={{fontSize:32, marginBottom: 16, fontWeight: "bold"}}><label></label>Administrator Advisement</div>
+                    </div>
+                    <div style={{display:"flex", marginTop:32, marginLeft:"auto", marginRight:"auto"}}>
+                        <div
+                            className={'advisor-button'}
+                            role={viewAdvisorsOption===ViewAdvisorsOrAdvisees.advisees?'active':'inactive'}
+                            onClick={() => handleChangeDisplayAdvisorOrAdvisees(ViewAdvisorsOrAdvisees.advisees)}>
+                            <label style={{textAlign: "center", padding: 4, fontWeight:"bold"}}>View Advisees</label>
                         </div>
-                    ))
-                }
+                        <div
+                            className={'advisor-button'}
+                            role={viewAdvisorsOption===ViewAdvisorsOrAdvisees.advisors?'active':'inactive'}
+                            onClick={() => handleChangeDisplayAdvisorOrAdvisees(ViewAdvisorsOrAdvisees.advisors)}>
+                            <label style={{textAlign: "center", padding: 4, fontWeight:"bold"}}>View Advisors</label>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {
+                !viewAdvisorsOption ?
+                    displayAdvisees_all() : displayAdvisors_all()
+            }
         </div>
     </div>;
 }
 
-function Advisement() {
+function Advisement(props:any) {
+
+    const {targetUID, targetRole} = props;
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userStoreRole = RoleAuthStore((state:any) => state.authRole);
     const [userID, setID] = useState(userStoreID);
+    const [userRole, setUserRole] = useState(userStoreRole);
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        if(targetRole && targetUID) {
+            setUserRole(targetRole+"");
+            setID(targetUID);
+            console.log(targetUID, targetRole)
+        }
+    }, [targetUID && targetRole])
 
     function displayAdvisement() {
-        switch(userStoreRole) {
+        switch(userRole) {
             case AuthRole.Student: {
                 return displayStudentAdvisement();
             }
@@ -506,9 +653,8 @@ function Advisement() {
             case AuthRole.Administrator: {
                 return displayAdministratorAdvisement();
             }
-            default: return <Fragment/>
+            default: return <Fragment>404 {userRole}</Fragment>
         }
-
     }
 
     function displayStudentAdvisement(){

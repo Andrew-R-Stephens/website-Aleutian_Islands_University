@@ -1,6 +1,14 @@
 import create from 'zustand'
 import {persist} from "zustand/middleware";
 
+export enum Roles {
+    Visitor,
+    Student,
+    Faculty,
+    Administrator,
+    Researcher
+}
+
 export const AuthRole = {
     Visitor: '0',
     Student: '1',

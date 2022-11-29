@@ -74,12 +74,28 @@ switch($func) {
         getAllStudents_Identifiable($conn);
         return;
     }
+    case 'getUserRoleByUID': {
+        getUserRoleByUID($conn);
+        return;
+    }
+    case 'getAllPeriods': {
+        getAllPeriods($conn);
+        return;
+    }
+    case 'getAllDays': {
+        getAllDays($conn);
+        return;
+    }
     case 'getMasterScheduleBySemesterID': {
         getMasterScheduleBySemesterID($conn);
         return;
     }
     case 'getSemesterIDsInRange': {
         getSemesterIDsInRange($conn);
+        return;
+    }
+    case 'getSemesterIDsInHistoryByStudentID': {
+        getSemesterIDsInHistoryByStudentID($conn);
         return;
     }
     case 'getAllAdvisors': {
@@ -108,6 +124,14 @@ switch($func) {
     }
     case 'getHoldsByStudentID': {
         getHoldsByStudentID($conn);
+        return;
+    }
+    case 'getProgramEnrollmentByStudentID': {
+        getProgramEnrollmentByStudentID($conn);
+        return;
+    }
+    case 'getHistoryByStudentIDAndSemesterID': {
+        getHistoryByStudentIDAndSemesterID($conn);
         return;
     }
     default: {
@@ -591,8 +615,12 @@ function getMasterScheduleBySemesterID($conn) {
         $out_courses['RoomID'],
         $out_courses['BuildingName'],
         $out_courses['RoomNum'],
+        $out_courses['PeriodID1'],
+        $out_courses['PeriodID2'],
+        $out_courses['DayID1'],
         $out_courses['DayName1'],
         $out_courses['DayName1Abbr'],
+        $out_courses['DayID2'],
         $out_courses['DayName2'],
         $out_courses['DayName2Abbr'],
         $out_courses['StartTime1'],
@@ -669,6 +697,41 @@ function getAllStudents_Identifiable($conn) {
 function getSemesterIDsInRange($conn) {
 
     $stmt = $conn->prepare("CALL getSemesterIDsInRange()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['SemesterID'],
+        $out_courses['Term'],
+        $out_courses['Year']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['SemesterIDs'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getSemesterIDsInHistoryByStudentID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+
+    $id = $_GET['id'];
+    $stmt = $conn->prepare("CALL getSemesterIDsInHistoryByStudentID(?)");
+    $stmt->bind_param("s", $id);
     $stmt->execute();
 
     $out_courses = [];
@@ -1023,6 +1086,171 @@ function getHoldsByStudentID($conn) {
     }
 
     $final_arr['holds'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getProgramEnrollmentByStudentID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getProgramEnrollmentByStudentID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['ProgramID'],
+        $out_schedule['UID'],
+        $out_schedule['ProgramName'],
+        $out_schedule['ProgramTypeID'],
+        $out_schedule['Description']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['enrollments'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getHistoryByStudentIDAndSemesterID($conn) {
+    if(!(isset($_GET['id'], $_GET['semesterID']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+    $semesterID = $_GET['semesterID'];
+
+    $stmt = $conn->prepare("CALL getHistoryByStudentIDAndSemesterID(?,?)");
+    $stmt->bind_param("ss", $id, $semesterID);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['CRN'],
+        $out_schedule['CourseID'],
+        $out_schedule['Name'],
+        $out_schedule['SectionID'],
+        $out_schedule['ID'],
+        $out_schedule['GradeID'],
+        $out_schedule['SemPeriod']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['semesterHistory'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAllPeriods($conn) {
+    $stmt = $conn->prepare("CALL getAllPeriods()");
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['PeriodID'],
+        $out_schedule['StartTime'],
+        $out_schedule['EndTime']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['periods'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAllDays($conn) {
+    $stmt = $conn->prepare("CALL getAllDays()");
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['DayID'],
+        $out_schedule['Name'],
+        $out_schedule['NameAbbr']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['days'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getUserRoleByUID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getUserRoleByUID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['UID'],
+        $out_schedule['UserType']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['userData'] = $completeArray;
 
     echo(json_encode($final_arr));
 

@@ -5,13 +5,23 @@ import "./../../../../css/PeudoTable.css"
 
 function SemesterSchedule(props:any) {
 
-    const {targetUID} = props;
+    const {targetUID, targetRole} = props;
+
     const userStoreID = UserAuthStore((state:any) => state.userID);
-    const roleStoreID = RoleAuthStore((state:any) => state.authRole);
+    const userStoreRole = RoleAuthStore((state:any) => state.authRole);
+    const [userID, setID] = useState(userStoreID);
+    const [userRole, setUserRole] = useState(userStoreRole);
+
+    useEffect(() => {
+        if(targetRole && targetUID) {
+            setUserRole(targetRole+"");
+            setID(targetUID);
+            console.log(targetUID, targetRole)
+        }
+    }, [targetUID && targetRole])
 
     const [semesterIDs, setSemesterIDs] = useState<any []>();
 
-    const [uid, setUID] = useState<string>(targetUID ? targetUID : userStoreID);
     const [selectedSemesterID, setSelectedSemesterID] = useState<string>();
     const [semesterSchedule, setSemesterSchedule] = useState<any[]>();
 
@@ -25,7 +35,7 @@ function SemesterSchedule(props:any) {
     }, [semesterIDs])
 
     useEffect(() => {
-        if(selectedSemesterID && uid) {
+        if(selectedSemesterID && userID) {
             requestScheduleByUIDAndSemesterID().then(r => console.log("Schedule Request Done"));
         }
     }, [selectedSemesterID])
@@ -49,11 +59,11 @@ function SemesterSchedule(props:any) {
     }
 
     async function requestScheduleByUIDAndSemesterID() {
-        console.log("requesting", uid, selectedSemesterID);
+        console.log("requesting", userID, selectedSemesterID);
         axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
                 func: "getScheduleByUIDAndSemesterID",
-                id: uid,
+                id: userID,
                 semesterID: selectedSemesterID
             }
         }).then(res => {

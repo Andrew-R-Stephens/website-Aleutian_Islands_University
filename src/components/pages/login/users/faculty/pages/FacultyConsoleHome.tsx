@@ -18,7 +18,7 @@ function FacultyConsoleHome() {
                 <h1>Welcome to the Faculty Console</h1>
                 <div  className={'bubble-container'}>
                     <div style={{display:"flex", marginTop:32, marginBottom:32}}>
-                        <div className={'page-bubble'} onClick={()=>navigate('./../educator-console')}>
+                        <div className={'page-bubble'} onClick={()=>navigate('./../registration')}>
                             <div className={'icon-console-educator'}/>
                             <label className={'page-bubble-label'}>Educator Console</label>
                             <div className={'page-bubble-description'}>Expands the options for managing your current

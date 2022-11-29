@@ -30,6 +30,8 @@ import SemesterSchedule from "./login/users/SemesterSchedule";
 import SemesterGrades from "./login/users/student/pages/SemesterGrades";
 import UnofficialTranscript from "./login/users/student/pages/UnofficialTranscript";
 import DegreeAudit from "./login/users/student/pages/DegreeAudit";
+import EducatorConsole from "./login/users/faculty/components/EducatorConsole";
+import AdvisorConsole from "./login/users/faculty/components/AdvisorConsole";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -151,6 +153,11 @@ function NavRoutes() {
                                         <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                                         <Route path={"holds"} element={<UserConsole child={<Holds/>}/>}/>
                                         <Route path={"semester-schedule"} element={<UserConsole child={<SemesterSchedule/>}/>}/>
+                                        <Route path={"semester-grades"} element={<UserConsole child={<SemesterGrades/>}/>}/>
+                                        <Route path={"unofficial-transcript"} element={<UserConsole child={<UnofficialTranscript/>}/>}/>
+                                        <Route path={"degree-audit"} element={<UserConsole child={<DegreeAudit/>}/>}/>
+                                        <Route path={"educator-console"} element={<UserConsole child={<EducatorConsole/>}/>}/>
+                                        <Route path={"advisor-console"} element={<UserConsole child={<AdvisorConsole/>}/>}/>
                                     </Route>
                                     <Route path={"administrator"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>}>
@@ -164,6 +171,7 @@ function NavRoutes() {
                                         <Route path={"registration"} element={<UserConsole child={<Registration/>}/>}/>
                                         <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
                                         <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
+                                        <Route path={"advisor-console"} element={<UserConsole child={<AdvisorConsole/>}/>}/>
                                     </Route>
                                     <Route path={"researcher"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Researcher]}/>}>
