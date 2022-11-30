@@ -20,14 +20,15 @@ function DisplayMasterSchedule(props:any) {
     const [days, setDays] = useState([]);
 
     const [selectedSemesterID, setSelectedSemesterID] = useState<any>();
-    const [selectedDepartment, setSelectedDepartment] = useState<any>();
+    const [selectedDepartment, setSelectedDepartment] = useState<string>("");
     const [selectedPeriod, setSelectedPeriod] = useState<any[]>([]);
-    const [selectedDay, setSelectedDay] = useState<any>();
-    const [selectedCourseName, setSelectedCourseName] = useState<string>();
-    const [selectedCourseID, setSelectedCourseID] = useState<string>();
-    const [selectedRoom, setSelectedRoom] = useState<string>();
-    const [selectedInstructorName, setSelectedInstructorName] = useState<string>();
+    const [selectedDay, setSelectedDay] = useState<any[]>([]);
+    const [selectedCourseName, setSelectedCourseName] = useState<string>("");
+    const [selectedCourseID, setSelectedCourseID] = useState<string>("");
+    const [selectedRoom, setSelectedRoom] = useState<string>("");
+    const [selectedInstructorName, setSelectedInstructorName] = useState<string>("");
 
+    const [filteredSections, setFilteredSections] = useState<any[]>([]);
 
     const [semesterSections, setSemesterSections]= useState<any>([]);
 
@@ -50,6 +51,11 @@ function DisplayMasterSchedule(props:any) {
     useEffect(() => {
         console.log(selectedPeriod)
     }, [selectedPeriod])
+
+    useEffect(() => {
+        filterSections().then(r=>setFilteredSections(r));
+    }, [selectedSemesterID, selectedDepartment, selectedPeriod, selectedDay, selectedCourseName, selectedCourseID,
+        selectedRoom, selectedInstructorName])
 
     async function requestViewableSemesters() {
         await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
@@ -132,50 +138,44 @@ function DisplayMasterSchedule(props:any) {
 
     const handleSelectSemesterID = (event:any) => {
         event.preventDefault();
-        console.log('Selected key', event.target.value)
         setSelectedSemesterID(event.target.value);
     }
 
     const handleSelectedDepartment = (event:any) => {
         event.preventDefault();
-        console.log('Selected key', event.target.value)
         setSelectedDepartment(event.target.value);
     }
 
     const handleSelectedCourseID = (event:any) => {
         event.preventDefault();
-        console.log('Selected key', event.target.value)
         setSelectedCourseID(event.target.value);
     }
 
     const handleSelectedCourseName = (event:any) => {
         event.preventDefault();
-        console.log('Selected key', event.target.value)
         setSelectedCourseName(event.target.value);
     }
 
     const handleSelectedFacultyName = (event:any) => {
         event.preventDefault();
-        console.log('Selected key', event.target.value)
         setSelectedInstructorName(event.target.value);
     }
 
     const handleSelectedRoom = (event:any) => {
         event.preventDefault();
-        console.log('Selected key', event.target.value)
         setSelectedRoom(event.target.value);
     }
 
     function handleSelectedPeriod(event:any, periodID : string) {
-        console.log('Selected key', periodID, event.target.checked)
         setSelectedPeriod(old => old.filter((p:any)=>(p !== periodID)));
         if(event.target.checked)
             setSelectedPeriod(old => [...old, periodID]);
     }
 
-    const handleSelectedDay = (event:any) => {
-        console.log('Selected key', event.target.value)
-        setSelectedDay(event.target.value);
+    function handleSelectedDay(event:any, dayID : string) {
+        setSelectedDay(old => old.filter((d:any)=>(d !== dayID)));
+        if(event.target.checked)
+            setSelectedDay(old => [...old, dayID]);
     }
 
     function displayFilterSemester() {
@@ -198,6 +198,7 @@ function DisplayMasterSchedule(props:any) {
             <div style={{display: "inline-block", marginLeft:"auto", marginRight:"auto"}}>
                 <label style={{display:"flex", marginLeft: 8, marginRight: "auto", width:"fit-content", fontSize:12, fontWeight:"bold"}}>Department</label>
                 <select style={{display:"flex", margin: "auto", width:"fit-content"}} onChange={handleSelectedDepartment}>
+                    <option value={''}>-- Any --</option>
                     {
                         departments?.map((department: any) => (
                             <option>{department.DepartmentID}</option>
@@ -226,7 +227,7 @@ function DisplayMasterSchedule(props:any) {
                 <label style={{display:"flex", marginLeft: 8, marginRight: "auto", width:"fit-content", fontSize:12, fontWeight:"bold"}}>Course Name</label>
                 <input style={{display:"flex", margin: "auto", width:"fit-content"}} type={'text'}
                        autoComplete={'on'}
-                       value={selectedCourseID}
+                       value={selectedCourseName}
                        onChange={handleSelectedCourseName}/>
             </div>
         );
@@ -239,7 +240,7 @@ function DisplayMasterSchedule(props:any) {
                 <label style={{display:"flex", marginLeft: 8, marginRight: "auto", width:"fit-content", fontSize:12, fontWeight:"bold"}}>Instructor Name</label>
                 <input style={{display:"flex", margin: "auto", width:"fit-content"}} type={'text'}
                        autoComplete={'on'}
-                       value={selectedCourseID}
+                       value={selectedInstructorName}
                        onChange={handleSelectedFacultyName}/>
             </div>
         );
@@ -251,7 +252,7 @@ function DisplayMasterSchedule(props:any) {
                 <label style={{display:"flex", marginLeft: 8, marginRight: "auto", width:"fit-content", fontSize:12, fontWeight:"bold"}}>Room</label>
                 <input style={{display:"flex", margin: "auto", width:"fit-content"}} type={'text'}
                        autoComplete={'on'}
-                       value={selectedCourseID}
+                       value={selectedRoom}
                        onChange={handleSelectedRoom}/>
             </div>
         );
@@ -288,7 +289,7 @@ function DisplayMasterSchedule(props:any) {
                             days?.map((d: any) => (
                                 <div style={{textAlign:"left"}}>
                                     <input type={'checkbox'}
-                                           onChange={handleSelectedDay}
+                                           onChange={(event)=>handleSelectedDay(event, d.DayID)}
                                     />
                                     <label style={{paddingLeft:8}}>{d.Name}</label>
                                 </div>
@@ -327,14 +328,24 @@ function DisplayMasterSchedule(props:any) {
         return hour+":"+split[1]+" "+zone;
     }
 
-    function filterSections() {
+    async function filterSections() {
         const newSem = semesterSections!?.filter((s:any)=> (
             selectedDepartment === "" || s.DepartmentID === selectedDepartment
         ))!.filter((s:any)=> (
-            s.PeriodID1 !== "1"
-        ))/*!.filter((s:any)=> (
-            s.DayID === "" || s.DayID === selectedDay.DayID1 || s.DayID2 === selectedDay.DayID2
-        ))*/
+            !(selectedPeriod.length>0) || (selectedPeriod?.includes(s.PeriodID1 || s.PeriodID2))
+        ))!.filter((s:any)=> (
+           !(selectedDay.length>0) || (selectedDay?.includes(s.DayID1 || s.DayID2))
+        ))!.filter((s:any)=> (
+            selectedCourseID === "" || (s.CourseID.includes(selectedCourseID))
+        ))!.filter((s:any)=> (
+            selectedCourseName === "" || (s.Name.includes(selectedCourseName))
+        ))!.filter((s:any)=> (
+            selectedInstructorName === "" || (s.FirstName.includes(selectedInstructorName.split(' ')[0])
+                || (s.LastName.includes(selectedInstructorName.split(' ')[1])))
+        ))!.filter((s:any)=> (
+            selectedRoom === "" || (s.RoomID.includes(selectedRoom))
+        ))
+
         return newSem;
     }
 
@@ -370,7 +381,7 @@ function DisplayMasterSchedule(props:any) {
                 </div>
                 <div style={{maxHeight:"50vh", overflowY:"auto"}}>
                 {
-                    filterSections()?.map((s:any) => (
+                    filteredSections?.map((s:any) => (
                         <div className={'div-table-row'} style={{display:"flex"}}>
                             <div className={'div-table-col'} style={{display:"inline-flex"}}>
                                 <div className={'div-table-button-wrapper'}>
