@@ -2,6 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
 import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import "./../../../../css/PeudoTable.css"
+import DisplayCourseSection from "./DisplayCourseSection";
 
 function SemesterSchedule(props:any) {
 
@@ -12,6 +13,14 @@ function SemesterSchedule(props:any) {
     const [userID, setID] = useState(userStoreID);
     const [userRole, setUserRole] = useState(userStoreRole);
 
+    const [semesterIDs, setSemesterIDs] = useState<any []>();
+    const [selectedSemesterID, setSelectedSemesterID] = useState<string>();
+
+    const [semesterSchedule, setSemesterSchedule] = useState<any[]>();
+
+    const [selectedCRN, setSelectedCRN] = useState<string>();
+
+
     useEffect(() => {
         if(targetRole && targetUID) {
             setUserRole(targetRole+"");
@@ -19,11 +28,6 @@ function SemesterSchedule(props:any) {
             console.log(targetUID, targetRole)
         }
     }, [targetUID && targetRole])
-
-    const [semesterIDs, setSemesterIDs] = useState<any []>();
-
-    const [selectedSemesterID, setSelectedSemesterID] = useState<string>();
-    const [semesterSchedule, setSemesterSchedule] = useState<any[]>();
 
     useEffect(() => {
         requestViewableSemesters().then();
@@ -81,6 +85,19 @@ function SemesterSchedule(props:any) {
         setSelectedSemesterID(event.target.value);
     }
 
+    function handleSelectCRN(event:any, CRN:string){
+        event.preventDefault();
+        setSelectedCRN(CRN);
+    }
+
+    function displayCourseSection() {
+        return (
+            <Fragment>
+                <DisplayCourseSection targetCRN={selectedCRN} godRole={userStoreRole}/>
+            </Fragment>
+        );
+    }
+
     return (
         <Fragment>
             <div style={{margin:32}}>
@@ -112,7 +129,8 @@ function SemesterSchedule(props:any) {
                             <div className={'div-table-row'} style={{display:"flex"}}>
                                 <div className={'div-table-col'} style={{display:"flex"}}>
                                     <div className={'div-table-button-wrapper'}>
-                                        <div className={'div-table-button'}>
+                                        <div className={'div-table-button'}
+                                             onClick={(event)=>handleSelectCRN(event, item.CRN)}>
                                             <div className={'div-table-button-content'}>View</div>
                                         </div>
                                     </div>
@@ -140,6 +158,8 @@ function SemesterSchedule(props:any) {
 
                     }
                 </div>
+                {selectedCRN?displayCourseSection():<></>}
+
             </div>
         </Fragment>
     );

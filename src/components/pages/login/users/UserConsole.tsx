@@ -181,11 +181,11 @@ function UserConsole(props:any) {
 
                 <div className={'navLink-children'} id={page==1?'active':'inactive'}>
                     <div className={'navLink-child'} onClick={(event:any) =>
-                        handleSelectLink(event,1, './../master-schedule',14)}
-                         role={childPage===14?'active':'inactive'}>Master Schedule</div>
+                        handleSelectLink(event,1, './../master-schedule',11)}
+                         role={childPage===11?'active':'inactive'}>Master Schedule</div>
                     <div className={'navLink-child'} onClick={(event:any) =>
-                        handleSelectLink(event,1, './../catalog',14)}
-                         role={childPage===14?'active':'inactive'}>Course Catalog</div>
+                        handleSelectLink(event,1, './../catalog',12)}
+                         role={childPage===12?'active':'inactive'}>Course Catalog</div>
                 </div>
 
                 <div className={'navLink item-last'} onClick={(event:any) =>

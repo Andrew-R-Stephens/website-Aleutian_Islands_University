@@ -32,6 +32,7 @@ import UnofficialTranscript from "./login/users/student/pages/UnofficialTranscri
 import DegreeAudit from "./login/users/student/pages/DegreeAudit";
 import EducatorConsole from "./login/users/faculty/components/EducatorConsole";
 import AdvisorConsole from "./login/users/faculty/components/AdvisorConsole";
+import CourseSection from "./login/users/CourseSection";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -137,6 +138,7 @@ function NavRoutes() {
                                         <Route path={"semester-grades"} element={<UserConsole child={<SemesterGrades/>}/>}/>
                                         <Route path={"unofficial-transcript"} element={<UserConsole child={<UnofficialTranscript/>}/>}/>
                                         <Route path={"degree-audit"} element={<UserConsole child={<DegreeAudit/>}/>}/>
+                                        <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
                                     </Route>
                                     <Route path={"faculty"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Faculty]}/>}>
@@ -158,6 +160,7 @@ function NavRoutes() {
                                         <Route path={"degree-audit"} element={<UserConsole child={<DegreeAudit/>}/>}/>
                                         <Route path={"educator-console"} element={<UserConsole child={<EducatorConsole/>}/>}/>
                                         <Route path={"advisor-console"} element={<UserConsole child={<AdvisorConsole/>}/>}/>
+                                        <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
                                     </Route>
                                     <Route path={"administrator"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>}>
@@ -172,6 +175,7 @@ function NavRoutes() {
                                         <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
                                         <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                                         <Route path={"advisor-console"} element={<UserConsole child={<AdvisorConsole/>}/>}/>
+                                        <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
                                     </Route>
                                     <Route path={"researcher"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Researcher]}/>}>
@@ -180,6 +184,7 @@ function NavRoutes() {
                                         <Route path={"console"} element={<UserConsole child={<Researcher/>}/>}/>
                                         <Route path={"master-schedule"} element={<UserConsole child={<DisplayMasterSchedule/>}/>}/>
                                         <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
+                                        <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
                                     </Route>
                                 </Route>
                             </Route>

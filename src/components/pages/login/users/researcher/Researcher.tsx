@@ -5,6 +5,7 @@ import SideBanner from "../../../../SideBanner";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
 import StudentHistoryComparator from "../../../../StudentHistoryComparator";
 import FacultyConsoleHome from "../faculty/pages/FacultyConsoleHome";
+import ResearcherConsoleHome from "./pages/ResearcherConsoleHome";
 
 function Researcher() {
 
@@ -23,7 +24,7 @@ function Researcher() {
                 <div className={'main-body'}>
                     <div className={'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <FacultyConsoleHome/>
+                            <ResearcherConsoleHome/>
                         </div>
                     </div>
                 </div>

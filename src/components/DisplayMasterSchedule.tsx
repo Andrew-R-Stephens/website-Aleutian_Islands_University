@@ -1,9 +1,10 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
-import {Checkbox} from "@mui/material";
+import {Checkbox, TablePagination} from "@mui/material";
 import {blue, pink, red} from "@mui/material/colors";
 import {Palette} from "@react-buddy/ide-toolbox";
+import {useNavigate} from "react-router-dom";
 
 function DisplayMasterSchedule(props:any) {
     const {targetUID} = props;
@@ -13,6 +14,9 @@ function DisplayMasterSchedule(props:any) {
 
     const [UID, setUID] = useState(targetUID?targetUID:userStoreID);
     const userRole = useRef(userRoleID);
+
+    const [pageNumber, setPageNumber] = useState(0);
+    const [maxResults, setMaxResults] = useState(10);
 
     const [semesterIDs, setSemesterIDs] = useState<any[]>([]);
     const [departments, setDepartments] = useState([]);
@@ -26,11 +30,14 @@ function DisplayMasterSchedule(props:any) {
     const [selectedCourseName, setSelectedCourseName] = useState<string>("");
     const [selectedCourseID, setSelectedCourseID] = useState<string>("");
     const [selectedRoom, setSelectedRoom] = useState<string>("");
+    const [selectedCredits, setSelectedCredits] = useState<string>("");
     const [selectedInstructorName, setSelectedInstructorName] = useState<string>("");
 
     const [filteredSections, setFilteredSections] = useState<any[]>([]);
 
     const [semesterSections, setSemesterSections]= useState<any>([]);
+
+    const navigate =  useNavigate();
 
     useEffect(() => {
         requestViewableSemesters().then(r => console.log("Completed Semester Request", semesterIDs));
@@ -53,8 +60,9 @@ function DisplayMasterSchedule(props:any) {
     }, [selectedPeriod])
 
     useEffect(() => {
+        setPageNumber(0)
         filterSections().then(r=>setFilteredSections(r));
-    }, [selectedSemesterID, selectedDepartment, selectedPeriod, selectedDay, selectedCourseName, selectedCourseID,
+    }, [semesterSections, selectedDepartment, selectedPeriod, selectedDay, selectedCourseName, selectedCredits, selectedCourseID,
         selectedRoom, selectedInstructorName])
 
     async function requestViewableSemesters() {
@@ -166,6 +174,11 @@ function DisplayMasterSchedule(props:any) {
         setSelectedRoom(event.target.value);
     }
 
+    const handleSelectedCredits = (event:any) => {
+        event.preventDefault();
+        setSelectedCredits(event.target.value);
+    }
+
     function handleSelectedPeriod(event:any, periodID : string) {
         setSelectedPeriod(old => old.filter((p:any)=>(p !== periodID)));
         if(event.target.checked)
@@ -258,6 +271,18 @@ function DisplayMasterSchedule(props:any) {
         );
     }
 
+    function displayFilterCredits() {
+        return (
+            <div style={{display: "inline-block", marginLeft:"auto", marginRight:"auto"}}>
+                <label style={{display:"flex", marginLeft: 8, marginRight: "auto", width:"fit-content", fontSize:12, fontWeight:"bold"}}>Credits</label>
+                <input style={{display:"flex", margin: "auto", width:"fit-content"}} type={'text'}
+                       autoComplete={'on'}
+                       value={selectedCredits}
+                       onChange={handleSelectedCredits}/>
+            </div>
+        );
+    }
+
     function displayFilterPeriod() {
         return (
             <div style={{display: "inline-block", marginLeft:"auto", marginRight:"auto"}}>
@@ -269,7 +294,7 @@ function DisplayMasterSchedule(props:any) {
                             <div style={{textAlign:"left"}}>
                                 <input type={'checkbox'}
                                        onChange={(event)=>handleSelectedPeriod(event, p.PeriodID)}/>
-                                <label style={{paddingLeft:8}}>{time24to12(p.StartTime)} - {time24to12(p.EndTime)}</label>
+                                <label style={{paddingLeft:8}}>{convertTime(p.StartTime)} - {convertTime(p.EndTime)}</label>
                             </div>
                         ))
                     }
@@ -309,6 +334,7 @@ function DisplayMasterSchedule(props:any) {
                     <div style={{marginLeft:"auto", marginTop: 8, marginRight:"auto"}}>{displayFilterCourseName()}</div>
                     <div style={{marginLeft:"auto", marginTop: 8, marginRight:"auto"}}>{displayFilterFacultyName()}</div>
                     <div style={{marginLeft:"auto", marginTop: 8, marginRight:"auto"}}>{displayFilterRoom()}</div>
+                    <div style={{marginLeft:"auto", marginTop: 8, marginRight:"auto"}}>{displayFilterCredits()}</div>
                 </div>
                 <div style={{width: "100%", marginLeft:"auto", marginTop: 16, marginRight:"auto", display:"inline-block"}}>
                     <div>{displayFilterDepartment()}</div>
@@ -321,20 +347,41 @@ function DisplayMasterSchedule(props:any) {
         );
     }
 
-    function time24to12(time:string) {
+    const handleChangePage = (
+        event: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+    ) => {
+        setPageNumber(newPage);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        setMaxResults(parseInt(event.target.value, 10));
+        setPageNumber(0);
+    };
+
+    function convertTime(time:string) {
         const split = time.split(":");
         const zone = parseFloat(split[0]) > 12 ? "PM" : "AM";
         const hour = ((parseFloat(split[0]) % 12) || 12);
         return hour+":"+split[1]+" "+zone;
     }
 
+    function handleSelectCRN(event:any, CRN:string){
+        event.preventDefault();
+        navigate('./../course-section', {state:{targetCRN:CRN, godRole:userRoleID}});
+    }
+
     async function filterSections() {
-        const newSem = semesterSections!?.filter((s:any)=> (
+        return semesterSections!?.filter((s:any)=> (
             selectedDepartment === "" || s.DepartmentID === selectedDepartment
         ))!.filter((s:any)=> (
             !(selectedPeriod.length>0) || (selectedPeriod?.includes(s.PeriodID1 || s.PeriodID2))
         ))!.filter((s:any)=> (
            !(selectedDay.length>0) || (selectedDay?.includes(s.DayID1 || s.DayID2))
+        ))!.filter((s:any)=> (
+            selectedCredits === "" || (s.Credits === selectedCredits)
         ))!.filter((s:any)=> (
             selectedCourseID === "" || (s.CourseID.includes(selectedCourseID))
         ))!.filter((s:any)=> (
@@ -345,8 +392,6 @@ function DisplayMasterSchedule(props:any) {
         ))!.filter((s:any)=> (
             selectedRoom === "" || (s.RoomID.includes(selectedRoom))
         ))
-
-        return newSem;
     }
 
     return <Fragment>
@@ -362,12 +407,20 @@ function DisplayMasterSchedule(props:any) {
             <div style={{marginLeft: 16, marginTop: 32, marginBottom: 16, textAlign:"left", fontSize:32, fontWeight: "bold"}}>
                 {selectedSemesterID?<label>{(semesterIDs?.find((e:any)=>(e.SemesterID===selectedSemesterID)).Term)+" "+(semesterIDs?.find((e:any)=>(e.SemesterID===selectedSemesterID)).Year)}</label>:""}
             </div>
+            <div style={{width:"100%"}}>
+                <TablePagination
+                    style={{float:"left"}}
+                    component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={filteredSections?filteredSections.length:0}
+                    page={pageNumber} rowsPerPage={maxResults} onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}/>
+            </div>
             <div className={'div-table'}>
                 <div className={'div-table-header'} style={{display:"flex"}}>
                     <div className={'div-table-col'}><label></label></div>
                     <div className={'div-table-col'}><label></label></div>
                     <div className={'div-table-col'}><label>CRN</label></div>
                     <div className={'div-table-col'}><label>Course</label></div>
+                    <div className={'div-table-col'}><label>Credits</label></div>
                     <div className={'div-table-col'}><label>Name</label></div>
                     <div className={'div-table-col'}><label>Sec</label></div>
                     <div className={'div-table-col'}><label>Instr</label></div>
@@ -381,11 +434,12 @@ function DisplayMasterSchedule(props:any) {
                 </div>
                 <div style={{maxHeight:"50vh", overflowY:"auto"}}>
                 {
-                    filteredSections?.map((s:any) => (
+                    filteredSections?.slice(pageNumber*maxResults, (pageNumber*maxResults+maxResults)).map((s:any, index) => (
                         <div className={'div-table-row'} style={{display:"flex"}}>
                             <div className={'div-table-col'} style={{display:"inline-flex"}}>
                                 <div className={'div-table-button-wrapper'}>
-                                    <div className={'div-table-button'}>
+                                    <div className={'div-table-button'}
+                                         onClick={(event)=> handleSelectCRN(event, s.CRN)}>
                                         <div className={'div-table-button-content'}>View</div>
                                     </div>
                                 </div>
@@ -409,6 +463,7 @@ function DisplayMasterSchedule(props:any) {
                                 </div>}
                             <div className={'div-table-col'}><label>{s.CRN}</label></div>
                             <div className={'div-table-col'}><label>{s.CourseID}</label></div>
+                            <div className={'div-table-col'}><label>{s.Credits}</label></div>
                             <div className={'div-table-col'}><label>{s.Name}</label></div>
                             <div className={'div-table-col'}><label>{s.SectionID}</label></div>
                             <div className={'div-table-col'}><label>{s.FirstName} {s.LastName}</label></div>
@@ -423,10 +478,10 @@ function DisplayMasterSchedule(props:any) {
                             </div>
                             <div className={'div-table-col'}>
                                 <div>
-                                    <label>{s.StartTime1} - {s.EndTime1}</label>
+                                    <label>{convertTime(s.StartTime1)} - {convertTime(s.EndTime1)}</label>
                                 </div>
                                 <div>
-                                    <label>{s.StartTime2} - {s.EndTime2}</label>
+                                    <label>{convertTime(s.StartTime2)} - {convertTime(s.EndTime2)}</label>
                                 </div>
                             </div>
                             <div className={'div-table-col'}><label>{s.SeatsMinimum}</label></div>
@@ -438,7 +493,6 @@ function DisplayMasterSchedule(props:any) {
                 }</div>
             </div>
         </div>
-        {/*<div><button>Create Section</button>{" "}<button>Apply Changes</button></div>*/}
 
     </Fragment>;
 }

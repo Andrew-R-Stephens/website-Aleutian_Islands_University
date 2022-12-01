@@ -25,7 +25,7 @@ function FacultyConsoleHome() {
                                 course sections and viewing future assigned course sections.</div>
                         </div>
                         <div className={'page-bubble'} onClick={()=>navigate('./../advisement')}>
-                            <div className={'icon-catalog-courses'}/>
+                            <div className={'icon-advisement'}/>
                             <label className={'page-bubble-label'}>Advisement</label>
                             <div className={'page-bubble-description'}>Displays your advisement information alongside
                                 information about your advisees, other advisees, and other advisors.</div>
