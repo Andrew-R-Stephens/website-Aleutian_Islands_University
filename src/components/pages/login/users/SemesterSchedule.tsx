@@ -3,6 +3,7 @@ import axios from "axios";
 import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import "./../../../../css/PeudoTable.css"
 import DisplayCourseSection from "./DisplayCourseSection";
+import {convertTime} from "../../../../Utils";
 
 function SemesterSchedule(props:any) {
 
@@ -10,8 +11,8 @@ function SemesterSchedule(props:any) {
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userStoreRole = RoleAuthStore((state:any) => state.authRole);
-    const [userID, setID] = useState(userStoreID);
-    const [userRole, setUserRole] = useState(userStoreRole);
+    const [userID, setID] = useState(targetUID?targetUID:userStoreID);
+    const [userRole, setUserRole] = useState(targetRole?targetRole:userStoreRole);
 
     const [semesterIDs, setSemesterIDs] = useState<any []>();
     const [selectedSemesterID, setSelectedSemesterID] = useState<string>();
@@ -19,15 +20,6 @@ function SemesterSchedule(props:any) {
     const [semesterSchedule, setSemesterSchedule] = useState<any[]>();
 
     const [selectedCRN, setSelectedCRN] = useState<string>();
-
-
-    useEffect(() => {
-        if(targetRole && targetUID) {
-            setUserRole(targetRole+"");
-            setID(targetUID);
-            console.log(targetUID, targetRole)
-        }
-    }, [targetUID && targetRole])
 
     useEffect(() => {
         requestViewableSemesters().then();
@@ -146,12 +138,12 @@ function SemesterSchedule(props:any) {
                                     <div><label>{item.Day2}</label></div>
                                 </div>
                                 <div className={'div-table-col'}>
-                                    <div><label>{item.StartTime1}</label></div>
-                                    <div><label>{item.StartTime2}</label></div>
+                                    <div><label>{convertTime(item.StartTime1)}</label></div>
+                                    <div><label>{convertTime(item.StartTime2)}</label></div>
                                 </div>
                                 <div className={'div-table-col'}>
-                                    <div><label>{item.EndTime1}</label></div>
-                                    <div><label>{item.EndTime2}</label></div>
+                                    <div><label>{convertTime(item.EndTime1)}</label></div>
+                                    <div><label>{convertTime(item.EndTime2)}</label></div>
                                 </div>
                             </div>
                         ))

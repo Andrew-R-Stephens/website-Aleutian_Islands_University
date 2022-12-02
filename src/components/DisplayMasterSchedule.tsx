@@ -5,6 +5,7 @@ import {Checkbox, TablePagination} from "@mui/material";
 import {blue, pink, red} from "@mui/material/colors";
 import {Palette} from "@react-buddy/ide-toolbox";
 import {useNavigate} from "react-router-dom";
+import {convertTime} from "../Utils";
 
 function DisplayMasterSchedule(props:any) {
     const {targetUID} = props;
@@ -360,6 +361,7 @@ function DisplayMasterSchedule(props:any) {
         setMaxResults(parseInt(event.target.value, 10));
         setPageNumber(0);
     };
+/*
 
     function convertTime(time:string) {
         const split = time.split(":");
@@ -367,6 +369,7 @@ function DisplayMasterSchedule(props:any) {
         const hour = ((parseFloat(split[0]) % 12) || 12);
         return hour+":"+split[1]+" "+zone;
     }
+*/
 
     function handleSelectCRN(event:any, CRN:string){
         event.preventDefault();

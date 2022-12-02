@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import AttendanceDetails from "../../../../classes/AttendanceDetails";
+import AttendanceDetails from "../../../../../../classes/AttendanceDetails";
 import axios from "axios";
 
 function DisplayCourseSectionRoster(props:any) {

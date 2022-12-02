@@ -7,8 +7,9 @@ function UnofficialTranscript(props:any) {
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userStoreRole = RoleAuthStore((state:any) => state.authRole);
-    const [userID, setID] = useState(userStoreID);
-    const [userRole, setUserRole] = useState(userStoreRole);
+    const [userID, setID] = useState(targetUID?targetUID:userStoreID);
+    const [userRole, setUserRole] = useState(targetRole?targetRole:userStoreRole);
+/*
 
     useEffect(() => {
         if(targetRole && targetUID) {
@@ -17,6 +18,7 @@ function UnofficialTranscript(props:any) {
             console.log(targetUID, targetRole)
         }
     }, [targetUID && targetRole])
+*/
 
 
 

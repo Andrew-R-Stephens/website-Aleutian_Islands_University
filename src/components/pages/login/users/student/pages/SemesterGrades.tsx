@@ -9,14 +9,7 @@ function SemesterGrades(props:any) {
     console.log("UID", targetUID)
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
-    const [userID, setID] = useState(userStoreID);
-
-    useEffect(() => {
-        if(targetUID) {
-            setID(targetUID);
-            console.log(targetUID)
-        }
-    }, [])
+    const [userID, setID] = useState(targetUID?targetUID:userStoreID);
 
     const [semesterIDs, setSemesterIDs] = useState<any[]>([]);
 

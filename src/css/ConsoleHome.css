@@ -160,3 +160,12 @@
     padding: 8px;
     aspect-ratio: 1/1;
 }
+
+.icon-profile-image {
+    content:url("./../res/profile-default.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}

@@ -8,6 +8,8 @@ import Holds from "../../student/pages/Holds";
 import SemesterGrades from "../../student/pages/SemesterGrades";
 import SemesterSchedule from "../../SemesterSchedule";
 import UnofficialTranscript from "../../student/pages/UnofficialTranscript";
+import PersonalInformationDetails from "../../../../../../classes/PersonalInformationDetails";
+import DisplayPersonalInfo from "../../DisplayPersonalInfo";
 
 function AdvisorConsole() {
 
@@ -24,7 +26,8 @@ function AdvisorConsole() {
         Holds=3,
         SemesterGrades=4,
         SemesterSchedules=5,
-        UnofficialTranscript=6
+        UnofficialTranscript=6,
+        PersonalInformation=7
     }
     const [page, setPage] = useState<number>(Page.Home);
 
@@ -52,7 +55,7 @@ function AdvisorConsole() {
     function displayHomeButton() {
         console.log("Page:", page, Page.Home)
         return (
-            <div style={{display:"flex", margin: "auto", width: 700}}>
+            <div style={{display:"flex", margin: "auto", marginLeft: 32}}>
                 <div style={{
                     marginTop: 32,
                     marginLeft: 0,
@@ -78,6 +81,13 @@ function AdvisorConsole() {
             <Fragment>
                 <div>
                     <div className={'bubble-container'}>
+                        <div style={{display:"flex", marginTop:32, marginBottom:32}}>
+                            <div className={'page-bubble'} onClick={()=>handleSetPage(Page.PersonalInformation)}>
+                                <div className={'icon-profile-image'}/>
+                                <label className={'page-bubble-label'}>Personal Information</label>
+                                <div className={'page-bubble-description'}>Todo</div>
+                            </div>
+                        </div>
                         <div style={{display:"flex", marginTop:32, marginBottom:32}}>
                             <div className={'page-bubble'} onClick={()=>handleSetPage(Page.DegreeAudit)}>
                                 <div className={'icon-degree-audit'}/>
@@ -134,6 +144,9 @@ function AdvisorConsole() {
             case Page.UnofficialTranscript:{
                 return <UnofficialTranscript targetUID={targetUID} targetRole={userRole} godRole={godRole}/>
             }
+            case Page.PersonalInformation:{
+                return <DisplayPersonalInfo targetUID={targetUID} targetRole={userRole} godRole={godRole}/>
+            }
             default: {
                 return <Fragment>{displayDefaultPage()}</Fragment>
             }
@@ -144,8 +157,10 @@ function AdvisorConsole() {
 
     return (
         <Fragment>
-            <h1>Advisor Console</h1>
-            <h3>Viewing on behalf of {userID}</h3>
+            <div style={{display:"inline-block", marginLeft:"auto", marginRight:"auto", marginTop:32, backgroundColor:"#333333", borderRadius:15, padding:16}}>
+                <div><label style={{color:"whitesmoke", fontSize:24}}>Advisor Console</label></div>
+                <div style={{marginTop: 8}}><label style={{color:"whitesmoke", fontSize:16}}>Viewing on behalf of {userID}</label></div>
+            </div>
             {
                 !(page===Page.Home)?displayHomeButton():<></>
             }

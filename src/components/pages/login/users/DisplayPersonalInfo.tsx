@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import '../../../../css/DisplayInfo.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -8,12 +8,13 @@ import PersonalInformationDetails from "../../../../classes/PersonalInformationD
 
 function DisplayPersonalInfo(props:any) {
 
+    const {targetUID, targetRole} = props;
+
     const userStoreID = UserAuthStore((state:any) => state.userID);
-    const roleStoreID = RoleAuthStore((state:any) => state.authRole);
+    const userStoreRole = RoleAuthStore((state:any) => state.authRole);
+    const [userID, setID] = useState(targetUID?targetUID:userStoreID);
+    const [userRole, setUserRole] = useState(targetRole?targetRole:userStoreRole);
 
-    const {externalUID} = props;
-
-    const [userID, setID] = useState(externalUID?externalUID:userStoreID);
     const [personalInformation, setPersonalInformation] = useState<PersonalInformationDetails>();
 
     const [sectionNum_about, setSectionNum_about] = useState(0);

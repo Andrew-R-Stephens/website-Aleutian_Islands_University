@@ -1,10 +1,10 @@
 
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import DisplayAttendance from "./DisplayCourseSectionAttendance";
+import DisplayAttendance from "./faculty/components/DisplayCourseSectionAttendance";
 import DisplayCourseSectionDetails from "./DisplayCourseSectionDetails";
-import DisplayCourseSectionRoster from "./DisplayCourseSectionRoster";
-import DisplayCourseSectionAttendance from "./DisplayCourseSectionAttendance";
+import DisplayCourseSectionRoster from "./faculty/components/DisplayCourseSectionRoster";
+import DisplayCourseSectionAttendance from "./faculty/components/DisplayCourseSectionAttendance";
 
 function DisplayCourseSection(props:any) {
 

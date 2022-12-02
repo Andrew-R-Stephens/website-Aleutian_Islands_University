@@ -9,21 +9,13 @@ function DegreeAudit(props:any) {
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userStoreRole = RoleAuthStore((state:any) => state.authRole);
-    const [userID, setID] = useState(userStoreID);
-    const [userRole, setUserRole] = useState(userStoreRole);
+    const [userID, setID] = useState(targetUID?targetUID:userStoreID);
+    const [userRole, setUserRole] = useState(targetRole?targetRole:userStoreRole);
 
     const [programIDOptions, setProgramIDOptions] = useState<any[]>();
 
     const [chosenProgramID, setChosenProgramID] = useState();
     const [programRequirements, setProgramRequirements] = useState(new ProgramRequirements(null));
-
-    useEffect(() => {
-        if(targetRole && targetUID) {
-            setUserRole(targetRole+"");
-            setID(targetUID);
-            console.log(targetUID, targetRole)
-        }
-    }, [targetUID && targetRole])
 
     useEffect(() => {
         requestProgramEnrollments().then(r => console.log("Finished enrollment request"));
