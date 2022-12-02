@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 import HomeNavBanner from "../../../HomeNavBanner";
 import SideBanner from "../../../SideBanner";
 import '../../../../css/Account.css';
-import HideBar from "../../../HideBar";
 import axios from "axios";
 import {UserAuthStore} from "../../../../stores/AuthUserStore";
 

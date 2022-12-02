@@ -1,8 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
 import '../stores/user-store';
-import ProgramDetails from "../classes/ProgramDetails";
-import CourseDetails from "../classes/CourseDetails";
 import CoursePrereqs from "../classes/CoursePrereqs";
 
 function DisplayCoursePrerequisites(props:any) {

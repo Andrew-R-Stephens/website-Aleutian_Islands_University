@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import '../css/SideBanner.css'
 
 /**

@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment} from 'react';
 import {Navigate, Outlet, Route, Routes, useLocation} from "react-router-dom";
 import Home from "./home/Home";
 import Student from "./login/users/student/Student";
@@ -19,7 +19,6 @@ import UserConsole from "./login/users/UserConsole";
 import DisplayMasterSchedule from "../DisplayMasterSchedule";
 import CourseCatalog from "../catalog/CourseCatalog";
 import DisplayAllStudents from "../DisplayAllStudents";
-import Settings from "./login/users/Settings";
 import Academics from "./login/users/Academics";
 import Registration from "./login/users/student/pages/Registration";
 import Advisement from "./login/users/Advisement";
@@ -164,7 +163,6 @@ function NavRoutes() {
                                     </Route>
                                     <Route path={"administrator"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>}>
-                                        <Route path={"settings"} element={<UserConsole child={<Settings/>}/>}/>
                                         <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                                         <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                                         <Route path={"console"} element={<UserConsole child={<Administrator/>}/>}/>

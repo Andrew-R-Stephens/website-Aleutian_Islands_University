@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import '../../stores/user-store';
 import "../../css/CourseCatalog.css"
 import CatalogDisplayPrograms from "./CatalogDisplayPrograms";

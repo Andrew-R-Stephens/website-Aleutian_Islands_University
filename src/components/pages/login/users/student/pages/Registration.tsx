@@ -1,7 +1,6 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
-import axios from "axios";
 
 function StudentRegistration(props:any) {
     const navigate = useNavigate();
@@ -32,7 +31,7 @@ function StudentRegistration(props:any) {
                 </div>
             </div>
             <div style={{display:"flex", marginTop:32, marginBottom:32}}>
-                <div className={'page-bubble'} onClick={()=>navigate('./../holds')}>
+                <div className={'page-bubble warning'} onClick={()=>navigate('./../holds')}>
                     <div className={'icon-holds'}/>
                     <label className={'page-bubble-label'}>Account Holds</label>
                     <div className={'page-bubble-description'}>Provides an overview of active Holds which will prevent further registration.</div>

@@ -1,7 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import HomeNavBanner from "../../../../HomeNavBanner";
-import SideBanner from "../../../../SideBanner";
-import CatalogDisplayCourses from "../../../../catalog/CatalogDisplayCourses";
+import React, {Fragment, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
 import AdminConsoleHome from "./pages/AdminConsoleHome";

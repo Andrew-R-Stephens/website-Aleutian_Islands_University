@@ -32,6 +32,7 @@ function SemesterSchedule(props:any) {
 
     useEffect(() => {
         if(selectedSemesterID && userID) {
+            setSelectedCRN("");
             requestScheduleByUIDAndSemesterID().then(r => console.log("Schedule Request Done"));
         }
     }, [selectedSemesterID])

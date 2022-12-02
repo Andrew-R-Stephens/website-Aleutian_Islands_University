@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import '../../stores/user-store';
 import "../../css/CourseCatalog.css"
 import axios from "axios";

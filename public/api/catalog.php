@@ -1345,18 +1345,19 @@ function getCourseSectionRosterByCRN($conn) {
     $stmt->bind_param("s", $crn);
     $stmt->execute();
 
-    $out_schedule = [];
+    $out_roster = [];
     $stmt->bind_result(
-        $out_schedule['StudentID'],
-        $out_schedule['FirstName'],
-        $out_schedule['LastName'],
-        $out_schedule['FacultyID']
+        $out_roster['StudentID'],
+        $out_roster['FirstName'],
+        $out_roster['LastName'],
+        $out_roster['StudentType'],
+        $out_roster['Time']
     );
 
     $completeArray = [];
     while ($stmt->fetch()) {
         $row = [];
-        foreach ($out_schedule as $key => $val) {
+        foreach ($out_roster as $key => $val) {
             $row[$key] = $val;
         }
         $completeArray[] = $row;
@@ -1381,17 +1382,17 @@ function getCourseSectionAttendanceByCRN($conn) {
     $stmt->bind_param("s", $crn);
     $stmt->execute();
 
-    $out_schedule = [];
+    $out_attendance = [];
     $stmt->bind_result(
-        $out_schedule['StudentID'],
-        $out_schedule['MeetingNumber'],
-        $out_schedule['Status']
+        $out_attendance['StudentID'],
+        $out_attendance['MeetingNumber'],
+        $out_attendance['Status']
     );
 
     $completeArray = [];
     while ($stmt->fetch()) {
         $row = [];
-        foreach ($out_schedule as $key => $val) {
+        foreach ($out_attendance as $key => $val) {
             $row[$key] = $val;
         }
         $completeArray[] = $row;
@@ -1419,8 +1420,11 @@ function getCourseSectionGradesByCRN($conn) {
     $out_schedule = [];
     $stmt->bind_result(
         $out_schedule['StudentID'],
+        $out_schedule['FirstName'],
+        $out_schedule['LastName'],
         $out_schedule['ID'],
-        $out_schedule['GradeID']
+        $out_schedule['GradeID'],
+        $out_schedule['SemPeriod']
     );
 
     $completeArray = [];

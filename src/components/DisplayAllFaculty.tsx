@@ -2,8 +2,8 @@ import React, {Fragment, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import '../css/PeudoTable.css'
 import '../css/TablePagination.css'
-import {Pagination, TablePagination} from "@mui/material";
-import {AuthRole, RoleAuthStore} from "../stores/AuthUserStore";
+import {TablePagination} from "@mui/material";
+import {AuthRole} from "../stores/AuthUserStore";
 
 function DisplayAllUsers() {
 

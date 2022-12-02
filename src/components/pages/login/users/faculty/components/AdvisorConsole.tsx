@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {Roles} from "../../../../../../stores/AuthUserStore";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import Advisement from "../../Advisement";
 import axios from "axios";
 import DegreeAudit from "../../student/pages/DegreeAudit";
@@ -8,15 +8,14 @@ import Holds from "../../student/pages/Holds";
 import SemesterGrades from "../../student/pages/SemesterGrades";
 import SemesterSchedule from "../../SemesterSchedule";
 import UnofficialTranscript from "../../student/pages/UnofficialTranscript";
-import PersonalInformationDetails from "../../../../../../classes/PersonalInformationDetails";
 import DisplayPersonalInfo from "../../DisplayPersonalInfo";
 
 function AdvisorConsole() {
 
     const location = useLocation();
-    const {targetUID, godRole} = location.state as any;
+    const {targetUID, godRole} = (location as any|null)?.state;
 
-    const [userID, setUserID] = useState(targetUID);
+    const [userID, setUserID] = useState(targetUID?targetUID:undefined);
     const [userRole, setUserRole] = useState<string>();
 
     enum Page {
@@ -157,13 +156,21 @@ function AdvisorConsole() {
 
     return (
         <Fragment>
-            <div style={{display:"inline-block", marginLeft:"auto", marginRight:"auto", marginTop:32, backgroundColor:"#333333", borderRadius:15, padding:16}}>
-                <div><label style={{color:"whitesmoke", fontSize:24}}>Advisor Console</label></div>
-                <div style={{marginTop: 8}}><label style={{color:"whitesmoke", fontSize:16}}>Viewing on behalf of {userID}</label></div>
+            <div style={{display:"inline-block", width: "100%", padding: 16, marginLeft:"auto", marginRight:"auto", backgroundColor:"#111113"}}>
+                <div style={{display: "inline-block"}}>
+                    <div style={{display: "inline-block"}}>
+                        <label style={{color:"whitesmoke", fontSize:24}}>Advisor Console</label>
+                    </div>
+                    <div style={{marginTop: 8}}>
+                        <label style={{color:"whitesmoke", fontSize:16}}>Viewing on behalf of {userID}</label>
+                    </div>
+                </div>
+                <div>
+                {
+                    !(page===Page.Home)?displayHomeButton():<></>
+                }
+                </div>
             </div>
-            {
-                !(page===Page.Home)?displayHomeButton():<></>
-            }
             {displayPage()}
         </Fragment>
     );

@@ -1,5 +1,4 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
-import axios from "axios";
+import React, {Fragment, useState} from 'react';
 import '../stores/user-store';
 import DisplayDepartmentDetails from "./DisplayDepartmentDetails";
 

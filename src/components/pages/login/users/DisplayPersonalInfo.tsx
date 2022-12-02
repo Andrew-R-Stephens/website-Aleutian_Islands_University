@@ -1,9 +1,8 @@
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import '../../../../css/DisplayInfo.css';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
 import '../../../../stores/user-store';
-import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
+import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import PersonalInformationDetails from "../../../../classes/PersonalInformationDetails";
 
 function DisplayPersonalInfo(props:any) {
@@ -22,6 +21,7 @@ function DisplayPersonalInfo(props:any) {
     enum Sections_About {
         Overview=0,
         Residence,
+        Education,
         ContactInfo
     }
 
@@ -32,7 +32,7 @@ function DisplayPersonalInfo(props:any) {
     async function initUserData() {
         await axios.get(process.env["REACT_APP_API_USER"] as string, {
             params: {
-                func: "standard",
+                func: "getPersonalInformation",
                 uid : userID
             }
         }).then(res => {
@@ -49,6 +49,9 @@ function DisplayPersonalInfo(props:any) {
 
     function displaySelectedAboutSection() {
         switch (sectionNum_about){
+            case Sections_About.Education: {
+                return displayEducationInfo();
+            }
             case Sections_About.Residence: {
                 return displayResidenceInfo();
             }
@@ -68,12 +71,34 @@ function DisplayPersonalInfo(props:any) {
                 <label>{personalInformation?.info.Honorific} {personalInformation?.info.LastN}, {personalInformation?.info.FirstN}</label>
             </div>
             <div className={'display-right-content'}>
+                <label style={{fontWeight:"bold", paddingRight:8}}>Role:</label>
+                <label>{personalInformation?.user.UserType}, {personalInformation?.user.Time} {personalInformation?.user.Rank}</label>
+            </div>
+            <hr style={{borderColor:"#555555"}}/>
+            <div className={'display-right-content'}>
                 <label style={{fontWeight:"bold", paddingRight:8}}>Lives in:</label>
                 <label>{personalInformation?.info.AddrCi}, {personalInformation?.info.AddrSta}</label>
             </div>
             <div className={'display-right-content'}>
                 <label style={{fontWeight:"bold", paddingRight:8}}>Gender:</label>
                 <label>{personalInformation?.info.Gender==="M" ? "Male":"Female" }</label>
+            </div>
+        </Fragment>
+    }
+
+    function displayEducationInfo() {
+        return <Fragment>
+            <div className={'display-right-content'}>
+                <label style={{fontWeight:"bold", paddingRight:8}}>Role:</label>
+                <label>{personalInformation?.user.UserType}</label>
+            </div>
+            <div className={'display-right-content'}>
+                <label style={{fontWeight:"bold", paddingRight:8}}>{personalInformation?.user.UserType} Type:</label>
+                <label>{personalInformation?.user.Rank}</label>
+            </div>
+            <div className={'display-right-content'}>
+                <label style={{fontWeight:"bold", paddingRight:8}}>Time:</label>
+                <label>{personalInformation?.user.Time}</label>
             </div>
         </Fragment>
     }
@@ -125,6 +150,11 @@ function DisplayPersonalInfo(props:any) {
                                     role={sectionNum_about===Sections_About.Overview?'active':'inactive'}
                                     onClick={() => updateSectionNum_about(Sections_About.Overview)}>
                                 <label className={'default-label'}>Overview</label></button>
+
+                            <button className={'default-button'}
+                                    role={sectionNum_about===Sections_About.Education?'active':'inactive'}
+                                    onClick={() => updateSectionNum_about(Sections_About.Education)}>
+                                <label className={'default-label'}>Education</label></button>
 
                             <button className={'default-button'}
                                     role={sectionNum_about===Sections_About.Residence?'active':'inactive'}

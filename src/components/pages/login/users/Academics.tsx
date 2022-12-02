@@ -1,7 +1,6 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
-import axios from "axios";
 
 function StudentAcademics(props:any) {
 

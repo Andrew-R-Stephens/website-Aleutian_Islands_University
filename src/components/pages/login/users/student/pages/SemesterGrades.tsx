@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import {RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
+import {UserAuthStore} from "../../../../../../stores/AuthUserStore";
 import "./../../../../../../css/PeudoTable.css"
 
 function SemesterGrades(props:any) {

@@ -9,7 +9,7 @@ $conn = connect();
 $func = $_GET['func'];
 
 switch($func) {
-    case 'standard': {
+    case 'getPersonalInformation': {
         getUserPersonalInformation($conn);
         break;
     }
@@ -46,9 +46,13 @@ function getUserPersonalInformation($conn) {
     $out_addrCountry = '';
     $out_addrZip = '';
     $out_email = '';
+    $out_userType = '';
+    $out_userRank = '';
+    $out_userTime = '';
     $stmt->bind_result(
         $out_uid, $out_ssn, $out_fname, $out_lname, $out_phoneNum, $out_gender, $out_honorific, $out_birthdate,
-        $out_addrNumber, $out_addrStreet, $out_addrCity, $out_addrState, $out_addrCountry, $out_addrZip, $out_email
+        $out_addrNumber, $out_addrStreet, $out_addrCity, $out_addrState, $out_addrCountry, $out_addrZip, $out_email,
+        $out_userType, $out_userRank, $out_userTime
     );
 
     $arr['UID'] = '';
@@ -66,6 +70,9 @@ function getUserPersonalInformation($conn) {
     $arr['AddrCo'] = '';
     $arr['AddrZip'] = '';
     $arr['Email'] = '';
+    $arr['UserType'] = '';
+    $arr['Rank'] = '';
+    $arr['Time'] = '';
 
     while ($stmt->fetch()) {
         $arr['UID'] = $out_uid;
@@ -83,6 +90,9 @@ function getUserPersonalInformation($conn) {
         $arr['AddrCo'] = $out_addrCountry;
         $arr['AddrZip'] = $out_addrZip;
         $arr['Email'] = $out_email;
+        $arr['UserType'] = $out_userType;
+        $arr['Rank'] = $out_userRank;
+        $arr['Time'] = $out_userTime;
     }
 
     echo(json_encode($arr));

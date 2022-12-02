@@ -1,3 +1,8 @@
+
+.background-color-primary {
+    background-color: #f4f5f8;
+}
+
 div .main-container {
     height: 100%;
     padding: 0;
@@ -37,13 +42,12 @@ div .inner-body-constraints {
     max-width: 85%;
 }
 
-div .main-footer {
-
+.main-footer {
 }
 
-div .inner-footer {
+.inner-footer {
     padding-top: 50px;
-    background-color: #333333;
+    background-color: #051e35;
     backface-visibility: hidden;
     color: white;
     position: relative;
@@ -57,7 +61,6 @@ div .inner-footer-constraints {
 }
 
 .section {
-    background: #333333;
     position: relative;
 }
 
@@ -69,6 +72,7 @@ div .inner-footer-constraints {
 .inner-footer:before {
     position: absolute;
     background-image: url('./../res/footer-texture3.svg');
+    filter: brightness(0) saturate(100%) invert(12%) sepia(43%) saturate(810%) hue-rotate(165deg) brightness(95%) contrast(105%);
     background-position: bottom center;
     background-repeat: repeat-x;
     background-size: 1000px;
@@ -87,6 +91,7 @@ div .inner-footer-constraints {
 
 img.logo {
     content: url("./../res/unilogo-map-gray-clean.svg");
+    filter: invert(100%);
     background-repeat: no-repeat;
     min-width: 100px;
     max-width: 250px;

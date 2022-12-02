@@ -1,10 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import HomeNavBanner from "../../../../HomeNavBanner";
 import {useNavigate} from "react-router-dom";
-import SideBanner from "../../../../SideBanner";
 import {UserAuthStore} from "../../../../../stores/AuthUserStore";
-import StudentHistoryComparator from "../../../../StudentHistoryComparator";
-import FacultyConsoleHome from "../faculty/pages/FacultyConsoleHome";
 import ResearcherConsoleHome from "./pages/ResearcherConsoleHome";
 
 function Researcher() {

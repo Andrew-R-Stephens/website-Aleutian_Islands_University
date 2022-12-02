@@ -56,9 +56,9 @@ function DisplayCourseSectionAttendance(props:any) {
     function display() {
         return (
             <Fragment>
-                <div style={{margin:32}}>
-                    <div>
-                        <h1>Attendance</h1>
+                <div style={{marginLeft:32, marginRight:"auto"}}>
+                    <div style={{marginLeft:0, width:"100%"}}>
+                        <div style={{padding:8, fontWeight:"bold", fontSize: 24, textAlign:"left"}}>Attendance</div>
                     </div>
                     <div className={'div-table'}>
                         <div className={'div-table-header'} style={{display:"flex"}}>

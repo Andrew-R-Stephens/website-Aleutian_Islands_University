@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import '../../../../css/DisplayInfo.css';
 import axios from "axios";
 import '../../../../stores/user-store';
-import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
+import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 
 function DisplayPersonalInfo(props:any) {
 

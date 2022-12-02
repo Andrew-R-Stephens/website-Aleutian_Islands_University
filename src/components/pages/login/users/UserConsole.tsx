@@ -1,7 +1,7 @@
-import React, {Fragment, useEffect, useRef, useState} from "react";
+import React, {Fragment, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import HomeNavBanner from "../../../HomeNavBanner";
-import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore} from "../../../../stores/AuthUserStore";
 
 function UserConsole(props:any) {
 

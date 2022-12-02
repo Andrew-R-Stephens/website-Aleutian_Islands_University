@@ -1,9 +1,11 @@
 
 .sidenav {
+    display: inline-block;
     min-height: 100%;
     min-width: 150px;
-    width: 150px;
-    background-color: #333333;
+    width: 10vw;
+    max-width: 200px;
+    background-color: #051e35;
     overflow-x: hidden;
     padding-top: 8px;
     float: left;
@@ -11,7 +13,7 @@
 }
 
 .navLink {
-    background: #292929;
+    background:/* #122c44;*/ /*#292929;*/ #041726;
     padding: 8px;
     text-decoration: none;
     color: whitesmoke;
@@ -22,19 +24,20 @@
     -webkit-user-drag: none;
     user-select: none;
     border-style: solid;
-    border-width: 1px;
-    border-color: #333333;
-    border-top: 1px;
+    border-width: 2px;
+    border-color: #0b2844;
+    border-left: 0;
+    border-bottom: 0;
     z-index: 1;
 }
 
 .sidenav .navLink:hover, a:hover, .navLink:hover  {
     color: lightgray;
-    background: #111111;
+    background: /*#072a49;*/ #2d455b;
 }
 
 .navLink > .navLink-children {
-    background: #151515;
+    background: #263e52;
     padding: 4px;
     text-decoration: none;
     color: whitesmoke;
@@ -52,14 +55,21 @@
     display: block;
     -webkit-user-drag: none;
     user-select: none;
+    margin-bottom: 4px;
 }
 
 .navLink-child {
     z-index: 0;
-    background: #3d3d3d;
+    background: /*#0c3d65;*/ #1f364b;
     color: #eeeeee;
-    margin-bottom: 1px;
+    /*margin-bottom: 1px;*/
     padding: 4px;
+    border-radius: 5px;
+    margin: 2px 4px 2px;
+}
+
+.navLink-child:last-child {
+    margin-bottom: 8px;
 }
 
 #inactive {
@@ -106,8 +116,8 @@
 }
 
 [role=active] {
-    border-right: 5px lightskyblue solid;
-    background-color: #19262d;
+    border-right: 5px whitesmoke solid;
+    background-color: /*#072a49;*/ #2b465d;
     /*pointer-events: none;*/
 }
 

@@ -1,10 +1,8 @@
-
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import DisplayAttendance from "./faculty/components/DisplayCourseSectionAttendance";
-import DisplayCourseSectionDetails from "./DisplayCourseSectionDetails";
-import DisplayCourseSectionRoster from "./faculty/components/DisplayCourseSectionRoster";
 import DisplayCourseSectionAttendance from "./faculty/components/DisplayCourseSectionAttendance";
+import DisplayCourseSectionDetails from "./faculty/components/DisplayCourseSectionDetails";
+import DisplayCourseSectionRoster from "./faculty/components/DisplayCourseSectionRoster";
 
 function DisplayCourseSection(props:any) {
 
@@ -74,7 +72,8 @@ function DisplayCourseSection(props:any) {
     function displayStudent() {
         return (
             <Fragment>
-
+                <DisplayCourseSectionDetails targetCRN={crn}/>
+                <DisplayCourseSectionRoster targetCRN={crn}/>
             </Fragment>
         );
     }
