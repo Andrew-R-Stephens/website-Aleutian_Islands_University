@@ -2,12 +2,13 @@ import React, {Fragment, useEffect, useState} from "react";
 import axios from "axios";
 import {UserAuthStore} from "../../../../../../stores/AuthUserStore";
 
-function DisplayCourseSectionRoster(props:any) {
+function DisplayCourseSectionRosterWithGrades(props:any) {
 
     const{targetCRN, godRole} = props;
 
     const [crn, setCRN] = useState(targetCRN);
     const [roster, setRoster] = useState<any[]>();
+    const [grades, setGrades] = useState<any[]>();
 
     useEffect(() => {
         setCRN(targetCRN);
@@ -15,6 +16,7 @@ function DisplayCourseSectionRoster(props:any) {
 
     useEffect(() => {
         requestSectionRoster().then(r=>console.log(r));
+        requestSectionGrades().then(r=>console.log(r));
     }, [crn])
 
     async function requestSectionRoster() {
@@ -32,6 +34,34 @@ function DisplayCourseSectionRoster(props:any) {
         })
     }
 
+    async function requestSectionGrades() {
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "getCourseSectionGradesByCRN",
+                crn: crn
+            }
+        }).then(res => {
+            let {error, grades} = res.data;
+            console.log(res.data)
+            setGrades(grades);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
+    function displayGrades(rosterEntity:any) {
+        return(
+            grades?.map((g:any) => (
+                g.StudentID === rosterEntity.StudentID ?
+                    <Fragment>
+                        <div className={'div-table-col'}>{g.GradeID?g.GradeID:"NA"}</div>
+                        <div className={'div-table-col'}>{g.SemPeriod?g.SemPeriod:"NA"}</div>
+                    </Fragment>
+                    : <Fragment/>
+            ))
+        );
+    }
+
     function display() {
         return (
             <Fragment>
@@ -45,6 +75,8 @@ function DisplayCourseSectionRoster(props:any) {
                             <div className={'div-table-col'}><label>First</label></div>
                             <div className={'div-table-col'}><label>Last</label></div>
                             <div className={'div-table-col'}><label>Time</label></div>
+                            <div className={'div-table-col'}><label>Grade</label></div>
+                            <div className={'div-table-col'}><label>Status</label></div>
                         </div>
                         <div>
                             {
@@ -54,6 +86,9 @@ function DisplayCourseSectionRoster(props:any) {
                                         <div className={'div-table-col'}>{r?.FirstName}</div>
                                         <div className={'div-table-col'}>{r?.LastName}</div>
                                         <div className={'div-table-col'}>{r?.Time}</div>
+                                        {
+                                            displayGrades(r)
+                                        }
                                     </div>
                                 ))
 
@@ -72,4 +107,4 @@ function DisplayCourseSectionRoster(props:any) {
     </Fragment>
 }
 
-export default DisplayCourseSectionRoster;
+export default DisplayCourseSectionRosterWithGrades;

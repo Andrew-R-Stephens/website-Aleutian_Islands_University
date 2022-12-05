@@ -94,6 +94,10 @@ switch($func) {
         getSemesterIDsInRange($conn);
         return;
     }
+    case 'getCurrentSemesterID': {
+        getCurrentSemesterID($conn);
+        return;
+    }
     case 'getSemesterIDsInHistoryByStudentID': {
         getSemesterIDsInHistoryByStudentID($conn);
         return;
@@ -1292,6 +1296,7 @@ function getCourseSectionDataByCRN($conn) {
 
     $out_schedule = [];
     $stmt->bind_result(
+        $out_schedule['SemesterID'],
         $out_schedule['Term'],
         $out_schedule['Year'],
         $out_schedule['CRN'],
@@ -1472,6 +1477,31 @@ function getCourseSectionMeetingDatesByCRN($conn) {
     }
 
     $final_arr['dates'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getCurrentSemesterID($conn) {
+    $stmt = $conn->prepare("CALL getCurrentSemesterID()");
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['SemesterID']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['semesterID'] = $completeArray;
 
     echo(json_encode($final_arr));
 

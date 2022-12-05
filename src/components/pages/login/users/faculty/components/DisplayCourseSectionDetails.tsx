@@ -1,5 +1,6 @@
 import React, {Fragment, useEffect, useState} from "react";
 import axios from "axios";
+import {convertTime} from "../../../../../../Utils";
 
 function DisplayCourseSectionDetails(props:any) {
     const{targetCRN, godRole} = props;
@@ -69,8 +70,8 @@ function DisplayCourseSectionDetails(props:any) {
                                         <div style={{display: "inline-block", textAlign:"left"}}>
                                             <div><label style={{fontWeight:"bold", paddingRight:8}}>Time:</label></div>
                                             <div style={{marginLeft: 16}}>
-                                                <div><label>{d.DayName1} {d.StartTime1} - {d.EndTime1}</label></div>
-                                                <div><label>{d.DayName2} {d.StartTime2} - {d.EndTime2}</label></div>
+                                                <div><label>{d.DayName1} {convertTime(d.StartTime1)} - {convertTime(d.EndTime1)}</label></div>
+                                                <div><label>{d.DayName2} {convertTime(d.StartTime2)} - {convertTime(d.EndTime2)}</label></div>
                                             </div>
                                         </div>
                                     </div>
@@ -78,8 +79,14 @@ function DisplayCourseSectionDetails(props:any) {
                                         <div style={{display: "inline-block", textAlign:"left"}}>
                                             <div><label style={{fontWeight:"bold", paddingRight:8}}>Room Information:</label></div>
                                             <div style={{marginLeft: 16}}>
-                                                <div><label style={{paddingRight:8, fontWeight:"bold"}}>Min/Max Seats:</label><label>{d.SeatsMinimum}</label> / <label>{d.SeatsCapacity}</label></div>
-                                                <div><label style={{paddingRight:8, fontWeight:"bold"}}>Actual Seats:</label><label>{d.SeatsActual}</label></div>
+                                                <div>
+                                                    <label style={{paddingRight:8, fontWeight:"bold"}}>Min/Max Seats:</label>
+                                                    <label>{d.SeatsMinimum}</label> / <label>{d.SeatsCapacity}</label>
+                                                </div>
+                                                <div>
+                                                    <label style={{paddingRight:8, fontWeight:"bold"}}>Occupied Seats:</label>
+                                                    <label>{d.SeatsActual}</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

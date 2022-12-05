@@ -1,5 +1,6 @@
 import React from "react";
 
+
 class AttendanceDetails {
 
     students: StudentAttendance[];

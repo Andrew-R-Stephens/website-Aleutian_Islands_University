@@ -3,28 +3,33 @@ import axios from "axios";
 import DisplayCourseSectionAttendance from "./faculty/components/DisplayCourseSectionAttendance";
 import DisplayCourseSectionDetails from "./faculty/components/DisplayCourseSectionDetails";
 import DisplayCourseSectionRoster from "./faculty/components/DisplayCourseSectionRoster";
+import {scryRenderedComponentsWithType} from "react-dom/test-utils";
+import {AuthRole, UserAuthStore} from "../../../../stores/AuthUserStore";
+import DisplayCourseSectionRosterWithGrades from "./faculty/components/DisplayCourseSectionRosterWithGrades";
 
 function DisplayCourseSection(props:any) {
 
     const{targetCRN, godRole} = props;
+    const userStoreID = UserAuthStore((state:any) => state.userID);
 
     const [crn, setCRN] = useState(targetCRN);
     const [data, setData] = useState<any[]>();
-    const [roster, setRoster] = useState<any[]>();
-    const [attendance, setAttendance] = useState<any[]>();
-    const [grades, setGrades] = useState<any[]>();
+    const [currentSemesterID, setCurrentSemesterID] = useState<any>();
 
     useEffect(() => {
         setCRN(targetCRN);
     }, [targetCRN])
 
     useEffect(() => {
-        requestSectionData().then(r=>console.log(r));
-        requestSectionRoster().then(r=>console.log(r));
-        requestSectionGrades().then(r=>console.log(r));
+        requestCurrentSemester().then(r => console.log());
+        requestSectionDetails().then(r => console.log());
     }, [crn])
 
-    async function requestSectionData() {
+    useEffect(() => {
+        console.log("is known section", data)
+    }, [data])
+
+    async function requestSectionDetails() {
         axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
                 func: "getCourseSectionDataByCRN",
@@ -32,38 +37,22 @@ function DisplayCourseSection(props:any) {
             }
         }).then(res => {
             let {error, data} = res.data;
-            console.log(res.data)
+            //const data = (data!?.filter((d:any)=>(d.FacultyID===userStoreID)))?.length > 0;
             setData(data);
         }).catch(function(err) {
             console.log(err.message);
         })
     }
 
-    async function requestSectionRoster() {
+    async function requestCurrentSemester() {
         axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getCourseSectionRosterByCRN",
-                crn: crn
+                func: "getCurrentSemesterID"
             }
         }).then(res => {
-            let {error, roster} = res.data;
-            console.log(res.data)
-            setRoster(roster);
-        }).catch(function(err) {
-            console.log(err.message);
-        })
-    }
-
-    async function requestSectionGrades() {
-        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
-            params: {
-                func: "getCourseSectionGradesByCRN",
-                crn: crn
-            }
-        }).then(res => {
-            let {error, grades} = res.data;
-            console.log(res.data)
-            setGrades(grades);
+            let {error, semesterID} = res.data;
+            setCurrentSemesterID(semesterID);
+            console.log("semesterID", semesterID)
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -73,7 +62,13 @@ function DisplayCourseSection(props:any) {
         return (
             <Fragment>
                 <DisplayCourseSectionDetails targetCRN={crn}/>
-                <DisplayCourseSectionRoster targetCRN={crn}/>
+                {
+                    data!?.filter((d:any)=>(d.FacultyID===userStoreID && currentSemesterID?.at(0)?.SemesterID === d.SemesterID))?.length > 0 ?
+                        <Fragment>
+                            <DisplayCourseSectionRoster targetCRN={crn}/>
+                        </Fragment>
+                        :<Fragment/>
+                }
             </Fragment>
         );
     }
@@ -82,17 +77,51 @@ function DisplayCourseSection(props:any) {
         return (
             <Fragment>
                 <DisplayCourseSectionDetails targetCRN={crn}/>
-                <DisplayCourseSectionRoster targetCRN={crn}/>
+                {
+                    data!?.filter((d:any)=>(d.FacultyID===userStoreID && currentSemesterID?.at(0)?.SemesterID === d.SemesterID))?.length > 0 ?
+                        <Fragment>
+                            <DisplayCourseSectionRosterWithGrades targetCRN={crn}/>
+                            <DisplayCourseSectionAttendance targetCRN={crn}/>
+                        </Fragment>
+                        :<Fragment/>
+                }
+
+            </Fragment>
+        );
+    }
+
+    function displayAdministrator() {
+        return (
+            <Fragment>
+                <DisplayCourseSectionDetails targetCRN={crn}/>
+                <DisplayCourseSectionRosterWithGrades targetCRN={crn}/>
                 <DisplayCourseSectionAttendance targetCRN={crn}/>
             </Fragment>
         );
+    }
+
+    function displayAsRole() {
+        switch(godRole) {
+            case AuthRole.Student: {
+                return displayStudent();
+            }
+            case AuthRole.Faculty: {
+                return displayFaculty();
+            }
+            case AuthRole.Administrator: {
+                return displayAdministrator();
+            }
+            default: {
+                return <Fragment/>
+            }
+        }
     }
 
 
     return (
         <Fragment>
             <div>
-                {godRole==='1'?displayStudent():displayFaculty()}
+                {displayAsRole()}
             </div>
         </Fragment>
     );

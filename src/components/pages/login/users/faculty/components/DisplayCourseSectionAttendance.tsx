@@ -53,6 +53,40 @@ function DisplayCourseSectionAttendance(props:any) {
         })
     }
 
+    function displayAttendance() {
+        return <div className={'div-table'}>
+            <div className={'div-table-header'} style={{display:"flex"}}>
+                <div className={'div-table-col'}><label style={{writingMode:"vertical-rl"}}>Student</label></div>
+                {
+                    dates?.map((d:any)=>(
+                        <div className={'div-table-col'}>
+                            <label style={{paddingTop: 4, paddingBottom: 4, writingMode:"vertical-rl"}}>
+                                {d.Date.replaceAll('-', " ")}
+                            </label>
+                        </div>
+                    ))
+                }
+            </div>
+            <div>
+                {
+                    attendance?.students.map((sa:any) => (
+                        <div className={'div-table-row'} style={{display:"flex"}}>
+                            <div className={'div-table-col'}>{sa?.studentID}</div>
+                            {
+                                sa.attendance.map((a:any)=> (
+                                    <div className={'div-table-col'}>
+                                        {a?.status===1?<span>&#10003;</span>:<span>&#x2717;</span>}
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    ))
+
+                }
+            </div>
+        </div>
+    }
+
     function display() {
         return (
             <Fragment>
@@ -60,37 +94,11 @@ function DisplayCourseSectionAttendance(props:any) {
                     <div style={{marginLeft:0, width:"100%"}}>
                         <div style={{padding:8, fontWeight:"bold", fontSize: 24, textAlign:"left"}}>Attendance</div>
                     </div>
-                    <div className={'div-table'}>
-                        <div className={'div-table-header'} style={{display:"flex"}}>
-                            <div className={'div-table-col'}><label style={{writingMode:"vertical-rl"}}>Student</label></div>
-                            {
-                                dates?.map((d:any)=>(
-                                    <div className={'div-table-col'}>
-                                        <label style={{writingMode:"vertical-rl"}}>
-                                            {d.Date.replaceAll('-', " ")}
-                                        </label>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                        <div>
-                            {
-                                attendance?.students.map((sa:any) => (
-                                    <div className={'div-table-row'} style={{display:"flex"}}>
-                                        <div className={'div-table-col'}>{sa?.studentID}</div>
-                                        {
-                                            sa.attendance.map((a:any)=> (
-                                                <div className={'div-table-col'}>
-                                                    {a?.status===1?<span>&#10003;</span>:<span>&#x2717;</span>}
-                                                </div>
-                                            ))
-                                        }
-                                    </div>
-                                ))
-
-                            }
-                        </div>
-                    </div>
+                    {attendance && attendance?.students?.length>0 ?
+                        displayAttendance()
+                        :<div>
+                            <label>Nothing to show.</label>
+                        </div>}
                 </div>
             </Fragment>
         );

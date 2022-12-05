@@ -121,7 +121,6 @@ function DisplayPersonalInfo(props:any) {
     }
 
     function displayContactInfo() {
-        console.log(personalInformation?.print())
         return (
             <Fragment>
                 <div className={'display-right-content'}>
@@ -170,7 +169,12 @@ function DisplayPersonalInfo(props:any) {
                     <div className={'display-right'}>
                         {displaySelectedAboutSection()}
                     </div>
+
+                    <div>
+                        <button onClick={()=>props.backFun()}>Edit</button>
+                    </div>
                 </div>
+
             </div>
         </Fragment>
     );

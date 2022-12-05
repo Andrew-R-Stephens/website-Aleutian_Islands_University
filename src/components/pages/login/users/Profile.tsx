@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import SideBanner from "../../../SideBanner";
 import {UserAuthStore} from "../../../../stores/AuthUserStore";
 import DisplayPersonalInfo from "./DisplayPersonalInfo";
+import EditPersonalInfo from "./EditPersonalInfo";
 
 /**
  * The public, outwards-facing data for a specific user.
@@ -13,23 +14,33 @@ function Profile(props:any) {
 
     const { sideBanner = <SideBanner/>} = props;
 
+    enum Pages {
+        View, Edit
+    }
+
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const [userID, setID] = useState(userStoreID);
 
+    const [page, setPage] = useState(Pages.View);
+
     const navigate = useNavigate();
-
-    useEffect(() => {
-
-    }, []);
 
     return (
         <Fragment>
             <div className={'main-body'}>
-                {/*{sideBanner}*/}
                 <div className={'inner-body'}>
-                    <DisplayPersonalInfo uid={userID}/>
-                    <div className={'inner-body-constraints'}>
-                    </div>
+                    {
+                        page === Pages.View ?
+                            <Fragment>
+                                <DisplayPersonalInfo uid={userID} backFun={()=>setPage(Pages.Edit)}/>
+                            </Fragment>
+                            :
+                            <Fragment>
+                                <div className={'inner-body-constraints'}>
+                                    <EditPersonalInfo uid={userID} backFun={()=>setPage(Pages.View)}/>
+                                </div>
+                            </Fragment>
+                    }
                 </div>
             </div>
         </Fragment>

@@ -6,10 +6,13 @@
  */
 
 function connect() {
+    $db = "systemsdb";
+    $db_test = "test_systemsdb";
+
     $hostname = "localhost";
     $username = "admin";
     $password = "systemsdb";
-    $database = "systemsdb";
+    $database = $db_test;
     $port = "3306";
 
     $conn = new mysqli($hostname, $username, $password, $database, $port);
