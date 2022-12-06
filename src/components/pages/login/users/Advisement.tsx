@@ -177,7 +177,7 @@ function FacultyAdvisement(props:any) {
         setViewAdviseesOption(event.target.checked ? ViewAdvisees.all : ViewAdvisees.self);
     }
 
-    function handleSelectAdvisee(uid:any) {
+    function handleSelectUser(uid:any) {
         navigate('./../advisor-console', {state:{targetUID:uid, godRole:roleStoreID}});
     }
 
@@ -206,7 +206,7 @@ function FacultyAdvisement(props:any) {
                                 <div className={'div-table-col'} style={{display:"flex"}}>
                                     <div className={'div-table-button-wrapper'}>
                                         <div className={'div-table-button'}
-                                            onClick={() => handleSelectAdvisee(a.UID)}>
+                                            onClick={() => handleSelectUser(a.UID)}>
                                             <div className={'div-table-button-content'}>View</div>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@ function FacultyAdvisement(props:any) {
                                     <div className={'div-table-col'} style={{display:"flex"}}>
                                         <div className={'div-table-button-wrapper'}>
                                             <div className={'div-table-button'}
-                                                 onClick={() => handleSelectAdvisee(a.UID)}>
+                                                 onClick={() => handleSelectUser(a.UID)}>
                                                 <div className={'div-table-button-content'}>View</div>
                                             </div>
                                         </div>
@@ -286,7 +286,8 @@ function FacultyAdvisement(props:any) {
                             <div className={'div-table-row'} style={{display:"flex"}}>
                                 <div className={'div-table-col'} style={{display:"flex"}}>
                                     <div className={'div-table-button-wrapper'}>
-                                        <div className={'div-table-button'}>
+                                        <div className={'div-table-button'}
+                                             onClick={() => handleSelectUser(a.UID)}>
                                             <div className={'div-table-button-content'}>View</div>
                                         </div>
                                     </div>
@@ -498,7 +499,7 @@ function AdministratorAdvisement(props:any) {
         setMaxPaginationResults(15);
     }
 
-    function handleSelectAdvisee(uid:any) {
+    function handleSelectUser(uid:any) {
         navigate('./../advisor-console', {state:{targetUID:uid, godRole:roleStoreID}});
     }
 
@@ -528,7 +529,7 @@ function AdministratorAdvisement(props:any) {
                                 <div className={'div-table-col'} style={{display:"flex"}}>
                                     <div className={'div-table-button-wrapper'}>
                                         <div className={'div-table-button'}
-                                             onClick={() => handleSelectAdvisee(a.UID)}>
+                                             onClick={() => handleSelectUser(a.UID)}>
                                             <div className={'div-table-button-content'}>View</div>
                                         </div>
                                     </div>
@@ -571,7 +572,8 @@ function AdministratorAdvisement(props:any) {
                             <div className={'div-table-row'} style={{display:"flex"}}>
                                 <div className={'div-table-col'} style={{display:"flex"}}>
                                     <div className={'div-table-button-wrapper'}>
-                                        <div className={'div-table-button'}>
+                                        <div className={'div-table-button'}
+                                             onClick={() => handleSelectUser(a.UID)}>
                                             <div className={'div-table-button-content'}>View</div>
                                         </div>
                                     </div>
@@ -666,7 +668,7 @@ function Advisement(props:any) {
     }
 
     function displayAdministratorAdvisement(){
-        return <AdministratorAdvisement/>
+        return <AdministratorAdvisement targetStudent={userID}/>
     }
 
     return (

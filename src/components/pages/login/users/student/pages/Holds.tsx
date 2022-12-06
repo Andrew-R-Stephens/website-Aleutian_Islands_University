@@ -31,6 +31,7 @@ function Holds(props:any) {
         }).then(res => {
             let {error, holds} = res.data;
             setHolds(holds);
+            console.log("Requested information for ", userID)
         }).catch(function(err) {
             console.log(err.message);
         })

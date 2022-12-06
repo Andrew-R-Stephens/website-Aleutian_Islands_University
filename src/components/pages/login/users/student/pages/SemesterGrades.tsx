@@ -59,7 +59,7 @@ function SemesterGrades(props:any) {
             }
         }).then(res => {
             let {error, semesterHistory} = res.data;
-            console.log(res.data)
+            console.log(res.data, "User ", userID)
             setSemesterHistory(semesterHistory);
         }).catch(function(err) {
             console.log(err.message);
@@ -92,7 +92,6 @@ function SemesterGrades(props:any) {
                 </div>
                 <div className={'div-table'}>
                     <div className={'div-table-header'} style={{display:"flex"}}>
-                        <div className={'div-table-col'}><label></label></div>
                         <div className={'div-table-col'}><label>CRN</label></div>
                         <div className={'div-table-col'}><label>Course ID</label></div>
                         <div className={'div-table-col'}><label>Section</label></div>
@@ -102,13 +101,6 @@ function SemesterGrades(props:any) {
                     {
                         semesterHistory?.map((item:any) => (
                             <div className={'div-table-row'} style={{display:"flex"}}>
-                                <div className={'div-table-col'} style={{display:"flex"}}>
-                                    <div className={'div-table-button-wrapper'}>
-                                        <div className={'div-table-button'}>
-                                            <div className={'div-table-button-content'}>View</div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div className={'div-table-col'}><label>{item.CRN}</label></div>
                                 <div className={'div-table-col'}><label>{item.CourseID}</label></div>
                                 <div className={'div-table-col'}><label>{item.SectionID}</label></div>

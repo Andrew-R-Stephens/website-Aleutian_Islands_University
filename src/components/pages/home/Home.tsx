@@ -19,10 +19,9 @@ function Home() {
                             </div>
                         </div>
                     </div>
-                    <div className={'main-body'}>
+                    <div className={'main-body'} style={{backgroundColor:"#dfe5ec"}}>
                         <div className={'inner-body'}>
                             <div className={'inner-body-constraints'}>
-
                             </div>
                         </div>
                     </div>

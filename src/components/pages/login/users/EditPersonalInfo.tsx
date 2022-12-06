@@ -80,8 +80,9 @@ function EditPersonalInfo(props:any) {
             }
         }).then(res => {
             const{status='Failed'} = res.data;
-            console.log("Res: ", res.data, "Status: ", res.data.toJSON)
-            initUserData().then(() => console.log('Redraw request succeeded.'));
+            console.log("Res: ", res.data)
+            initUserData().then(() => console.log('Init request succeeded.'));
+            alert(res.data.status);
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -148,7 +149,8 @@ function EditPersonalInfo(props:any) {
         setZip(event.target.value);
     }
 
-    function handleSubmit() {
+    const handleSubmit = (event:any) => {
+        event.preventDefault();
         updateUserPersonalInformation().then(r=>console.log("Requesting updates"));
     }
 
@@ -175,6 +177,7 @@ function EditPersonalInfo(props:any) {
                                 <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Gender: </label>
                                 {/*<input type={'text'} value={gender} onChange={handleChangeGender}/>*/}
                                 <select className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}} onChange={handleChangeGender}>
+                                    <option value="">Select option</option>
                                     <option value={'M'}>Male</option>
                                     <option value={'F'}>Female</option>
                                 </select>
@@ -183,6 +186,7 @@ function EditPersonalInfo(props:any) {
                                 <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Honorific: </label>
                                 {/*<input type={'text'} value={honorific} onChange={handleChangeHonorific}/>*/}
                                 <select className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}} onChange={handleChangeHonorific}>
+                                    <option value="">Select option</option>
                                     <option>Mr.</option>
                                     <option>Ms.</option>
                                     <option>Mrs.</option>
@@ -219,12 +223,13 @@ function EditPersonalInfo(props:any) {
                             </div>
                             <div className={'div-table-row'} style={{backgroundColor:"transparent", display:"flex", margin:16}}>
                                 <button className={'div-table-col'} type={"submit"}>Apply</button>
-                                <button className={'div-table-col'} style={{marginLeft: 16}} onClick={()=>props.backFun()}><label>Back</label></button>
+                                <button className={'div-table-col'} type={"button"} style={{marginLeft: 16}} onClick={()=>props.pageFun()}><label>Back</label></button>
                             </div>
                         </div>
                     </fieldset>
                 </form>
             </div>
+
         </Fragment>
     }
 

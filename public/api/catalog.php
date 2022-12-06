@@ -5,14 +5,14 @@ header("Access-Control-Allow-Headers: Content-Type");
 require_once("connect.php");
 
 $conn = connect();
-
+/*
 if(!isset($_GET['func'])) {
     $out = ['error' => 'Function not set.'];
     echo json_encode($out);
     return;
 }
-$func = $_GET['func'];
-
+$func = $_GET['func'];*/
+$func = isset($_GET['func']) ? $_GET['func'] : "";
 switch($func) {
     case 'searchAllCourses': {
         searchAllCourses($conn);
@@ -94,6 +94,10 @@ switch($func) {
         getSemesterIDsInRange($conn);
         return;
     }
+    case 'getSemesterWithRegistrationAvailable': {
+        getSemesterWithRegistrationAvailable($conn);
+        return;
+    }
     case 'getCurrentSemesterID': {
         getCurrentSemesterID($conn);
         return;
@@ -159,11 +163,36 @@ switch($func) {
         return;
     }
     default: {
-        $out = ['error' => 'Function "'. $func .'" does not exist.'];
-        echo json_encode($out);
+        $arr ['status'] = "Error: No post function matching request.";
+        break;
+    }
+}
+
+$rp = json_decode(file_get_contents('php://input'), true);
+$params = $rp['params'];
+//echo "\nparams = \n".print_r($params);
+$post = $params['post'];
+//echo "\npost = \n". $post;
+
+switch ($post) {
+    case 'dropCourseSection':
+    {
+        dropCourseSection($conn, $params);
+        return;
+    }
+    case 'addCourseSection':
+    {
+        addCourseSection($conn, $params);
+        return;
+    }
+    default:
+    {
+        $arr ['status'] = "Error: No post function matching request.";
         return;
     }
 }
+
+
 
 function getCourseCount($conn) {
     $stmt = $conn->prepare("CALL getNumCourses()");
@@ -741,6 +770,34 @@ function getSemesterIDsInRange($conn) {
     }
 
     $final_arr['SemesterIDs'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getSemesterWithRegistrationAvailable($conn) {
+
+    $stmt = $conn->prepare("CALL getSemesterWithRegistrationAvailable()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['SemesterID'],
+        $out_courses['Term'],
+        $out_courses['Year']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['SemesterID'] = $completeArray;
 
     echo(json_encode($final_arr));
 
@@ -1506,4 +1563,54 @@ function getCurrentSemesterID($conn) {
     echo(json_encode($final_arr));
 
     mysqli_close($conn);
+}
+
+function dropCourseSection($conn, $params) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($params['uid'], $params['crn']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $uid = $params['uid'];
+    $crn = $params['crn'];
+
+    $stmt = $conn->prepare("CALL dropCourseSectionByStudentIDAndCRN(?,?)");
+    $stmt->bind_param("ss", $uid, $crn);
+    $status = $stmt->execute();
+
+    if($status === false)
+        trigger_error($stmt->error, E_USER_ERROR);
+    else
+        $arr ['status'] = "$uid $crn";
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}
+
+function addCourseSection($conn, $params) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($params['uid'], $params['crn']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $uid = $params['uid'];
+    $crn = $params['crn'];
+
+    $stmt = $conn->prepare("CALL addStudentToCourseSection(?,?)");
+    $stmt->bind_param("ss", $uid, $crn);
+    $status = $stmt->execute();
+
+    if($status === false)
+        trigger_error($stmt->error, E_USER_ERROR);
+    else
+        $arr ['status'] = "$uid $crn";
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
 }

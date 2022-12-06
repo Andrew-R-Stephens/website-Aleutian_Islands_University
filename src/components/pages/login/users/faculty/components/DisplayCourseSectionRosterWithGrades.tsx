@@ -9,6 +9,10 @@ function DisplayCourseSectionRosterWithGrades(props:any) {
     const [crn, setCRN] = useState(targetCRN);
     const [roster, setRoster] = useState<any[]>();
     const [grades, setGrades] = useState<any[]>();
+    const [gradeOptions, setGradeOptions] = useState<any[]>();
+    const [canSetMidterm, setCanSetMidterm] = useState<boolean>(false);
+    const [canSetFinal, setCanSetFinal] = useState<boolean>(false);
+    const [canSetAttendance, setCanSetAttendance] = useState<boolean>(false);
 
     useEffect(() => {
         setCRN(targetCRN);
@@ -49,6 +53,66 @@ function DisplayCourseSectionRosterWithGrades(props:any) {
         })
     }
 
+    /*
+    async function requestCanSetMidtermGrades() {
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "canSetMidtermGrades"
+            }
+        }).then(res => {
+            let {error, canSet} = res.data;
+            console.log(res.data)
+            setCanSetMidterm(canSet);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
+    async function requestCanSetFinalGrades() {
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "canSetFinalGrades"
+            }
+        }).then(res => {
+            let {error, canSet} = res.data;
+            console.log(res.data)
+            setCanSetFinal(canSet);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
+    async function requestPossibleGrades() {
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "getPossibleGrades"
+            }
+        }).then(res => {
+            let {error, grades} = res.data;
+            console.log(res.data)
+            setGrades(grades);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
+    async function requestCanSetAttendance() {
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "getCanSetAttendance",
+                crn
+
+            }
+        }).then(res => {
+            let {error, grades} = res.data;
+            console.log(res.data)
+            setGrades(grades);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+    */
+
     function displayGrades(rosterEntity:any) {
         return(
             grades?.map((g:any) => (
@@ -56,6 +120,7 @@ function DisplayCourseSectionRosterWithGrades(props:any) {
                     <Fragment>
                         <div className={'div-table-col'}>{g.GradeID?g.GradeID:"NA"}</div>
                         <div className={'div-table-col'}>{g.SemPeriod?g.SemPeriod:"NA"}</div>
+                        {/*<div className={'div-table-col'}>{g.SemPeriod?g.SemPeriod:"NA"}</div>*/}
                     </Fragment>
                     : <Fragment/>
             ))

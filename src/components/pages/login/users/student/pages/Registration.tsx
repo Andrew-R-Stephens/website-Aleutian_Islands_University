@@ -1,15 +1,25 @@
 import React, {Fragment, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
 
 function StudentRegistration(props:any) {
+
+    const location = useLocation();
+    const {targetUID, targetRole, godRole} =
+        (location as any|null)?.state ?  (location as any|null)?.state : props;
+
+    const userStoreID = UserAuthStore((state:any) => state.userID);
+    const userStoreRole = RoleAuthStore((state:any) => state.authRole);
+    const [userID, setID] = useState(targetUID?targetUID:userStoreID);
+    const [userRole, setUserRole] = useState(targetRole?targetRole:userStoreRole);
+
     const navigate = useNavigate();
 
     return <Fragment>
         <h1>Student Registration</h1>
-        <div  className={'bubble-container'}>
+        <div className={'bubble-container'}>
             <div style={{display:"flex", marginTop:32, marginBottom:32}}>
-                <div className={'page-bubble'} onClick={()=>navigate('./../register-course')}>
+                <div className={'page-bubble'} onClick={()=>navigate('./../register-course', {state:{targetUID:targetUID, godRole:godRole}})}>
                     <div className={'icon-registration'}/>
                     <label className={'page-bubble-label'}>Course Registration</label>
                     <div className={'page-bubble-description'}>Allows for the management of course registration.</div>
@@ -74,34 +84,37 @@ function FacultyRegistration(props:any) {
     </Fragment>;
 }
 
+function Registration(props:any) {
 
-function Registration() {
+    const {targetUID, targetRole, godRole} = props;
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userStoreRole = RoleAuthStore((state:any) => state.authRole);
-    const [userID, setID] = useState(userStoreID);
+    const [userID, setID] = useState(targetUID?targetUID:userStoreID);
+    const [role, setRole] = useState<string>((targetRole?targetRole:userStoreRole)+"");
 
     function displayRegistration() {
-        switch(userStoreRole) {
+        switch(role) {
             case AuthRole.Student: {
                 return displayStudentAdvisement();
             }
             case AuthRole.Faculty: {
                 return displayFacultyRegistration();
             }
-            default: return <Fragment/>
+            default: {
+                return <Fragment><h1>404: Page not found.</h1><h3>Uh oh! There's nothing here.</h3></Fragment>
+            }
         }
-
     }
 
     function displayStudentAdvisement(){
-        return <StudentRegistration targetStudent={userID}/>
+        console.log("displaying  student registration", userID, role, godRole)
+        return <StudentRegistration targetUID={userID} targetRole={role} godRole={godRole}/>
     }
 
     function displayFacultyRegistration(){
-        return <FacultyRegistration targetFaculty={userID}/>
+        return <FacultyRegistration targetUID={userID}/>
     }
-
 
     return (
         <Fragment>

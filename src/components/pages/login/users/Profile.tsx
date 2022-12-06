@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import SideBanner from "../../../SideBanner";
-import {UserAuthStore} from "../../../../stores/AuthUserStore";
+import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import DisplayPersonalInfo from "./DisplayPersonalInfo";
 import EditPersonalInfo from "./EditPersonalInfo";
 
@@ -12,14 +12,19 @@ import EditPersonalInfo from "./EditPersonalInfo";
  */
 function Profile(props:any) {
 
+    console.log(props)
+    const {targetUID, targetRole} = props;
+
+    const userStoreID = UserAuthStore((state:any) => state.userID);
+    const userStoreRole = RoleAuthStore((state:any) => state.authRole);
+    const [userID, setID] = useState(targetUID?targetUID:userStoreID);
+    const [userRole, setUserRole] = useState(targetRole?targetRole:userStoreRole);
+
     const { sideBanner = <SideBanner/>} = props;
 
     enum Pages {
         View, Edit
     }
-
-    const userStoreID = UserAuthStore((state:any) => state.userID);
-    const [userID, setID] = useState(userStoreID);
 
     const [page, setPage] = useState(Pages.View);
 
@@ -32,12 +37,12 @@ function Profile(props:any) {
                     {
                         page === Pages.View ?
                             <Fragment>
-                                <DisplayPersonalInfo uid={userID} backFun={()=>setPage(Pages.Edit)}/>
+                                <DisplayPersonalInfo targetUID={userID} pageFun={()=>setPage(Pages.Edit)}/>
                             </Fragment>
                             :
                             <Fragment>
                                 <div className={'inner-body-constraints'}>
-                                    <EditPersonalInfo uid={userID} backFun={()=>setPage(Pages.View)}/>
+                                    <EditPersonalInfo targetUID={userID} pageFun={()=>setPage(Pages.View)}/>
                                 </div>
                             </Fragment>
                     }

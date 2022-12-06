@@ -16,7 +16,7 @@ switch ($func) {
     }
     default:
     {
-        echo "Error: No get function matching request.";
+        $arr ['status'] = "Error: No get function matching request.";
         break;
     }
 }
@@ -35,7 +35,7 @@ switch ($post) {
     }
     default:
     {
-        echo "Error: No post function matching request.";
+        $arr ['status'] = "Error: No post function matching request.";
         return;
     }
 }
@@ -44,7 +44,7 @@ switch ($post) {
 function getUserPersonalInformation($conn) {
 
     if(!(isset($_GET['uid']))) {
-        echo "Incomplete request";
+        $arr ['status'] = "Incomplete request";
     }
 
     $uid = $_GET['uid'];
@@ -125,34 +125,36 @@ function getUserPersonalInformation($conn) {
 
 function updateUserPersonalInformation($conn, $params) {
 
-    echo "Entered function -> UID = ". ($params['uid']);
+    // echo "Entered function -> UID = ". ($params['uid']);
 
+    $arr ['status'] = "Failed!";
     if(!(isset($params['uid']))) {
-        echo "Incomplete request";
+        $arr ['status'] = "Incomplete request";
     }
 
     $uid = $params['uid'];
 
-    $fName = $params['fName']===""?$params['fName']:null;
-    $lName = $params['lName']===""?$params['lName']:null;
-    $phone = $params['phone']===""?$params['phone']:null;
-    $gender = $params['gender']===""?$params['gender']:null;
-    $honorific = $params['honorific']===""?$params['honorific']:null;
-    $birthdate = $params['birthdate']===""?$params['birthdate']:null;
-    $houseNum = $params['houseNum']===""?$params['houseNum']:null;
-    $street = $params['street']===""?$params['street']:null;
-    $city = $params['city']===""?$params['city']:null;
-    $state = $params['state']===""?$params['state']:null;
-    $country = $params['country']===""?$params['country']:null;
-    $zip = $params['zip']===""?$params['zip']:null;
+    $fName = strcmp($params['fName'], "") !== 0 ? $params['fName'] : null;
+    $lName = strcmp($params['lName'], "") !== 0 ? $params['lName'] : null;
+    $phone = strcmp($params['phone'], "") !== 0 ? $params['phone'] : null;
+    $gender = strcmp($params['gender'], "") !== 0 ? $params['gender'] : null;
+    $honorific = strcmp($params['honorific'], "") !== 0 ? $params['honorific'] : null;
+    $birthdate = strcmp($params['birthdate'], "") !== 0 ? $params['birthdate'] : null;
+    $houseNum = strcmp($params['houseNum'], "") !== 0 ? $params['houseNum'] : null;
+    $street =strcmp($params['street'], "") !== 0 ? $params['street'] : null;
+    $city = strcmp($params['city'], "") !== 0 ? $params['city'] : null;
+    $state = strcmp($params['state'], "") !== 0 ? $params['state'] : null;
+    $country = strcmp($params['country'], "") !== 0 ? $params['country'] : null;
+    $zip = strcmp($params['zip'], "") !== 0 ? $params['zip'] : null;
 
     $stmt = $conn->prepare("CALL updatePersonalInformation(?,?,?,?,?,?,?,?,?,?,?,?,?)");
     $stmt->bind_param("sssssssssssss", $uid, $fName, $lName, $phone, $gender, $honorific, $birthdate, $houseNum, $street, $city, $state, $country, $zip);
     $status = $stmt->execute();
+
     if($status === false)
         trigger_error($stmt->error, E_USER_ERROR);
-
-    $arr ['status'] = "Success!";
+    else
+        $arr ['status'] = "$uid $fName $lName $phone $gender $honorific $birthdate $houseNum $street $city $state $country $zip";
 
     echo(json_encode($arr));
 

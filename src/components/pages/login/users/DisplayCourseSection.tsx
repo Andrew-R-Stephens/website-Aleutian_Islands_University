@@ -4,13 +4,14 @@ import DisplayCourseSectionAttendance from "./faculty/components/DisplayCourseSe
 import DisplayCourseSectionDetails from "./faculty/components/DisplayCourseSectionDetails";
 import DisplayCourseSectionRoster from "./faculty/components/DisplayCourseSectionRoster";
 import {scryRenderedComponentsWithType} from "react-dom/test-utils";
-import {AuthRole, UserAuthStore} from "../../../../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import DisplayCourseSectionRosterWithGrades from "./faculty/components/DisplayCourseSectionRosterWithGrades";
 
 function DisplayCourseSection(props:any) {
 
-    const{targetCRN, godRole} = props;
+    const {targetCRN, godRole} = props;
     const userStoreID = UserAuthStore((state:any) => state.userID);
+    //const userRoleID = RoleAuthStore((state:any) => state.authRole);
 
     const [crn, setCRN] = useState(targetCRN);
     const [data, setData] = useState<any[]>();
@@ -101,7 +102,7 @@ function DisplayCourseSection(props:any) {
     }
 
     function displayAsRole() {
-        switch(godRole) {
+        switch(godRole/*?godRole:userStoreRole*/) {
             case AuthRole.Student: {
                 return displayStudent();
             }

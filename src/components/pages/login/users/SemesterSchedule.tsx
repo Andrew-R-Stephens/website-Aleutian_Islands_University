@@ -4,10 +4,12 @@ import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import "./../../../../css/PeudoTable.css"
 import DisplayCourseSection from "./DisplayCourseSection";
 import {convertTime} from "../../../../Utils";
+import DisplaySemesterSchedule from "./DisplaySemesterSchedule";
 
 function SemesterSchedule(props:any) {
 
     const {targetUID, targetRole} = props;
+    console.log("SemSched", props)
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userStoreRole = RoleAuthStore((state:any) => state.authRole);
@@ -18,6 +20,7 @@ function SemesterSchedule(props:any) {
     const [selectedSemesterID, setSelectedSemesterID] = useState<string>();
 
     const [semesterSchedule, setSemesterSchedule] = useState<any[]>();
+    const [dropStatus, setDropStatus] = useState<boolean[]>([])
 
     const [selectedCRN, setSelectedCRN] = useState<string>();
 
@@ -36,6 +39,12 @@ function SemesterSchedule(props:any) {
             requestScheduleByUIDAndSemesterID().then(r => console.log("Schedule Request Done"));
         }
     }, [selectedSemesterID])
+
+    useEffect(() => {
+        const status:boolean[] = [];
+        semesterSchedule?.map((index:any)=>(status.push(false)))
+        setDropStatus(status);
+    }, [semesterSchedule])
 
     async function requestViewableSemesters() {
         await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
@@ -66,6 +75,7 @@ function SemesterSchedule(props:any) {
         }).then(res => {
             let {error, schedule} = res.data;
             console.log(res.data)
+            console.log("user", userID)
             setSemesterSchedule(schedule);
         }).catch(function(err) {
             console.log(err.message);
@@ -91,68 +101,20 @@ function SemesterSchedule(props:any) {
         );
     }
 
+    const handleChangeDropStatus = (event:any, index:number) => {
+        const status:boolean[] = dropStatus;
+        const value = parseInt(event.target.value)
+        status[index] = !!value;
+        setDropStatus(status);
+    }
+
     return (
         <Fragment>
             <div style={{margin:32}}>
                 <div>
                     <h1>Semester Schedule</h1>
                 </div>
-                <select onChange={handleSelectSemesterID}>
-                    {
-                        semesterIDs?.map((item:any) => (
-                            <option value={item.SemesterID}>{item.Term}{" "}{item.Year}</option>
-                        ))
-                    }
-                </select>
-                <div className={'div-table'}>
-                    <div className={'div-table-header'} style={{display:"flex"}}>
-                        <div className={'div-table-col'}><label></label></div>
-                        <div className={'div-table-col'}><label>CRN</label></div>
-                        <div className={'div-table-col'}><label>Course ID</label></div>
-                        <div className={'div-table-col'}><label>Section</label></div>
-                        <div className={'div-table-col'}><label>Faculty</label></div>
-                        <div className={'div-table-col'}><label>Building</label></div>
-                        <div className={'div-table-col'}><label>Room</label></div>
-                        <div className={'div-table-col'}><label>Day</label></div>
-                        <div className={'div-table-col'}><label>Start</label></div>
-                        <div className={'div-table-col'}><label>End</label></div>
-                    </div>
-                    {
-                        semesterSchedule?.map((item:any) => (
-                            <div className={'div-table-row'} style={{display:"flex"}}>
-                                <div className={'div-table-col'} style={{display:"flex"}}>
-                                    <div className={'div-table-button-wrapper'}>
-                                        <div className={'div-table-button'}
-                                             onClick={(event)=>handleSelectCRN(event, item.CRN)}>
-                                            <div className={'div-table-button-content'}>View</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={'div-table-col'}><label>{item.CRN}</label></div>
-                                <div className={'div-table-col'}><label>{item.CourseID}</label></div>
-                                <div className={'div-table-col'}><label>{item.SectionID}</label></div>
-                                <div className={'div-table-col'}><label>{item.FacultyID}</label></div>
-                                <div className={'div-table-col'}><label>{item.BuildingName}</label></div>
-                                <div className={'div-table-col'}><label>{item.RoomID}</label></div>
-                                <div className={'div-table-col'}>
-                                    <div><label>{item.Day1}</label></div>
-                                    <div><label>{item.Day2}</label></div>
-                                </div>
-                                <div className={'div-table-col'}>
-                                    <div><label>{convertTime(item.StartTime1)}</label></div>
-                                    <div><label>{convertTime(item.StartTime2)}</label></div>
-                                </div>
-                                <div className={'div-table-col'}>
-                                    <div><label>{convertTime(item.EndTime1)}</label></div>
-                                    <div><label>{convertTime(item.EndTime2)}</label></div>
-                                </div>
-                            </div>
-                        ))
-
-                    }
-                </div>
-                {selectedCRN?displayCourseSection():<></>}
-
+                <DisplaySemesterSchedule targetUID={targetUID} targetRole={targetRole}/>
             </div>
         </Fragment>
     );

@@ -8,6 +8,7 @@ import PersonalInformationDetails from "../../../../classes/PersonalInformationD
 function DisplayPersonalInfo(props:any) {
 
     const {targetUID, targetRole} = props;
+    console.log(props)
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userStoreRole = RoleAuthStore((state:any) => state.authRole);
@@ -171,7 +172,7 @@ function DisplayPersonalInfo(props:any) {
                     </div>
 
                     <div>
-                        <button onClick={()=>props.backFun()}>Edit</button>
+                        <button onClick={()=>props.pageFun()}>Edit</button>
                     </div>
                 </div>
 

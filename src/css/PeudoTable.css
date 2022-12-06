@@ -75,6 +75,7 @@
     background-color: #333333;
     color: whitesmoke;
     cursor: pointer;
+    user-select: none;
 }
 
 .div-list-item:hover {

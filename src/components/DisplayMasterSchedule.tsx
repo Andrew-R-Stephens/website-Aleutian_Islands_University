@@ -8,6 +8,7 @@ import {convertTime} from "../Utils";
 
 function DisplayMasterSchedule(props:any) {
     const {targetUID} = props;
+    const {enableRegistration, registrableSemesterID, handleRegisterCourse, handleBackButton} = props;
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userRoleID = RoleAuthStore((state:any) => state.authRole);
@@ -27,6 +28,7 @@ function DisplayMasterSchedule(props:any) {
     const [selectedDepartment, setSelectedDepartment] = useState<string>("");
     const [selectedPeriod, setSelectedPeriod] = useState<any[]>([]);
     const [selectedDay, setSelectedDay] = useState<any[]>([]);
+    const [selectedCRN, setSelectedCRN] = useState<string>("");
     const [selectedCourseName, setSelectedCourseName] = useState<string>("");
     const [selectedCourseID, setSelectedCourseID] = useState<string>("");
     const [selectedRoom, setSelectedRoom] = useState<string>("");
@@ -47,7 +49,12 @@ function DisplayMasterSchedule(props:any) {
     }, [])
 
     useEffect(() => {
-        semesterIDs.length>0?setSelectedSemesterID(semesterIDs.at(0).SemesterID):<></>;
+        console.log("RegSemesterID", registrableSemesterID)
+        semesterIDs.length > 0 ?
+            !registrableSemesterID ?
+                setSelectedSemesterID(semesterIDs.at(0).SemesterID)
+                :setSelectedSemesterID(registrableSemesterID)
+            : <></>;
     }, [semesterIDs])
 
     useEffect(() => {
@@ -63,7 +70,7 @@ function DisplayMasterSchedule(props:any) {
         setPageNumber(0)
         filterSections().then(r=>setFilteredSections(r));
     }, [semesterSections, selectedDepartment, selectedPeriod, selectedDay, selectedCourseName, selectedCredits, selectedCourseID,
-        selectedRoom, selectedInstructorName])
+        selectedRoom, selectedInstructorName, selectedCRN])
 
     async function requestViewableSemesters() {
         await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
@@ -154,6 +161,11 @@ function DisplayMasterSchedule(props:any) {
         setSelectedDepartment(event.target.value);
     }
 
+    const handleSelectedCRN = (event:any) => {
+        event.preventDefault();
+        setSelectedCRN(event.target.value);
+    }
+
     const handleSelectedCourseID = (event:any) => {
         event.preventDefault();
         setSelectedCourseID(event.target.value);
@@ -218,6 +230,18 @@ function DisplayMasterSchedule(props:any) {
                         ))
                     }
                 </select>
+            </div>
+        );
+    }
+
+    function displayFilterCRN() {
+        return (
+            <div style={{display: "inline-block", marginLeft:"auto", marginRight:"auto"}}>
+                <label style={{display:"flex", marginLeft: 8, marginRight: "auto", width:"fit-content", fontSize:12, fontWeight:"bold"}}>CRN</label>
+                <input style={{display:"flex", margin: "auto", width:"fit-content"}} type={'text'}
+                       autoComplete={'on'}
+                       value={selectedCRN}
+                       onChange={handleSelectedCRN}/>
             </div>
         );
     }
@@ -330,7 +354,8 @@ function DisplayMasterSchedule(props:any) {
         return(
             <div style={{backgroundColor:"#eeeeee", borderRadius:15, boxShadow: "0 0 15px #333333", padding: 16, display:"flex", maxWidth: 700, margin:"auto"}}>
                 <div style={{marginLeft:"auto", marginTop: 16, marginRight:"auto", display:"inline-block"}}>
-                    <div style={{marginLeft:"auto", marginRight:"auto"}}>{displayFilterCourseID()}</div>
+                    <div style={{marginLeft:"auto", marginRight:"auto"}}>{displayFilterCRN()}</div>
+                    <div style={{marginLeft:"auto", marginTop: 8, marginRight:"auto"}}>{displayFilterCourseID()}</div>
                     <div style={{marginLeft:"auto", marginTop: 8, marginRight:"auto"}}>{displayFilterCourseName()}</div>
                     <div style={{marginLeft:"auto", marginTop: 8, marginRight:"auto"}}>{displayFilterFacultyName()}</div>
                     <div style={{marginLeft:"auto", marginTop: 8, marginRight:"auto"}}>{displayFilterRoom()}</div>
@@ -360,19 +385,16 @@ function DisplayMasterSchedule(props:any) {
         setMaxResults(parseInt(event.target.value, 10));
         setPageNumber(0);
     };
-/*
-
-    function convertTime(time:string) {
-        const split = time.split(":");
-        const zone = parseFloat(split[0]) > 12 ? "PM" : "AM";
-        const hour = ((parseFloat(split[0]) % 12) || 12);
-        return hour+":"+split[1]+" "+zone;
-    }
-*/
 
     function handleSelectCRN(event:any, CRN:string){
         event.preventDefault();
         navigate('./../course-section', {state:{targetCRN:CRN, godRole:userRoleID}});
+    }
+
+    function handleRegistration(event:any, CRN:string){
+        event.preventDefault();
+        handleRegisterCourse(CRN);
+        handleBackButton(event);
     }
 
     async function filterSections() {
@@ -384,6 +406,8 @@ function DisplayMasterSchedule(props:any) {
            !(selectedDay.length>0) || (selectedDay?.includes(s.DayID1 || s.DayID2))
         ))!.filter((s:any)=> (
             selectedCredits === "" || (s.Credits === selectedCredits)
+        ))!.filter((s:any)=> (
+            selectedCRN === "" || ((parseInt(s.CRN)+"").includes(selectedCRN))
         ))!.filter((s:any)=> (
             selectedCourseID === "" || (s.CourseID.includes(selectedCourseID))
         ))!.filter((s:any)=> (
@@ -397,105 +421,116 @@ function DisplayMasterSchedule(props:any) {
     }
 
     return <Fragment>
-
-        <h1>Master Schedule</h1>
         <div>
-            {displayFilterSemester()}
+            {
+                !enableRegistration ?
+                    displayFilterSemester()
+                    : <div style={{display:"flex", marginLeft: 32}}>
+                        <button onClick={(event:any)=>handleBackButton(event)}>Back</button>
+                    </div>
+            }
         </div>
         <div>
             {displayFilterOptions()}
         </div>
-        <div style={{overflowX:"auto", marginTop:32}}>
-            <div style={{marginLeft: 16, marginTop: 32, marginBottom: 16, textAlign:"left", fontSize:32, fontWeight: "bold"}}>
-                {selectedSemesterID?<label>{(semesterIDs?.find((e:any)=>(e.SemesterID===selectedSemesterID)).Term)+" "+(semesterIDs?.find((e:any)=>(e.SemesterID===selectedSemesterID)).Year)}</label>:""}
-            </div>
-            <div style={{width:"100%"}}>
-                <TablePagination
-                    style={{float:"left"}}
-                    component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={filteredSections?filteredSections.length:0}
-                    page={pageNumber} rowsPerPage={maxResults} onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}/>
-            </div>
-            <div className={'div-table'}>
-                <div className={'div-table-header'} style={{display:"flex"}}>
-                    <div className={'div-table-col'}><label></label></div>
-                    <div className={'div-table-col'}><label></label></div>
-                    <div className={'div-table-col'}><label>CRN</label></div>
-                    <div className={'div-table-col'}><label>Course</label></div>
-                    <div className={'div-table-col'}><label>Credits</label></div>
-                    <div className={'div-table-col'}><label>Name</label></div>
-                    <div className={'div-table-col'}><label>Sec</label></div>
-                    <div className={'div-table-col'}><label>Instr</label></div>
-                    <div className={'div-table-col'}><label>Room</label></div>
-                    <div className={'div-table-col'}><label>Day</label></div>
-                    <div className={'div-table-col'}><label>Time</label></div>
-                    <div className={'div-table-col'}><label>Min</label></div>
-                    <div className={'div-table-col'}><label>Cap</label></div>
-                    <div className={'div-table-col'}><label>Act</label></div>
-                    <div className={'div-table-col'}><label>Dept</label></div>
-                </div>
-                <div style={{maxHeight:"50vh", overflowY:"auto"}}>
-                {
-                    filteredSections?.slice(pageNumber*maxResults, (pageNumber*maxResults+maxResults)).map((s:any, index) => (
-                        <div className={'div-table-row'} style={{display:"flex"}}>
-                            <div className={'div-table-col'} style={{display:"inline-flex"}}>
-                                <div className={'div-table-button-wrapper'}>
-                                    <div className={'div-table-button'}
-                                         onClick={(event)=> handleSelectCRN(event, s.CRN)}>
-                                        <div className={'div-table-button-content'}>View</div>
-                                    </div>
-                                </div>
-                            </div>
-                            {userRole.current==='3'?
-                                <div className={'div-table-col'} style={{display: "inline-flex"}}>
-                                    <div style={{paddingLeft: 8}} className={'div-table-button-wrapper'}>
-                                        <div className={'div-table-button'}>
-                                            <div className={'div-table-button-content'}>Edit</div>
+        <form>
+            <fieldset>
+                <div style={{overflowX:"auto"}}>
+                    <div style={{marginLeft: 16, marginTop: 32, marginBottom: 16, textAlign:"left", fontSize:32, fontWeight: "bold"}}>
+                        {selectedSemesterID?<label>{(semesterIDs?.find((e:any)=>(e.SemesterID===selectedSemesterID)).Term)+" "+(semesterIDs?.find((e:any)=>(e.SemesterID===selectedSemesterID)).Year)}</label>:""}
+                    </div>
+                    <div style={{width:"100%"}}>
+                        <TablePagination
+                            style={{float:"left"}}
+                            component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={filteredSections?filteredSections.length:0}
+                            page={pageNumber} rowsPerPage={maxResults} onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}/>
+                    </div>
+                    <div className={'div-table'}>
+                        <div className={'div-table-header'} style={{display:"flex"}}>
+                            <div className={'div-table-col'}><label></label></div>
+                            {
+                                enableRegistration || userRole.current === '3' ?
+                                    <div className={'div-table-col'}><label></label></div>
+                                    : <Fragment/>
+                            }
+                            <div className={'div-table-col'}><label>CRN</label></div>
+                            <div className={'div-table-col'}><label>Course</label></div>
+                            <div className={'div-table-col'}><label>Credits</label></div>
+                            <div className={'div-table-col'}><label>Name</label></div>
+                            <div className={'div-table-col'}><label>Sec</label></div>
+                            <div className={'div-table-col'}><label>Instr</label></div>
+                            <div className={'div-table-col'}><label>Room</label></div>
+                            <div className={'div-table-col'}><label>Day</label></div>
+                            <div className={'div-table-col'}><label>Time</label></div>
+                            <div className={'div-table-col'}><label>Min</label></div>
+                            <div className={'div-table-col'}><label>Cap</label></div>
+                            <div className={'div-table-col'}><label>Act</label></div>
+                            <div className={'div-table-col'}><label>Dept</label></div>
+                        </div>
+                        <div style={{maxHeight:"50vh", overflowY:"auto"}}>
+                        {
+                            filteredSections?.slice(pageNumber*maxResults, (pageNumber*maxResults+maxResults)).map((s:any, index) => (
+                                <div className={'div-table-row'} style={{display:"flex"}}>
+                                    <div className={'div-table-col'} style={{display:"inline-flex"}}>
+                                        <div className={'div-table-button-wrapper'} style={{margin:"auto"}}>
+                                            <div className={'div-table-button'}
+                                                 onClick={(event)=> handleSelectCRN(event, s.CRN)}>
+                                                <div className={'div-table-button-content'}><label>View</label></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div> :
-                                <div className={'div-table-col'} style={{display: "inline-flex"}}>
-                                    <div style={{paddingLeft: 8}} className={'div-table-button-wrapper'}>
-                                        <Checkbox sx={{
-                                            '&.Mui-checked': {
-                                                color: blue[800]
-                                            }
-                                        }}/>
+                                    {
+                                        enableRegistration ?
+                                        <div className={'div-table-col'} style={{display: "inline-flex"}}>
+                                            <div className={'div-table-button-wrapper'}>
+                                                <div className={'div-table-button'}
+                                                     onClick={(event)=> handleRegistration(event, s.CRN)}>
+                                                    <div className={'div-table-button-content'}><label>Add</label></div>
+                                                </div>
+                                                {/*<Checkbox sx={{
+                                                    '&.Mui-checked': {
+                                                        color: blue[800]
+                                                    }
+                                                }}/>*/}
+                                            </div>
+                                        </div> : <Fragment/>
+                                    }
+                                    <div className={'div-table-col'}><label>{s.CRN}</label></div>
+                                    <div className={'div-table-col'}><label>{s.CourseID}</label></div>
+                                    <div className={'div-table-col'}><label>{s.Credits}</label></div>
+                                    <div className={'div-table-col'}><label>{s.Name}</label></div>
+                                    <div className={'div-table-col'}><label>{s.SectionID}</label></div>
+                                    <div className={'div-table-col'}><label>{s.FirstName} {s.LastName}</label></div>
+                                    <div className={'div-table-col'}><label>{s.RoomID}</label></div>
+                                    <div className={'div-table-col'}>
+                                        <div>
+                                            <label>{s.DayName1Abbr}</label>
+                                        </div>
+                                        <div>
+                                            <label>{s.DayName2Abbr}</label>
+                                        </div>
                                     </div>
-                                </div>}
-                            <div className={'div-table-col'}><label>{s.CRN}</label></div>
-                            <div className={'div-table-col'}><label>{s.CourseID}</label></div>
-                            <div className={'div-table-col'}><label>{s.Credits}</label></div>
-                            <div className={'div-table-col'}><label>{s.Name}</label></div>
-                            <div className={'div-table-col'}><label>{s.SectionID}</label></div>
-                            <div className={'div-table-col'}><label>{s.FirstName} {s.LastName}</label></div>
-                            <div className={'div-table-col'}><label>{s.RoomID}</label></div>
-                            <div className={'div-table-col'}>
-                                <div>
-                                    <label>{s.DayName1Abbr}</label>
+                                    <div className={'div-table-col'}>
+                                        <div>
+                                            <label>{convertTime(s.StartTime1)} - {convertTime(s.EndTime1)}</label>
+                                        </div>
+                                        <div>
+                                            <label>{convertTime(s.StartTime2)} - {convertTime(s.EndTime2)}</label>
+                                        </div>
+                                    </div>
+                                    <div className={'div-table-col'}><label>{s.SeatsMinimum}</label></div>
+                                    <div className={'div-table-col'}><label>{s.SeatsCapacity}</label></div>
+                                    <div className={'div-table-col'}><label>{s.SeatsActual}</label></div>
+                                    <div className={'div-table-col'}><label>{s.DepartmentID}</label></div>
                                 </div>
-                                <div>
-                                    <label>{s.DayName2Abbr}</label>
-                                </div>
-                            </div>
-                            <div className={'div-table-col'}>
-                                <div>
-                                    <label>{convertTime(s.StartTime1)} - {convertTime(s.EndTime1)}</label>
-                                </div>
-                                <div>
-                                    <label>{convertTime(s.StartTime2)} - {convertTime(s.EndTime2)}</label>
-                                </div>
-                            </div>
-                            <div className={'div-table-col'}><label>{s.SeatsMinimum}</label></div>
-                            <div className={'div-table-col'}><label>{s.SeatsCapacity}</label></div>
-                            <div className={'div-table-col'}><label>{s.SeatsActual}</label></div>
-                            <div className={'div-table-col'}><label>{s.DepartmentID}</label></div>
-                        </div>
-                    ))
-                }</div>
-            </div>
-        </div>
-
+                            ))
+                        }</div>
+                    </div>
+                </div>
+                <div></div>
+            </fieldset>
+        </form>
     </Fragment>;
 }
 export default DisplayMasterSchedule;
