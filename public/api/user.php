@@ -1,9 +1,16 @@
 <?php
 ini_set('display_errors', 1);
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type");/*
+ini_set("mail.log", "/tmp/mail.log");
+ini_set("mail.add_x_header", TRUE);*/
+error_reporting(-1);
+set_error_handler("var_dump");/*
+ini_set('SMTP','mailout.one.com' );
+ini_set('smtp_port',587);*/
 
 require_once ("connect.php");
+require ('ses_mailer.php');
 
 $conn = connect();
 
@@ -12,6 +19,11 @@ switch ($func) {
     case 'getPersonalInformation':
     {
         getUserPersonalInformation($conn);
+        return;
+    }
+    case 'sendPasswordResetRequest':
+    {
+        sendPasswordResetRequest($conn);
         return;
     }
     default:
@@ -159,5 +171,35 @@ function updateUserPersonalInformation($conn, $params) {
     echo(json_encode($arr));
 
     mysqli_close($conn);
+}
+
+function sendPasswordResetRequest($conn) {
+
+    if(!(isset($_GET['sender'], $_GET['subject'], $_GET['message']))) {
+        $arr ['status'] = "false";
+        echo(json_encode($arr));
+    }
+    $sender = $_GET['sender'];
+    $subject = $_GET['subject'];
+    $message = $_GET['message'];
+
+    $stmt = $conn->prepare("CALL getPrimaryAdminEmail()");
+    $stmt->execute();
+    $out_email = '';
+    $stmt->bind_result(
+        $out_email
+    );
+    $recipient = 'stephensandrewryan@gmail.com';
+    /*while ($stmt->fetch()) {
+        $recipient = $out_email;
+    }*/
+
+    sendEmail($recipient, $recipient, $subject, $message);
+
+    $arr['email'] = $sender;
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
 
 }
+

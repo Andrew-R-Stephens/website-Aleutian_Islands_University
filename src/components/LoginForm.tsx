@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useRef, useState} from 'react';
 import '../css/LoginForm.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -6,6 +6,7 @@ import '../stores/user-store';
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
 
 function LoginForm() {
+
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const roleStoreID = RoleAuthStore((state:any) => state.authRole);
@@ -62,6 +63,24 @@ function LoginForm() {
         })
 
         event.preventDefault();
+    }
+
+    function handlePassReset() {
+        axios.get(process.env['REACT_APP_API_USER'] as string, {
+            params: {
+                func: "sendPasswordResetRequest",
+                sender: email,
+                subject: "Password Reset Request",
+                message: "Please reset the password for " + email
+            }
+        }).then(res => {
+            console.log(res);
+            //const {result, details, email} = res.data;
+            console.log(res.data);
+            //alert(!(!!result) ? "Password reset request FAILED." : ("An email has been sent to with a request to reset password for " + email));*/
+        }).catch(function(err) {
+            console.log(err.message);
+        })
     }
 
     function renderError() {
@@ -124,7 +143,9 @@ function LoginForm() {
                                 <input type={"submit"} value={"Login"}/>
                             </div>
                             <div style={{fontSize:13, marginTop:32, float:"right"}}>
-                                <label className={'clickable-text'}>Can't sign in?</label>
+                                <label className={'clickable-text'}
+                                    onClick={handlePassReset}>
+                                    Can't sign in?</label>
                             </div>
                         </div>
                     </fieldset>
