@@ -58,6 +58,10 @@ switch($func) {
         getAllDepartments($conn);
         return;
     }
+    case 'getAllDepartments_distinct': {
+        getAllDepartments_unique($conn);
+        return;
+    }
     case 'getDepartmentDetails': {
         getDepartmentDetails($conn);
         return;
@@ -162,6 +166,10 @@ switch($func) {
         getCourseSectionMeetingDatesByCRN($conn);
         return;
     }
+    case 'deleteCourseSectionFromSchedule': {
+        deleteCourseSectionFromSchedule($conn);
+        return;
+    }
     default: {
         $arr ['status'] = "Error: No post function matching request.";
         break;
@@ -177,12 +185,17 @@ $post = $params['post'];
 switch ($post) {
     case 'dropCourseSection':
     {
-        dropCourseSection($conn, $params);
+        dropStudentFromCourseSection($conn, $params);
         return;
     }
     case 'addCourseSection':
     {
-        addCourseSection($conn, $params);
+        addStudentToCourseSection($conn, $params);
+        return;
+    }
+    case 'createNewProgram':
+    {
+        createNewProgram($conn, $params);
         return;
     }
     default:
@@ -568,6 +581,36 @@ function getAllDepartments($conn) {
         $out_courses['UID'],
         $out_courses['PhoneNum'],
         $out_courses['SchoolID']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['departments'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAllDepartments_unique($conn) {
+
+    $stmt = $conn->prepare("CALL getAllDepartments_Unique()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['DepartmentID'],
+        $out_courses['Description'],
+        $out_courses['RoomID'],
+        $out_courses['UID'],
+        $out_courses['PhoneNum']
     );
 
     $completeArray = [];
@@ -1565,7 +1608,7 @@ function getCurrentSemesterID($conn) {
     mysqli_close($conn);
 }
 
-function dropCourseSection($conn, $params) {
+function dropStudentFromCourseSection($conn, $params) {
 
     $arr ['status'] = "Failed!";
     if(!(isset($params['uid'], $params['crn']))) {
@@ -1590,7 +1633,7 @@ function dropCourseSection($conn, $params) {
 
 }
 
-function addCourseSection($conn, $params) {
+function addStudentToCourseSection($conn, $params) {
 
     $arr ['status'] = "Failed!";
     if(!(isset($params['uid'], $params['crn']))) {
@@ -1608,6 +1651,57 @@ function addCourseSection($conn, $params) {
         trigger_error($stmt->error, E_USER_ERROR);
     else
         $arr ['status'] = "$uid $crn";
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}
+
+function deleteCourseSectionFromSchedule($conn, $params) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($params['crn']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $crn = $params['crn'];
+
+    $stmt = $conn->prepare("CALL deleteCourseSection(?)");
+    $stmt->bind_param("s", $crn);
+    $status = $stmt->execute();
+
+    if($status === false)
+        trigger_error($stmt->error, E_USER_ERROR);
+    else
+        $arr ['status'] = "200";
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}
+
+function createNewProgram($conn, $params) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($params['programName'], $params['programTypeID'], $params['description'], $params['departmentID']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $programName = $params['programName'];
+    $programTypeID = $params['programTypeID'];
+    $description = $params['description'];
+    $departmentID = $params['departmentID'];
+
+    $stmt = $conn->prepare("CALL setNewProgramRecord(?,?,?,?)");
+    $stmt->bind_param("ssss", $programName, $programTypeID, $description, $departmentID);
+    $status = $stmt->execute();
+
+    if($status === false)
+        trigger_error($stmt->error, E_USER_ERROR);
+    else
+        $arr ['status'] = $programName . " " . $programTypeID . " " . $description . " " . $departmentID;
 
     echo(json_encode($arr));
 

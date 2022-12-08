@@ -7,7 +7,6 @@ import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
 
 function LoginForm() {
 
-
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const roleStoreID = RoleAuthStore((state:any) => state.authRole);
     const setUserStoreID = UserAuthStore((state:any) => state.setUserID);
@@ -65,24 +64,6 @@ function LoginForm() {
         event.preventDefault();
     }
 
-    function handlePassReset() {
-        axios.get(process.env['REACT_APP_API_USER'] as string, {
-            params: {
-                func: "sendPasswordResetRequest",
-                sender: email,
-                subject: "Password Reset Request",
-                message: "Please reset the password for " + email
-            }
-        }).then(res => {
-            console.log(res);
-            //const {result, details, email} = res.data;
-            console.log(res.data);
-            //alert(!(!!result) ? "Password reset request FAILED." : ("An email has been sent to with a request to reset password for " + email));*/
-        }).catch(function(err) {
-            console.log(err.message);
-        })
-    }
-
     function renderError() {
         var errMsg = "";
 
@@ -103,54 +84,39 @@ function LoginForm() {
 
     return (
         <Fragment>
-            <div className={'plain'}>
-                <form onSubmit={event => handleSubmit(event)}>
-                    <fieldset disabled={failedAttemptCount >= 5} className = "div-login">
-                        <div className={'login-container'}>
-                            <div className={'login-body'}>
-                                <div className={'div-login-row'}>
-                                    <div className={'div-login-col'}>
-                                        <label className={'authError'}>
-                                            { renderError() }
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className={'div-login-row'}>
-                                    <div className={'div-login-col'}>
-                                        <div className={'div-login-label'}>Email: </div>
-                                    </div>
-                                    <div className={'div-login-col'}><input className={'inputText'}
-                                               type={"email"}
-                                               autoComplete={'on'}
-                                               value={email}
-                                               onChange={handleEmailChange}/>
-                                    </div>
-                                </div>
-                                <div className={'div-login-row'}>
-                                    <div className={'div-login-col'}><div className={'div-login-label'}>Password: </div></div>
-                                    <div className={'div-login-col'}>
-                                        <input className={'inputText'}
-                                               type={"password"}
-                                               autoComplete={'on'}
-                                               value={pass}
-                                               onChange={handlePassChange}/>
-                                    </div>
-                                </div>
-                            </div>
+            <form onSubmit={event => handleSubmit(event)}>
+                <fieldset disabled={failedAttemptCount >= 5}>
+                    <div style={{marginBottom:8}}>
+                        <label className={'authError'}>
+                            { renderError() }
+                        </label>
+                    </div>
+                    <div className={'div-login-row'}>
+                        <div className={'div-login-col'}>
+                            <div className={'div-login-label'}>Email: </div>
                         </div>
-                        <div className={'submit'} style={{display:"inline-block", width:"100%", marginRight:"auto", marginLeft:"auto"}}>
-                            <div style={{marginRight:"auto", marginLeft:"auto"}}>
-                                <input type={"submit"} value={"Login"}/>
-                            </div>
-                            <div style={{fontSize:13, marginTop:32, float:"right"}}>
-                                <label className={'clickable-text'}
-                                    onClick={handlePassReset}>
-                                    Can't sign in?</label>
-                            </div>
+                        <div className={'div-login-col'}><input className={'inputText'}
+                                   type={"email"}
+                                   autoComplete={'on'}
+                                   value={email}
+                                   onChange={handleEmailChange}/>
                         </div>
-                    </fieldset>
-                </form>
-            </div>
+                    </div>
+                    <div className={'div-login-row'}>
+                        <div className={'div-login-col'}><div className={'div-login-label'}>Password: </div></div>
+                        <div className={'div-login-col'}>
+                            <input className={'inputText'}
+                                   type={"password"}
+                                   autoComplete={'on'}
+                                   value={pass}
+                                   onChange={handlePassChange}/>
+                        </div>
+                    </div>
+                    <div style={{marginRight:"auto", marginLeft:"auto"}}>
+                        <input type={"submit"} value={"Login"}/>
+                    </div>
+                </fieldset>
+            </form>
         </Fragment>
     );
 }

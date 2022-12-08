@@ -91,6 +91,15 @@ function AdvisorConsole() {
                                 <label className={'page-bubble-label'}>Personal Information</label>
                                 <div className={'page-bubble-description'}>Todo</div>
                             </div>
+                            {
+                                (userRole === AuthRole.Student || userRole === AuthRole.Faculty) ?
+                                    <div className={'page-bubble'} onClick={() => handleSetPage(Page.Advisor)}>
+                                        <div className={'icon-advisement'}/>
+                                        <label className={'page-bubble-label'}>Advisement</label>
+                                        <div className={'page-bubble-description'}>Todo</div>
+                                    </div>
+                                    :<Fragment/>
+                            }
                         </div>
                         {
                             userRole === AuthRole.Student ?

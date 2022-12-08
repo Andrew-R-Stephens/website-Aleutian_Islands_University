@@ -33,6 +33,7 @@ import EducatorConsole from "./login/users/faculty/components/EducatorConsole";
 import AdvisorConsole from "./login/users/faculty/components/AdvisorConsole";
 import CourseSection from "./login/users/CourseSection";
 import MasterSchedule from "../MasterSchedule";
+import AdminPlayground from "./login/users/administrator/pages/AdminPlayground";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -178,6 +179,7 @@ function NavRoutes() {
                                         <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
                                         <Route path={"enroll-program"} element={<UserConsole child={<EnrollProgram/>}/>}/>
                                         <Route path={"semester-schedule"} element={<UserConsole child={<SemesterSchedule/>}/>}/>
+                                        <Route path={"admin-playground"} element={<UserConsole child={<AdminPlayground/>}/>}/>
                                     </Route>
                                     <Route path={"researcher"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Researcher]}/>}>

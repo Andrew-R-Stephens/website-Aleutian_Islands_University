@@ -27,7 +27,7 @@ function sendEmail($sender, $recipient, $header, $message){
 
         //Recipients
         $mail->setFrom($sender, 'Aleutian Islands University');
-        $mail->addAddress($recipient, 'Joe User');                          //Add a recipient
+        $mail->addAddress($recipient, '');                          //Add a recipient
 
 
         //Content

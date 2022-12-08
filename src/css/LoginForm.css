@@ -8,9 +8,16 @@ fieldset {
     color: black;
 }
 
-.login .authError {
+.authError {
     color:#ff0033;
     font-size: 12px;
+    text-align: center;
+}
+
+.authSuccess {
+    color: #051e35;
+    font-size: 12px;
+    text-align: center;
 }
 
 .login form {

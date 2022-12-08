@@ -24,6 +24,14 @@ function UserConsole(props:any) {
         navigate(link);
     }
 
+    const handleSelectLinkPayload = (event:any, page:number, link:string, navPayload:any, cPage:number = -1) => {
+        event.preventDefault();
+        setPage(page);
+        setChildPage(cPage);
+        window.sessionStorage.setItem("lastPage", page as any);
+        navigate(link, navPayload);
+    }
+
     function generateByRole() {
         switch (role.current) {
             case AuthRole.Administrator: {
@@ -61,11 +69,12 @@ function UserConsole(props:any) {
                      role={page===2?'active':'inactive'}>Admin</div>
                 <div className={'navLink-children'} id={page==2?'active':'inactive'}>
                     <div className={'navLink-child'} onClick={(event:any) =>
-                        handleSelectLink(event,2, './../master-schedule',20)}
+                        handleSelectLinkPayload(event,2, './../master-schedule',
+                            {state:{adminManagement:true}},20)}
                          role={childPage===20?'active':'inactive'}>Manage Master Schedule</div>
                     <div className={'navLink-child'} onClick={(event:any) =>
                         handleSelectLink(event,2, './../catalog',21)}
-                         role={childPage===21?'active':'inactive'}>Manage Course Catalog</div>
+                         role={childPage===21?'active':'inactive'}>Course Catalog</div>
                     <div className={'navLink-child'} onClick={(event:any) =>
                         handleSelectLink(event,2, './../manage-users',22)}
                          role={childPage===22?'active':'inactive'}>Manage Users</div>

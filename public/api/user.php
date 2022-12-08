@@ -26,6 +26,11 @@ switch ($func) {
         sendPasswordResetRequest($conn);
         return;
     }
+    case 'sendEmailRequest':
+    {
+        sendEmailRequest($conn);
+        return;
+    }
     default:
     {
         $arr ['status'] = "Error: No get function matching request.";
@@ -43,6 +48,11 @@ switch ($post) {
     case 'updateUserPersonalInformation':
     {
         updateUserPersonalInformation($conn, $params);
+        return;
+    }
+    case 'getUserPassword':
+    {
+        updatePassword($conn, $params);
         return;
     }
     default:
@@ -135,7 +145,73 @@ function getUserPersonalInformation($conn) {
 
 }
 
+function getUserPassword($conn) {
+
+    if(!(isset($_GET['uid']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $uid = $_GET['uid'];
+
+    $stmt = $conn->prepare("CALL getUserPassword(?)");
+    $stmt->bind_param("s", $uid);
+    $stmt->execute();
+
+    $out_pass = '';
+    $stmt->bind_result(
+        $out_pass
+    );
+
+    $arr['UID'] = '';
+    while ($stmt->fetch()) {
+        $arr['pass'] = $out_pass;
+    }
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}
+
 function updateUserPersonalInformation($conn, $params) {
+
+    // echo "Entered function -> UID = ". ($params['uid']);
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($params['uid']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $uid = $params['uid'];
+
+    $fName = strcmp($params['fName'], "") !== 0 ? $params['fName'] : null;
+    $lName = strcmp($params['lName'], "") !== 0 ? $params['lName'] : null;
+    $phone = strcmp($params['phone'], "") !== 0 ? $params['phone'] : null;
+    $gender = strcmp($params['gender'], "") !== 0 ? $params['gender'] : null;
+    $honorific = strcmp($params['honorific'], "") !== 0 ? $params['honorific'] : null;
+    $birthdate = strcmp($params['birthdate'], "") !== 0 ? $params['birthdate'] : null;
+    $houseNum = strcmp($params['houseNum'], "") !== 0 ? $params['houseNum'] : null;
+    $street =strcmp($params['street'], "") !== 0 ? $params['street'] : null;
+    $city = strcmp($params['city'], "") !== 0 ? $params['city'] : null;
+    $state = strcmp($params['state'], "") !== 0 ? $params['state'] : null;
+    $country = strcmp($params['country'], "") !== 0 ? $params['country'] : null;
+    $zip = strcmp($params['zip'], "") !== 0 ? $params['zip'] : null;
+
+    $stmt = $conn->prepare("CALL updatePersonalInformation(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    $stmt->bind_param("sssssssssssss", $uid, $fName, $lName, $phone, $gender, $honorific, $birthdate, $houseNum, $street, $city, $state, $country, $zip);
+    $status = $stmt->execute();
+
+    if($status === false)
+        trigger_error($stmt->error, E_USER_ERROR);
+    else
+        $arr ['status'] = "$uid $fName $lName $phone $gender $honorific $birthdate $houseNum $street $city $state $country $zip";
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+}
+
+function updatePassword($conn, $params) {
 
     // echo "Entered function -> UID = ". ($params['uid']);
 
@@ -190,11 +266,11 @@ function sendPasswordResetRequest($conn) {
         $out_email
     );
     $recipient = 'stephensandrewryan@gmail.com';
-    /*while ($stmt->fetch()) {
+    while ($stmt->fetch()) {
         $recipient = $out_email;
-    }*/
+    }
 
-    sendEmail($recipient, $recipient, $subject, $message);
+    sendEmail($sender, $recipient, $subject, $message);
 
     $arr['email'] = $sender;
     echo(json_encode($arr));
@@ -203,3 +279,22 @@ function sendPasswordResetRequest($conn) {
 
 }
 
+function sendEmailRequest($conn) {
+
+    if(!(isset($_GET['sender'], $_GET['recipient'], $_GET['subject'], $_GET['message']))) {
+        $arr ['status'] = "false";
+        echo(json_encode($arr));
+    }
+    $sender = $_GET['sender'];
+    $recipient = $_GET['recipient'];
+    $subject = $_GET['subject'];
+    $message = $_GET['message'];
+
+    sendEmail($sender, $recipient, $subject, $message);
+
+    $arr['email'] = $sender;
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}

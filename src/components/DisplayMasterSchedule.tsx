@@ -1,14 +1,15 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import axios from "axios";
-import {RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
 import {Checkbox, TablePagination} from "@mui/material";
 import {blue} from "@mui/material/colors";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {convertTime} from "../Utils";
 
 function DisplayMasterSchedule(props:any) {
     const {targetUID} = props;
     const {enableRegistration, registrableSemesterID, handleRegisterCourse, handleBackButton} = props;
+    const {adminManagement} = props;
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
     const userRoleID = RoleAuthStore((state:any) => state.authRole);
@@ -148,6 +149,21 @@ function DisplayMasterSchedule(props:any) {
 
         }).catch(function(err) {
             console.log("getMasterScheduleByID", err.message);
+        })
+    }
+
+    async function requestDeleteSection(CRN:string) {
+        await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
+            params: {
+                func: "deleteCourseSection",
+                crn: CRN
+            }
+        }).then(res => {
+            requestMasterSchedule().then(r=>console.log("Schedule Reloaded"));
+            console.log(res.data);
+
+        }).catch(function(err) {
+            console.log("getSemesterIDsInRange", err.message);
         })
     }
 
@@ -397,6 +413,11 @@ function DisplayMasterSchedule(props:any) {
         handleBackButton(event);
     }
 
+    function handleSectionDelete(event:any, CRN:string){
+        event.preventDefault();
+        requestDeleteSection(CRN).then(r=>console.log("Delete attempt completed."));
+    }
+
     async function filterSections() {
         return semesterSections!?.filter((s:any)=> (
             selectedDepartment === "" || s.DepartmentID === selectedDepartment
@@ -418,6 +439,44 @@ function DisplayMasterSchedule(props:any) {
         ))!.filter((s:any)=> (
             selectedRoom === "" || (s.RoomID.includes(selectedRoom))
         ))
+    }
+
+    function displayButtonHCol() {
+        return (
+            (enableRegistration || (userRole.current === AuthRole.Administrator && adminManagement)) ?
+                <Fragment>
+                    <div className={'div-table-col'}><label></label></div>
+                </Fragment>
+                : <Fragment/>
+        );
+    }
+
+    function displayButtonRCol(s:any) {
+        if(enableRegistration)
+            return (
+                <div className={'div-table-col'} style={{display: "inline-flex"}}>
+                    <div className={'div-table-button-wrapper'}>
+                        <div className={'div-table-button'}
+                             onClick={(event)=> handleRegistration(event, s.CRN)}>
+                            <div className={'div-table-button-content'}><label>Add</label></div>
+                        </div>
+                    </div>
+                </div>
+            );
+        else if(userRoleID === AuthRole.Administrator && adminManagement){
+            return (
+                <Fragment>
+                    <div className={'div-table-col'} style={{display: "inline-flex"}}>
+                        <div className={'div-table-button-wrapper'}>
+                            <div className={'div-table-button'} style={{margin:"auto"}} defaultValue={''}
+                                 onClick={(event:any)=>handleSectionDelete(event, s.CRN)}>
+                                <label>Delete</label>
+                            </div>
+                        </div>
+                    </div>
+                </Fragment>
+            );
+        }
     }
 
     return <Fragment>
@@ -450,9 +509,7 @@ function DisplayMasterSchedule(props:any) {
                         <div className={'div-table-header'} style={{display:"flex"}}>
                             <div className={'div-table-col'}><label></label></div>
                             {
-                                enableRegistration || userRole.current === '3' ?
-                                    <div className={'div-table-col'}><label></label></div>
-                                    : <Fragment/>
+                                displayButtonHCol()
                             }
                             <div className={'div-table-col'}><label>CRN</label></div>
                             <div className={'div-table-col'}><label>Course</label></div>
@@ -481,20 +538,7 @@ function DisplayMasterSchedule(props:any) {
                                         </div>
                                     </div>
                                     {
-                                        enableRegistration ?
-                                        <div className={'div-table-col'} style={{display: "inline-flex"}}>
-                                            <div className={'div-table-button-wrapper'}>
-                                                <div className={'div-table-button'}
-                                                     onClick={(event)=> handleRegistration(event, s.CRN)}>
-                                                    <div className={'div-table-button-content'}><label>Add</label></div>
-                                                </div>
-                                                {/*<Checkbox sx={{
-                                                    '&.Mui-checked': {
-                                                        color: blue[800]
-                                                    }
-                                                }}/>*/}
-                                            </div>
-                                        </div> : <Fragment/>
+                                        displayButtonRCol(s)
                                     }
                                     <div className={'div-table-col'}><label>{s.CRN}</label></div>
                                     <div className={'div-table-col'}><label>{s.CourseID}</label></div>
