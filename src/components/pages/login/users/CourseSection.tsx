@@ -9,9 +9,7 @@ function CourseSection(props:any) {
 
     return (
         <Fragment>
-
             <DisplayCourseSection targetCRN={targetCRN} godRole={godRole}></DisplayCourseSection>
-
         </Fragment>
     );
 

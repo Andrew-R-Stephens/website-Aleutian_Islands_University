@@ -115,6 +115,7 @@ function NavRoutes() {
                                 <Route path={"/academics"} element={<GeneralAcademics/>}/>
                                 <Route path={"/about"} element={<About/>}/>
                                 <Route path={"/login"} element={<Login/>}/>
+                                <Route path={"/course-section"} element={<CourseSection/>}/>
                                 <Route element={<RequireUserAuth/>}>
                                     <Route path={"/u"}>
                                         <Route index element={<DoRoleAuthRouting/>}/>

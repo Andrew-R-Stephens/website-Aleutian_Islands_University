@@ -450,6 +450,18 @@ function DisplayMasterSchedule(props:any) {
                 : <Fragment/>
         );
     }
+    function displayButtonDefaultHCol() {
+        if(userRoleID != 0) {
+            return (
+                <div className={'div-table-col'}><label></label></div>
+            );
+        }
+        else {
+            return (
+                <Fragment/>
+            );
+        }
+    }
 
     function displayButtonRCol(s:any) {
         if(enableRegistration)
@@ -475,6 +487,26 @@ function DisplayMasterSchedule(props:any) {
                         </div>
                     </div>
                 </Fragment>
+            );
+        }
+    }
+
+    function displayButtonDefaultRCol(s:any) {
+        if(userRoleID != 0) {
+            return (
+                <div className={'div-table-col'} style={{display: "inline-flex"}}>
+                    <div className={'div-table-button-wrapper'} style={{margin: "auto"}}>
+                        <div className={'div-table-button'}
+                             onClick={(event) => handleSelectCRN(event, s.CRN)}>
+                            <div className={'div-table-button-content'}><label>View</label></div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        else {
+            return (
+                <Fragment/>
             );
         }
     }
@@ -507,7 +539,9 @@ function DisplayMasterSchedule(props:any) {
                     </div>
                     <div className={'div-table'}>
                         <div className={'div-table-header'} style={{display:"flex"}}>
-                            <div className={'div-table-col'}><label></label></div>
+                            {
+                                displayButtonDefaultHCol()
+                            }
                             {
                                 displayButtonHCol()
                             }
@@ -529,14 +563,9 @@ function DisplayMasterSchedule(props:any) {
                         {
                             filteredSections?.slice(pageNumber*maxResults, (pageNumber*maxResults+maxResults)).map((s:any, index) => (
                                 <div className={'div-table-row'} style={{display:"flex"}}>
-                                    <div className={'div-table-col'} style={{display:"inline-flex"}}>
-                                        <div className={'div-table-button-wrapper'} style={{margin:"auto"}}>
-                                            <div className={'div-table-button'}
-                                                 onClick={(event)=> handleSelectCRN(event, s.CRN)}>
-                                                <div className={'div-table-button-content'}><label>View</label></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {
+                                        displayButtonDefaultRCol(s)
+                                    }
                                     {
                                         displayButtonRCol(s)
                                     }
