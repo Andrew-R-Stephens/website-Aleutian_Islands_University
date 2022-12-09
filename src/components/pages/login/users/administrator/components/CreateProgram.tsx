@@ -1,5 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function CreateProgram() {
 
@@ -10,6 +11,8 @@ function CreateProgram() {
     const [selectedDepartment, setSelectedDepartment] = useState("");
     const [programName, setProgramName] = useState("");
     const [description, setDescription] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         requestAllProgramTypes().then(r=>console.log("ProgramTypes loaded"));
@@ -104,70 +107,78 @@ function CreateProgram() {
         requestCreateProgram().then(r=>console.log());
     }
 
+    const handleNavigateBack = (event:any) => {
+        event.preventDefault();
+        navigate("./../admin-playground");
+    }
 
     return (
         <Fragment>
-            <form onSubmit={handleSubmit}>
+            <h1>Create a Program</h1>
+            <form onSubmit={handleSubmit} style={{margin:"auto"}}>
                 <fieldset>
-                    <div style={{display:"flex"}}>
-                        <div style={{display:"inline-block", margin:"auto"}}>
-                            <div style={{display: "block", margin: "auto"}}>
-                                <div><label style={{
-                                    fontWeight: "bold",
-                                    fontSize: 18,
-                                    whiteSpace: "nowrap",
-                                    float: "left",
-                                    width: "500"
-                                }}>Program Type</label></div>
-                                <select name={"programTypes"} id={"programTypes"} onChange={handleSelectProgramType} defaultValue={selectedProgramType}>
-                                    <option key={'-1'} value={""}>-Any-</option>
-                                    {
-                                        programTypes?.map((item: any, key: any) => (
-                                            <option key={key} value={item.ProgramTypeID}>{item.Name}</option>
-                                        ))
-                                    }
-                                </select>
+                    <div style={{display:"inline-block", textAlign:'left'}}>{/*
+                        <div style={{display:"flex"}}>*/}
+                            <div className={'div-table-row'} style={{backgroundColor:"transparent", display:"flex", width:"100%"}}>
+                                <div style={{display: "block", marginLeft:0, marginRight: "auto"}}>
+                                    <div>
+                                        <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Program Type</label>
+                                        <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
+                                            <select name={"programTypes"} id={"programTypes"} onChange={handleSelectProgramType} defaultValue={selectedProgramType}>
+                                                <option key={'-1'} value={""}>-Any-</option>
+                                                {
+                                                    programTypes?.map((item: any, key: any) => (
+                                                        <option key={key} value={item.ProgramTypeID}>{item.Name}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div className={'div-table-row'} style={{backgroundColor:"transparent",display:"flex", width:"100%"}}>
+                                <div style={{display: "block", marginLeft:0, marginRight: "auto"}}>
+                                    <div>
+                                        <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Department</label>
+                                        <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
+                                            <select name={"departments"} id={"departments"} onChange={handleSelectDepartment} defaultValue={selectedDepartment}>
+                                                <option key={'-1'} value={""}>-Any-</option>
+                                                {
+                                                    departments?.map((item: any, key: any) => (
+                                                        <option key={key}>{item.DepartmentID}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={'div-table-row'} style={{backgroundColor:"transparent",display:"flex", width:"100%"}}>
+                                <div style={{display: "block", marginLeft:0, marginRight: "auto"}}>
+                                    <div>
+                                        <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Program Name</label>
+                                        <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
+                                            <input type={'text'} onChange={handleChangeName} value={programName}></input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={'div-table-row'} style={{backgroundColor:"transparent",display:"flex", width:"100%"}}>
+                                <div style={{display: "block", marginLeft:0, marginRight: "auto"}}>
+                                    <div>
+                                        <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Description</label>
+                                        <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
+                                            <textarea onChange={handleChangeDescription} value={description}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div>
+                            <button type={'submit'}>Create</button>
+                            <button style={{marginLeft:16}} type={'button'} onClick={handleNavigateBack}>Cancel</button>
                         </div>
-                        <div style={{display: "block", margin:"auto"}}>
-                            <div><label style={{
-                                fontWeight: "bold",
-                                fontSize: 18,
-                                whiteSpace: "nowrap",
-                                float: "left",
-                                width: "500"
-                            }}>Department</label></div>
-                            <select name={"departments"} id={"departments"} onChange={handleSelectDepartment} defaultValue={selectedDepartment}>
-                                <option key={'-1'} value={""}>-Any-</option>
-                                {
-                                    departments?.map((item: any, key: any) => (
-                                        <option key={key}>{item.DepartmentID}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                        <div style={{display: "block", margin:"auto"}}>
-                            <div><label style={{
-                                fontWeight: "bold",
-                                fontSize: 18,
-                                whiteSpace: "nowrap",
-                                float: "left",
-                                width: "500"
-                            }}>Program Name</label></div>
-                            <input type={'text'} onChange={handleChangeName} value={programName}></input>
-                        </div>
-                        <div style={{display: "block", margin:"auto"}}>
-                            <div><label style={{
-                                fontWeight: "bold",
-                                fontSize: 18,
-                                whiteSpace: "nowrap",
-                                float: "left",
-                                width: "500"
-                            }}>Description</label></div>
-                            <textarea onChange={handleChangeDescription} value={description}/>
-                        </div>
+
                     </div>
-                    <button type={'submit'}>Create</button>
                 </fieldset>
             </form>
         </Fragment>

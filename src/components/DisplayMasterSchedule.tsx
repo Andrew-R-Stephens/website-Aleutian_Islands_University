@@ -153,17 +153,21 @@ function DisplayMasterSchedule(props:any) {
     }
 
     async function requestDeleteSection(CRN:string) {
+        console.log("CRN is ", CRN);
         await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
             params: {
-                func: "deleteCourseSection",
+                func: "deleteCourseSectionFromSchedule",
                 crn: CRN
             }
         }).then(res => {
+            const{result} = res.data;
             requestMasterSchedule().then(r=>console.log("Schedule Reloaded"));
-            console.log(res.data);
-
+            if(result == 0)
+                alert(CRN + " has been successfully deleted.")
+            else
+                alert(CRN + " could not be deleted.")
         }).catch(function(err) {
-            console.log("getSemesterIDsInRange", err.message);
+            console.log("delete section", err.message);
         })
     }
 
@@ -223,7 +227,7 @@ function DisplayMasterSchedule(props:any) {
         return (
             <div style={{display: "inline-block", margin:"auto", marginBottom: 32, marginTop: 16}}>
                 <label style={{display:"flex", marginLeft: 8, marginRight: "auto", width:"fit-content", fontSize:12, fontWeight:"bold"}}>Semester</label>
-                <select onChange={handleSelectSemesterID}>
+                <select onChange={handleSelectSemesterID} value={selectedSemesterID}>
                     {
                         semesterIDs?.map((item:any) => (
                             <option value={item.SemesterID}>{item.Term}{" "}{item.Year}</option>
@@ -415,6 +419,7 @@ function DisplayMasterSchedule(props:any) {
 
     function handleSectionDelete(event:any, CRN:string){
         event.preventDefault();
+        console.log("handling ", CRN);
         requestDeleteSection(CRN).then(r=>console.log("Delete attempt completed."));
     }
 

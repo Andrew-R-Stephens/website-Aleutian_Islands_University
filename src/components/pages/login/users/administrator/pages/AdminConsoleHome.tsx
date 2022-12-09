@@ -25,13 +25,13 @@ function AdminConsoleHome() {
                     </div>
                     <div className={'page-bubble'} onClick={()=>navigate('./../master-schedule', {state:{adminManagement:true}})}>
                         <div className={'icon-schedule'}/>
-                        <label className={'page-bubble-label'}>Manage Master Schedule</label>
+                        <label className={'page-bubble-label'}>Master Schedule</label>
                         <div className={'page-bubble-description'}>Provides a dashboard for managing the information
                             that's held within the course catalog.</div>
                     </div>
                     <div className={'page-bubble'} onClick={()=>navigate('./../catalog')}>
-                        <div className={'icon-edit-catalog'}/>
-                        <label className={'page-bubble-label'}>Manage Catalog</label>
+                        <div className={'icon-catalog-courses'}/>
+                        <label className={'page-bubble-label'}>Catalog</label>
                         <div className={'page-bubble-description'}>Provides a dashboard for managing the information
                             that's held within the course catalog.</div>
                     </div>

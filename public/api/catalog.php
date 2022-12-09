@@ -1658,28 +1658,35 @@ function addStudentToCourseSection($conn, $params) {
 
 }
 
-function deleteCourseSectionFromSchedule($conn, $params) {
-
+function deleteCourseSectionFromSchedule($conn) {
     $arr ['status'] = "Failed!";
-    if(!(isset($params['crn']))) {
+    if(!(isset($_GET['crn']))) {
         $arr ['status'] = "Incomplete request";
     }
 
-    $crn = $params['crn'];
+    $crn = $_GET['crn'];
 
     $stmt = $conn->prepare("CALL deleteCourseSection(?)");
     $stmt->bind_param("s", $crn);
     $status = $stmt->execute();
 
+    $out = '';
+    $stmt->bind_result(
+        $out
+    );
+
+    while ($stmt->fetch()) {
+        $arr['result'] = $out;
+    }
+
     if($status === false)
         trigger_error($stmt->error, E_USER_ERROR);
     else
-        $arr ['status'] = "200";
+        $arr ['status'] = $out;
 
     echo(json_encode($arr));
 
     mysqli_close($conn);
-
 }
 
 function createNewProgram($conn, $params) {

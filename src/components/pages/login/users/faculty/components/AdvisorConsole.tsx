@@ -11,6 +11,8 @@ import UnofficialTranscript from "../../student/pages/UnofficialTranscript";
 import DisplayPersonalInfo from "../../DisplayPersonalInfo";
 import Registration from "../../student/pages/Registration";
 import Profile from "../../Profile";
+import EditRegistration from "../../student/pages/EditRegistration";
+import EditEnrollment from "../../student/pages/EditEnrollment";
 
 function AdvisorConsole() {
 
@@ -31,7 +33,8 @@ function AdvisorConsole() {
         SemesterSchedules=5,
         UnofficialTranscript=6,
         PersonalInformation=7,
-        Registration=8
+        Registration=8,
+        Enrollment=9
     }
     const [page, setPage] = useState<number>(Page.Home);
 
@@ -92,6 +95,15 @@ function AdvisorConsole() {
                                 <div className={'page-bubble-description'}>Todo</div>
                             </div>
                             {
+                                userRole === AuthRole.Student ?
+                                    <div className={'page-bubble'} onClick={() => handleSetPage(Page.Holds)}>
+                                        <div className={'icon-holds'}/>
+                                        <label className={'page-bubble-label'}>Holds</label>
+                                        <div className={'page-bubble-description'}>Todo</div>
+                                    </div>
+                                    : <Fragment/>
+                            }
+                            {
                                 (userRole === AuthRole.Student || userRole === AuthRole.Faculty) ?
                                     <div className={'page-bubble'} onClick={() => handleSetPage(Page.Advisor)}>
                                         <div className={'icon-advisement'}/>
@@ -124,11 +136,18 @@ function AdvisorConsole() {
                         }
                         <div style={{display:"flex", marginTop: 32}}>
                             {godRole === AuthRole.Administrator && userRole === AuthRole.Student ?
-                                <div className={'page-bubble'} onClick={() => handleSetPage(Page.Registration)}>
-                                    <div className={'icon-registration'}/>
-                                    <label className={'page-bubble-label'}>Registration</label>
-                                    <div className={'page-bubble-description'}>Todo</div>
-                                </div>
+                                <Fragment>
+                                    <div className={'page-bubble'} onClick={() => handleSetPage(Page.Registration)}>
+                                        <div className={'icon-registration'}/>
+                                        <label className={'page-bubble-label'}>Registration</label>
+                                        <div className={'page-bubble-description'}>Todo</div>
+                                    </div>
+                                    <div className={'page-bubble'} onClick={() => handleSetPage(Page.Enrollment)}>
+                                        <div className={'icon-registration'}/>
+                                        <label className={'page-bubble-label'}>Enrollment</label>
+                                        <div className={'page-bubble-description'}>Todo</div>
+                                    </div>
+                                </Fragment>
                                 :<Fragment/>
                             }
                             <div className={'page-bubble'} onClick={()=>handleSetPage(Page.SemesterSchedules)}>
@@ -136,15 +155,6 @@ function AdvisorConsole() {
                                 <label className={'page-bubble-label'}>Semester Schedule</label>
                                 <div className={'page-bubble-description'}>Todo</div>
                             </div>
-                            {
-                                userRole === AuthRole.Student ?
-                                <div className={'page-bubble'} onClick={() => handleSetPage(Page.Holds)}>
-                                    <div className={'icon-holds'}/>
-                                    <label className={'page-bubble-label'}>Holds</label>
-                                    <div className={'page-bubble-description'}>Todo</div>
-                                </div>
-                                : <Fragment/>
-                            }
                         </div>
                     </div>
                 </div>
@@ -156,7 +166,10 @@ function AdvisorConsole() {
 
         switch(page) {
             case Page.Registration:{
-                return <Registration targetUID={targetUID} targetRole={userRole} godRole={godRole}/>
+                return <EditRegistration targetUID={targetUID} targetRole={userRole} godRole={godRole}/>
+            }
+            case Page.Enrollment:{
+                return <EditEnrollment targetUID={targetUID} targetRole={userRole} godRole={godRole}/>
             }
             case Page.Advisor:{
                 return <Advisement targetUID={targetUID} targetRole={userRole} godRole={godRole}/>
