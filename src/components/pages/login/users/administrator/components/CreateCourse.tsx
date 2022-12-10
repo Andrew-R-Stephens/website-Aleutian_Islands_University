@@ -4,7 +4,6 @@ import axios from "axios";
 
 function CreateCourse() {
 
-    const [programTypes, setProgramTypes] = useState([]);
     const [departments, setDepartments] = useState([]);
 
     const [courseIDA, setCourseIDA] = useState<string>("NA");
@@ -12,29 +11,13 @@ function CreateCourse() {
     const [courseName, setCourseName] = useState("");
     const [credits, setCredits] = useState<number>(4);
     const [selectedDepartment, setSelectedDepartment] = useState("");
-    const [programName, setProgramName] = useState("");
     const [description, setDescription] = useState("");
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        requestAllProgramTypes().then(r=>console.log("ProgramTypes loaded"));
         requestAllDepartments().then(r=>console.log("Departments loaded"));
     }, [])
-
-    async function requestAllProgramTypes() {
-        await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
-            params: {
-                func: "getAllProgramTypes"
-            }
-        }).then(res => {
-            let {error, programTypes} = res.data;
-            setProgramTypes(programTypes);
-            console.log(programTypes);
-        }).catch(function(err) {
-            console.log(err.message);
-        })
-    }
 
     async function requestAllDepartments() {
         await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
@@ -50,72 +33,60 @@ function CreateCourse() {
         })
     }
 
-    async function requestCreateProgram() {
-        /*
-        await axios.post(process.env["REACT_APP_API_CATALOG"] as string, {
+    async function requestCreateCourse() {
+        await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
             params: {
-                post: "createNewProgram",
-                programName: programName,
-                programTypeID: selectedProgramType,
-                description,
-                departmentID: selectedDepartment
+                func: "createNewCourse",
+                courseID: (courseIDA+courseIDB+""),
+                courseName,
+                courseCredits:credits,
+                departmentID:selectedDepartment,
+                description
             }
         }).then(res => {
             const {status} = res;
-            console.log("Res: ", status)
-            if(status == 200) {
-                handleReset()
-                const typeSel = document.getElementById("programTypes");
-                typeSel?.setAttribute('value', '')
-            }
+            console.log("Res: ", status, res)
         }).catch(function(err) {
             console.log(err.message);
         })
-        */
     }
 
     const handleChangeCourseIDA = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value.toUpperCase())
         setCourseIDA(event.target.value.toUpperCase());
     };
 
     const handleChangeCourseIDB = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setCourseIDB(event.target.value);
     };
 
     const handleChangeCourseName = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setCourseName(event.target.value);
     };
 
     const handleChangeCredits = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setCredits(event.target.value);
     };
 
     const handleSelectDepartment = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setSelectedDepartment(event.target.value);
     };
 
     const handleChangeDescription = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setDescription(event.target.value);
     };
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
-        console.log(courseIDA, courseIDB, courseName, credits, selectedDepartment, description.length)
+        console.log(courseIDA+courseIDB+"", courseName, credits, selectedDepartment, description)
         console.log(courseIDA.length>0 , courseIDB>0 , courseName.length>0 , credits>0 , selectedDepartment.length>0, description.length>0)
         if(!!courseIDA.length && !!courseIDB && !!courseName.length && !!credits && !!selectedDepartment.length && !!description.length)
-            requestCreateProgram().then(r=>console.log());
+            requestCreateCourse().then(r=>console.log());
     }
 
     function disableSubmit() : boolean {
@@ -157,7 +128,7 @@ function CreateCourse() {
                                     <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Course Name</label>
                                     <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
                                         <input type={'text'}
-                                               minLength={1} maxLength={30} pattern={'[A-Za-z]{1,30}'}
+                                               minLength={1} maxLength={30} pattern={'[A-Za-z ]{1,30}'}
                                                onChange={handleChangeCourseName} value={courseName}></input>
                                     </div>
                                 </div>

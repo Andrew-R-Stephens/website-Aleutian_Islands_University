@@ -7,7 +7,7 @@
 
 function connect() {
     $db = "systemsdb";
-    $db_test = "temp_db";
+    $db_test = "test_systemsdb";
 
     $hostname = "localhost";
     $username = "admin";

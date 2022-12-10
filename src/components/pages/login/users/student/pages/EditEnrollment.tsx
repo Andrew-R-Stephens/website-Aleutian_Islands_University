@@ -27,9 +27,9 @@ function EditEnrollment(props:any) {
     const [primaryFaculty, setPrimaryFaculty] = useState<any[]>([]);
     const [secondaryFaculty, setSecondaryFaculty] = useState<any[]>([]);
 
-    const [selectedPrimaryProgram, setSelectedPrimaryProgram] = useState<string>();
+    const [selectedPrimaryProgram, setSelectedPrimaryProgram] = useState<string>('');
     const [selectedSecondaryProgram, setSelectedSecondaryProgram] = useState<string>();
-    const [selectedPrimaryFaculty, setSelectedPrimaryFaculty] = useState<string>();
+    const [selectedPrimaryFaculty, setSelectedPrimaryFaculty] = useState<string>('');
     const [selectedSecondaryFaculty, setSelectedSecondaryFaculty] = useState<string>();
 
     useEffect(() => {
@@ -185,8 +185,8 @@ function EditEnrollment(props:any) {
                 id: userID,
                 p1: selectedPrimaryProgram,
                 f1: selectedPrimaryFaculty,
-                p2: selectedSecondaryProgram,
-                f2: selectedSecondaryFaculty
+                p2: selectedSecondaryProgram===''?undefined:selectedSecondaryProgram,
+                f2: selectedSecondaryFaculty===''?undefined:selectedSecondaryFaculty
             }
         }).then(res => {
             const {
@@ -200,6 +200,11 @@ function EditEnrollment(props:any) {
 
     const handleSelectPrimaryProgram = (event:any) => {
         setSelectedPrimaryProgram(event.target.value)
+        if(event.target.value === '') {
+            setSelectedPrimaryFaculty('')
+            setSelectedSecondaryProgram('')
+            setSelectedSecondaryFaculty('')
+        }
     }
 
     const handleSelectSecondaryProgram = (event:any) => {
@@ -208,6 +213,10 @@ function EditEnrollment(props:any) {
 
     const handleSelectPrimaryAdvisor = (event:any) => {
         setSelectedPrimaryFaculty(event.target.value)
+        if(event.target.value === '') {
+            setSelectedSecondaryProgram('')
+            setSelectedSecondaryFaculty('')
+        }
     }
 
     const handleSelectSecondaryAdvisor = (event:any) => {
@@ -229,6 +238,8 @@ function EditEnrollment(props:any) {
         </Fragment>
     }
 
+    console.log(selectedPrimaryProgram, selectedPrimaryFaculty, selectedSecondaryProgram, selectedSecondaryFaculty)
+
     function displayProgram1Option() {
         return <Fragment>
             <div style={{display:"inline", margin:"auto"}}>
@@ -240,7 +251,7 @@ function EditEnrollment(props:any) {
                         <select defaultValue={selectedPrimaryProgram}
                                 onChange={handleSelectPrimaryProgram}
                         >
-                            <option>- Any -</option>
+                            <option value={''}>- Any -</option>
                             {
                                 primaryPrograms?.map((item:any)=>(
                                     <option value={item.ProgramID}>{item.ProgramName}</option>
@@ -263,9 +274,11 @@ function EditEnrollment(props:any) {
                     </div>
                     <div>
                         <select defaultValue={selectedSecondaryProgram}
-                            onChange={handleSelectSecondaryProgram}
+                                value={selectedSecondaryProgram}
+                                onChange={handleSelectSecondaryProgram}
+                                disabled={(selectedPrimaryProgram?.length<=0) || (selectedPrimaryFaculty?.length<=0)}
                         >
-                            <option>- Any -</option>
+                            <option value={''}>- Any -</option>
                             {
                                 secondaryPrograms?.map((item:any)=>(
                                     <option value={item.ProgramID}>{item.ProgramName}</option>
@@ -288,9 +301,10 @@ function EditEnrollment(props:any) {
                     </div>
                     <div style={{textAlign:"left"}}>
                         <select
+                                value={selectedPrimaryFaculty}
                                 onChange={handleSelectPrimaryAdvisor}
                         >
-                            <option>- Any -</option>
+                            <option value={''}>- Any -</option>
                             {
                                 primaryFaculty?.map((item:any)=>(
                                     <option value={item.UID}>({item.UID}) {item.FirstName} {item.LastName}</option>
@@ -312,9 +326,11 @@ function EditEnrollment(props:any) {
                     </div>
                     <div style={{textAlign:"left"}}>
                         <select
+                                value={selectedSecondaryFaculty}
                                 onChange={handleSelectSecondaryAdvisor}
+                                disabled={((selectedPrimaryProgram==="") || (selectedPrimaryFaculty===""))}
                         >
-                            <option>- Any -</option>
+                            <option value={''}>- Any -</option>
                             {
                                 secondaryFaculty?.map((item:any)=>(
                                     <option value={item.UID}>({item.UID}) {item.FirstName} {item.LastName}</option>

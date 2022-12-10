@@ -190,6 +190,10 @@ switch($func) {
         setStudentToMajorMinor($conn);
         return;
     }
+    case 'createNewCourse': {
+        createNewCourse($conn);
+        return;
+    }
     default: {
         $arr ['status'] = "Error: No post function matching request.";
         break;
@@ -216,6 +220,11 @@ switch ($post) {
     case 'createNewProgram':
     {
         createNewProgram($conn, $params);
+        return;
+    }
+    case 'createNewCourse':
+    {
+        createNewCourse($conn, $params);
         return;
     }
     default:
@@ -1914,3 +1923,30 @@ function setStudentToMajorMinor($conn) {
     mysqli_close($conn);
 }
 
+function createNewCourse($conn) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($_GET['courseID'], $_GET['courseName'], $_GET['courseCredits'], $_GET['departmentID'], $_GET['description']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $courseID = $_GET['courseID'];
+    $courseName = $_GET['courseName'];
+    $courseCredits = $_GET['courseCredits'];
+    $departmentID = $_GET['departmentID'];
+    $description = $_GET['description'];
+
+    $stmt = $conn->prepare("CALL setNewCourse(?,?,?,?,?)");
+    $stmt->bind_param("sssss", $courseID, $courseName, $courseCredits, $departmentID, $description);
+    $status = $stmt->execute();
+
+    if($status === false)
+        trigger_error($stmt->error, E_USER_ERROR);
+    else
+        $arr ['status'] = $courseID . " " . $courseName . " " . $courseCredits . " " . $departmentID . " " . $description;
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}
