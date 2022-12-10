@@ -194,6 +194,10 @@ switch($func) {
         createNewCourse($conn);
         return;
     }
+    case 'getAvailableOffices': {
+        getAvailableOffices($conn);
+        return;
+    }
     default: {
         $arr ['status'] = "Error: No post function matching request.";
         break;
@@ -1949,4 +1953,30 @@ function createNewCourse($conn) {
 
     mysqli_close($conn);
 
+}
+
+function getAvailableOffices($conn) {
+
+    $stmt = $conn->prepare("CALL getAvailableOffices()");
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['RoomID']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['rooms'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
 }
