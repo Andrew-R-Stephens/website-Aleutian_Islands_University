@@ -170,6 +170,26 @@ switch($func) {
         deleteCourseSectionFromSchedule($conn);
         return;
     }
+    case 'getStudentGradTypeByStudentID': {
+        getStudentGradTypeByStudentID($conn);
+        return;
+    }
+    case 'getPrimaryProgramsForEnrollmentByStudentID': {
+        getPrimaryProgramsForEnrollmentByStudentID($conn);
+        return;
+    }
+    case 'getSecondaryProgramsForEnrollmentByStudentID': {
+        getSecondaryProgramsForEnrollmentByStudentID($conn);
+        return;
+    }
+    case 'getAvailableAdvisorsUsingProgramID': {
+        getAvailableAdvisorsUsingProgramID($conn);
+        return;
+    }
+    case 'setStudentToMajorMinor': {
+        setStudentToMajorMinor($conn);
+        return;
+    }
     default: {
         $arr ['status'] = "Error: No post function matching request.";
         break;
@@ -1715,3 +1735,182 @@ function createNewProgram($conn, $params) {
     mysqli_close($conn);
 
 }
+
+function getStudentGradTypeByStudentID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getStudentGradTypeByStudentID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['UID'],
+        $out_schedule['GradLevel'],
+        $out_schedule['GradType']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['data'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getPrimaryProgramsForEnrollmentByStudentID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getPrimaryProgramsForEnrollmentByStudentID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['ProgramTypeID'],
+        $out_schedule['ProgramID'],
+        $out_schedule['ProgramName'],
+        $out_schedule['Description'],
+        $out_schedule['Name'],
+        $out_schedule['ProgramLevel'],
+        $out_schedule['ClassType'],
+        $out_schedule['ClassLevel']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['programs'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getSecondaryProgramsForEnrollmentByStudentID($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getSecondaryProgramsForEnrollmentByStudentID(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['ProgramTypeID'],
+        $out_schedule['ProgramID'],
+        $out_schedule['ProgramName'],
+        $out_schedule['Description'],
+        $out_schedule['Name'],
+        $out_schedule['ProgramLevel'],
+        $out_schedule['ClassType'],
+        $out_schedule['ClassLevel']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['programs'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAvailableAdvisorsUsingProgramID($conn) {
+    if(!(isset($_GET['pid']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $pid = $_GET['pid'];
+
+    $stmt = $conn->prepare("CALL getAvailableAdvisorsUsingProgramID(?)");
+    $stmt->bind_param("s", $pid);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['UID'],
+        $out_schedule['FirstName'],
+        $out_schedule['LastName']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['advisors'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function setStudentToMajorMinor($conn) {
+    if(!(isset($_GET['id'], $_GET['p1'], $_GET['f1']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+    $p1 = $_GET['p1'];
+    $f1 = $_GET['f1'];
+    $p2 = null;
+    $f2 = null;
+
+    if(isset($_GET['p2'],$_GET['f2'])) {
+        $p2 = $_GET['p2'];
+        $f2 = $_GET['f2'];
+    }
+
+    $stmt = $conn->prepare("CALL setStudentToMajorMinor(?,?,?,?,?)");
+    $stmt->bind_param("sssss", $id, $p1, $f1, $p2, $f2);
+    $stmt->execute();
+
+    $final_arr['payload'] = $id . " " . $p1 . " " . $f1 . " " . $p2 . " " . $f2;
+    $final_arr['status'] = "0";
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+

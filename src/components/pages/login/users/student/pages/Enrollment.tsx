@@ -98,7 +98,7 @@ function Enrollment(props:any) {
     function displayEnrollment() {
         return (
             <Fragment>
-                <DisplayEnrollmentInfo targetUID={targetUID} targetRole={targetRole} godRole={godRole}/>
+                {/*<DisplayEnrollmentInfo targetUID={targetUID} targetRole={targetRole} godRole={godRole}/>*/}
                 <EditEnrollment targetUID={targetUID} targetRole={targetRole} godRole={godRole}/>
             </Fragment>
         );

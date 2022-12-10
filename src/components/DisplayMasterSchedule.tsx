@@ -51,7 +51,7 @@ function DisplayMasterSchedule(props:any) {
 
     useEffect(() => {
         console.log("RegSemesterID", registrableSemesterID)
-        semesterIDs.length > 0 ?
+        semesterIDs?.length > 0 ?
             !registrableSemesterID ?
                 setSelectedSemesterID(semesterIDs.at(0).SemesterID)
                 :setSelectedSemesterID(registrableSemesterID)
@@ -427,9 +427,9 @@ function DisplayMasterSchedule(props:any) {
         return semesterSections!?.filter((s:any)=> (
             selectedDepartment === "" || s.DepartmentID === selectedDepartment
         ))!.filter((s:any)=> (
-            !(selectedPeriod.length>0) || (selectedPeriod?.includes(s.PeriodID1 || s.PeriodID2))
+            !(selectedPeriod?.length>0) || (selectedPeriod?.includes(s.PeriodID1 || s.PeriodID2))
         ))!.filter((s:any)=> (
-           !(selectedDay.length>0) || (selectedDay?.includes(s.DayID1 || s.DayID2))
+           !(selectedDay?.length>0) || (selectedDay?.includes(s.DayID1 || s.DayID2))
         ))!.filter((s:any)=> (
             selectedCredits === "" || (s.Credits === selectedCredits)
         ))!.filter((s:any)=> (
@@ -538,7 +538,7 @@ function DisplayMasterSchedule(props:any) {
                     <div style={{width:"100%"}}>
                         <TablePagination
                             style={{float:"left"}}
-                            component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={filteredSections?filteredSections.length:0}
+                            component="div" rowsPerPageOptions={[5, 10, 15, 25, 50]} count={filteredSections?filteredSections?.length:0}
                             page={pageNumber} rowsPerPage={maxResults} onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}/>
                     </div>
