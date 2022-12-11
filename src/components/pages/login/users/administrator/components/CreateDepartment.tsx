@@ -13,7 +13,7 @@ function CreateDepartment() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [room, setRoom] = useState("");
-    const [selectedFaculty] = useState("");
+    const [selectedFaculty, setSelectedFaculty] = useState("");
     const [phone, setPhone] = useState("");
 
     const navigate = useNavigate();
@@ -21,8 +21,11 @@ function CreateDepartment() {
     useEffect(() => {
         requestAllSchools().then(r=>console.log("Schools loaded"));
         requestAvailableOffices().then(r=>console.log("Rooms loaded"));
-        requestNonChairFaculty().then(r=>console.log("Faculty loaded"));
     }, [])
+
+    useEffect(() => {
+        requestNonChairFaculty().then(r=>console.log("Faculty loaded"));
+    }, [selectedSchool])
 
     async function requestAllSchools() {
         await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
@@ -56,31 +59,32 @@ function CreateDepartment() {
     async function requestNonChairFaculty() {
         await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getNonChairFaculty"
+                func: "getAvailableFacultyForDepartmentHeadBySchoolID",
+                sid: selectedSchool
             }
         }).then(res => {
             let {error, faculty} = res.data;
             setFaculty(faculty);
-            console.log(faculty);
+            console.log("Faculty", faculty);
         }).catch(function(err) {
             console.log(err.message);
         })
     }
 
     async function requestCreateDepartment() {
-        await axios.post(process.env["REACT_APP_API_CATALOG"] as string, {
+        await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
             params: {
-                post: "createNewDepartment",
+                func: "createNewDepartment",
                 sid: selectedSchool,
-                name,
-                description,
-                roomID: room,
-                fid: faculty,
-                phone
+                rid: room,
+                did: name,
+                fid: selectedFaculty,
+                desc: description,
+                phn: phone
             }
         }).then(res => {
             const {status} = res;
-            console.log("Res: ", status)
+            console.log("Res: ", status, res)
             if(status == 200) {
                 handleReset()
                 const typeSel = document.getElementById("programTypes");
@@ -98,43 +102,37 @@ function CreateDepartment() {
 
     const handleChangeSchool = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setSelectedSchool(event.target.value);
     };
 
     const handleChangeName = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setName(event.target.value);
     };
 
     const handleChangeDescription = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setDescription(event.target.value);
     };
 
     const handleChangeRoom = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setRoom(event.target.value);
     };
 
     const handleChangeFaculty = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
-        setFaculty(event.target.value);
+        setSelectedFaculty(event.target.value);
     };
 
     const handleChangePhone = (event:any) => {
         event.preventDefault();
-        console.log(event.target.value)
         setPhone(event.target.value);
     };
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
-        console.log(selectedSchool, name, description, room, faculty, phone)
+        console.log(selectedSchool, name, description, room, selectedFaculty, phone)
         if(!!selectedSchool.length && !!name.length && !!description.length && !!room.length && !!selectedFaculty.length && !!phone.length)
             requestCreateDepartment().then(r=>console.log());
     }
@@ -146,7 +144,7 @@ function CreateDepartment() {
 
     return (
         <Fragment>
-            <h1>Create a Program</h1>
+            <h1>Create a Department</h1>
             <form onSubmit={handleSubmit} style={{margin:"auto"}}>
                 <fieldset>
                     <div style={{display:"inline-block", textAlign:'left'}}>{/*
@@ -183,7 +181,7 @@ function CreateDepartment() {
                         <div className={'div-table-row'} style={{backgroundColor:"transparent",display:"flex", width:"100%"}}>
                             <div style={{display: "block", marginLeft:0, marginRight: "auto"}}>
                                 <div>
-                                    <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Room ID</label>
+                                    <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Department Room</label>
                                     <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
                                         <select name={"departments"} id={"departments"}
                                                 onChange={handleChangeRoom} defaultValue={room}>
@@ -202,14 +200,14 @@ function CreateDepartment() {
                         <div className={'div-table-row'} style={{backgroundColor:"transparent",display:"flex", width:"100%"}}>
                             <div style={{display: "block", marginLeft:0, marginRight: "auto"}}>
                                 <div>
-                                    <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Faculty</label>
+                                    <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Chairperson</label>
                                     <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
                                         <select name={"departments"} id={"departments"}
-                                                onChange={handleChangeFaculty} value={faculty}>
+                                                onChange={handleChangeFaculty} value={selectedFaculty}>
                                             <option key={'-1'} value={-1}>-Any-</option>
                                             {
                                                 faculty?.map((f: any, key: any) => (
-                                                    <option key={key} value={f.UID}>({f.UID}) {f.FirstName} {f.LastName}</option>
+                                                    <option key={key} value={f.FacultyID}>({f.FacultyID}) {f.FirstName} {f.LastName}</option>
                                                 ))
                                             }
                                         </select>
@@ -232,7 +230,7 @@ function CreateDepartment() {
                         <div className={'div-table-row'} style={{backgroundColor:"transparent",display:"flex", width:"100%"}}>
                             <div style={{display: "block", marginLeft:0, marginRight: "auto"}}>
                                 <div>
-                                    <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Description</label>
+                                    <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Department Description</label>
                                     <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
                                         <textarea onChange={handleChangeDescription} value={description}/>
                                     </div>

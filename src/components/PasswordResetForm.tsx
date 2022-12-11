@@ -30,9 +30,10 @@ function PasswordResetForm(props:any) {
         axios.get(process.env['REACT_APP_API_USER'] as string, {
             params: {
                 func: "sendPasswordResetRequest",
-                sender: "noreply.aiu@gmail.com",
+                sender: "noreply.aiu@owsysdb.com",
                 subject: "Password Reset Request",
-                message: "Please reset the password for " + email
+                message: "Please reset the password for " + email,
+                email: email
             }
         }).then(res => {
             console.log(res);

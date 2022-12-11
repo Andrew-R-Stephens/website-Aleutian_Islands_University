@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import '../../../../css/Account.css';
 import {UserAuthStore} from "../../../../stores/AuthUserStore";
 import DisplayAccountInfo from "./DisplayAccountInfo";
+import EditPassword from "./EditPassword";
 
 /**
  * The private, inwards-facing data for a specific user.
@@ -24,7 +25,8 @@ function Account(props: any) {
                 <div className={'main-body'}>
                     <div className = {'inner-body'}>
                         <div className={'inner-body-constraints'}>
-                            <DisplayAccountInfo/>
+                            {/*<DisplayAccountInfo/>*/}
+                            <EditPassword/>
                         </div>
                     </div>
                 </div>

@@ -26,6 +26,16 @@ switch ($func) {
         sendPasswordResetRequest($conn);
         return;
     }
+    case 'updatePassword':
+    {
+        changePassword($conn);
+        return;
+    }
+    case 'changePassword_Admin':
+    {
+        changePassword_Admin($conn);
+        return;
+    }
     case 'sendEmailRequest':
     {
         sendEmailRequest($conn);
@@ -173,6 +183,101 @@ function getUserPassword($conn) {
 
 }
 
+function changePassword($conn) {
+
+    if(!(isset($_GET['uid'],$_GET['currentP'],$_GET['newP']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $uid = $_GET['uid'];
+    $cP = $_GET['currentP'];
+    $nP = $_GET['newP'];
+
+    $stmt = $conn->prepare("CALL updatePassword(?,?,?)");
+    $stmt->bind_param("sss", $uid, $cP, $nP);
+    $stmt->execute();
+
+    $out_result = '';
+    $stmt->bind_result(
+        $out_result
+    );
+
+    $arr = [];
+    while ($stmt->fetch()) {
+        $arr['ERROR'] = $out_result;
+    }
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}
+
+function changePassword_Admin($conn) {
+
+    if(!(isset($_GET['email'],$_GET['newP']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $email = $_GET['email'];
+    $nP = $_GET['newP'];
+
+    $stmt = $conn->prepare("CALL checkIfEmailExists(?)");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $out_result = '';
+    $stmt->bind_result(
+        $out_result
+    );
+    $arr = [];
+    while ($stmt->fetch()) {
+        $arr['ERROR'] = $out_result;
+    }
+
+    if($arr['ERROR'] == 0) {
+        $arr['ERROR'] = "Could not reset. Email does not exist.";
+        echo(json_encode($arr));
+        return false;
+    }
+
+    $stmt->close();
+
+    $stmt = $conn->prepare("CALL updatePassword_Admin(?,?)");
+    $stmt->bind_param("ss", $email, $nP);
+    $stmt->execute();
+    $out_result = '';
+    $stmt->bind_result(
+        $out_result
+    );
+    $arr['ERROR'] = null;
+    while ($stmt->fetch()) {
+        $arr['ERROR'] = $out_result;
+    }
+
+    if($arr['ERROR'] !== '200') {
+        echo(json_encode($arr));
+        return false;
+    }
+    $stmt->close();
+
+    $arr['ERROR'] = null;
+
+    $sender = "noreply.aiu@owsysdb.com";
+    $subject = "Your Password Has Been Reset";
+    $message = "
+        <p>Your password has been reset to <code>" . $nP ."</code></p>
+        <br>
+        <p>It is highly recommended that you change your password immediately. 
+            You can do so within your Account settings.</p>
+    ";
+    sendEmail($sender, $email, $subject, $message);
+
+    echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}
+
 function updateUserPersonalInformation($conn, $params) {
 
     // echo "Entered function -> UID = ". ($params['uid']);
@@ -251,13 +356,34 @@ function updatePassword($conn, $params) {
 
 function sendPasswordResetRequest($conn) {
 
-    if(!(isset($_GET['sender'], $_GET['subject'], $_GET['message']))) {
+    if(!(isset($_GET['sender'], $_GET['subject'], $_GET['message'], $_GET['email']))) {
         $arr ['status'] = "false";
         echo(json_encode($arr));
     }
     $sender = $_GET['sender'];
     $subject = $_GET['subject'];
     $message = $_GET['message'];
+    $email = $_GET['email'];
+
+    $stmt = $conn->prepare("CALL checkIfEmailExists(?)");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $out_result = '';
+    $stmt->bind_result(
+        $out_result
+    );
+    $arr = [];
+    while ($stmt->fetch()) {
+        $arr['ERROR'] = $out_result;
+    }
+
+    if($arr['ERROR'] == 0) {
+        $arr['ERROR'] = "Could not reset. Email does not exist.";
+        echo(json_encode($arr));
+        return false;
+    }
+    $stmt->close();
+    $arr['ERROR'] = null;
 
     $stmt = $conn->prepare("CALL getPrimaryAdminEmail()");
     $stmt->execute();

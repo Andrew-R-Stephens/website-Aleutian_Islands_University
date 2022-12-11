@@ -16,7 +16,6 @@ import Faculty from "./login/users/faculty/Faculty";
 import Researcher from "./login/users/researcher/Researcher";
 import GeneralAcademics from "./home/GeneralAcademics";
 import UserConsole from "./login/users/UserConsole";
-import DisplayMasterSchedule from "../DisplayMasterSchedule";
 import CourseCatalog from "../catalog/CourseCatalog";
 import DisplayAllStudents from "../DisplayAllStudents";
 import Academics from "./login/users/Academics";
@@ -39,6 +38,7 @@ import CreateCourseSection from "./login/users/administrator/components/CreateCo
 import CreateDepartment from "./login/users/administrator/components/CreateDepartment";
 import CreateUser from "./login/users/administrator/components/CreateUser";
 import CreateProgram from "./login/users/administrator/components/CreateProgram";
+import AdminPasswordReset from "../AdminPasswordReset";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -191,6 +191,7 @@ function NavRoutes() {
                                         <Route path={"create-department"} element={<UserConsole child={<CreateDepartment/>}/>}/>
                                         <Route path={"create-user"} element={<UserConsole child={<CreateUser/>}/>}/>
                                         <Route path={"create-program"} element={<UserConsole child={<CreateProgram/>}/>}/>
+                                        <Route path={"reset-password"} element={<UserConsole child={<AdminPasswordReset/>}/>}/>
                                     </Route>
                                     <Route path={"researcher"}
                                            element={<RequireRoleAuth allowedRoles={[AuthRole.Researcher]}/>}>

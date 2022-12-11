@@ -41,12 +41,25 @@ function EditEnrollment(props:any) {
     }, [userID])
 
     useEffect(() => {
-        requestPrimaryFaculty().then(r=>console.log("Populating f1", r));
+        requestPrimaryFaculty().then(r=>
+            (userRole === AuthRole.Student) ?
+                setSelectedPrimaryFaculty(primaryFaculty?.at(0)?.UID):'')
     },[selectedPrimaryProgram])
 
     useEffect(() => {
-        requestSecondaryFaculty().then(r=>console.log("Populating f2", r));
+        if(userRole === AuthRole.Student)
+            setSelectedPrimaryFaculty(primaryFaculty?.at(0)?.UID)
+    },[primaryFaculty])
+
+    useEffect(() => {
+        requestSecondaryFaculty().then(r=>(userRole === AuthRole.Student) ?
+            setSelectedSecondaryFaculty(secondaryFaculty?.at(0)?.UID):'')
     },[selectedSecondaryProgram])
+
+    useEffect(() => {
+        if(userRole === AuthRole.Student)
+            setSelectedSecondaryFaculty(secondaryFaculty?.at(0)?.UID)
+    },[secondaryFaculty])
 
     async function requestCurrentAdvisors() {
         await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
@@ -200,6 +213,7 @@ function EditEnrollment(props:any) {
 
     const handleSelectPrimaryProgram = (event:any) => {
         setSelectedPrimaryProgram(event.target.value)
+        console.log(selectedPrimaryProgram)
         if(event.target.value === '') {
             setSelectedPrimaryFaculty('')
             setSelectedSecondaryProgram('')
@@ -225,6 +239,7 @@ function EditEnrollment(props:any) {
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
+        console.log(selectedPrimaryProgram, selectedPrimaryFaculty, selectedSecondaryProgram, selectedSecondaryFaculty);
         requestSetEnrollments().then(r=>console.log("Enrollments requested"));
     }
 
@@ -237,8 +252,6 @@ function EditEnrollment(props:any) {
             }
         </Fragment>
     }
-
-    console.log(selectedPrimaryProgram, selectedPrimaryFaculty, selectedSecondaryProgram, selectedSecondaryFaculty)
 
     function displayProgram1Option() {
         return <Fragment>
@@ -253,14 +266,18 @@ function EditEnrollment(props:any) {
                         >
                             <option value={''}>- Any -</option>
                             {
-                                primaryPrograms?.map((item:any)=>(
+                                primaryPrograms!?.filter((p:any)=>(
+                                    p.ProgramID+"" !== selectedSecondaryProgram+""
+                                ))?.map((item:any)=>(
                                     <option value={item.ProgramID}>{item.ProgramName}</option>
                                 ))
                             }
                         </select>
                     </div>
                 </div>
-                {displayFaculty1Option()}
+                {
+                    userRole === AuthRole.Administrator ? displayFaculty1Option() : <Fragment/>
+                }
             </div>
         </Fragment>
     }
@@ -280,14 +297,18 @@ function EditEnrollment(props:any) {
                         >
                             <option value={''}>- Any -</option>
                             {
-                                secondaryPrograms?.map((item:any)=>(
+                                secondaryPrograms!?.filter((p:any)=>(
+                                    p.ProgramID+"" !== selectedPrimaryProgram+""
+                                ))?.map((item:any)=>(
                                     <option value={item.ProgramID}>{item.ProgramName}</option>
                                 ))
                             }
                         </select>
                     </div>
                 </div>
-                {displayFaculty2Option()}
+                {
+                    userRole === AuthRole.Administrator ? displayFaculty2Option() : <Fragment/>
+                }
             </div>
         </Fragment>
     }
@@ -306,7 +327,9 @@ function EditEnrollment(props:any) {
                         >
                             <option value={''}>- Any -</option>
                             {
-                                primaryFaculty?.map((item:any)=>(
+                                primaryFaculty!?.filter((f:any)=>(
+                                    f.UID+"" !== selectedSecondaryFaculty+""
+                                ))?.map((item:any)=>(
                                     <option value={item.UID}>({item.UID}) {item.FirstName} {item.LastName}</option>
                                 ))
                             }
@@ -332,7 +355,9 @@ function EditEnrollment(props:any) {
                         >
                             <option value={''}>- Any -</option>
                             {
-                                secondaryFaculty?.map((item:any)=>(
+                                secondaryFaculty!?.filter((f:any)=>(
+                                    f.UID+"" !== selectedPrimaryFaculty+""
+                                ))?.map((item:any)=>(
                                     <option value={item.UID}>({item.UID}) {item.FirstName} {item.LastName}</option>
                                 ))
                             }

@@ -6,7 +6,7 @@ import {convertTime} from "../../../../../../Utils";
 function CreateCourseSection() {
 
     const [courseIDs, setCourseIDs] = useState([]);
-    const [semester, setSemester] = useState<any>({SemesterID:'S23', Term:"Spring", Year:"2023"});
+    const [semester, setSemester] = useState<any>([]);
     const [rooms, setRooms] = useState([]);
     const [timeslots, setTimeslots] = useState<any[]>([]);
     const [faculty, setFaculty] = useState<any[]>([]);
@@ -17,35 +17,25 @@ function CreateCourseSection() {
     const [selectedTimeslotIDB, setSelectedTimeslotIDB] = useState<number>(-1);
     const [selectedFaculty, setSelectedFaculty] = useState("");
     const [minSeats, setMinSeats] = useState<number>(5);
-    const [maxSeats, setMaxSeats] = useState<number>(minSeats);
+    const [maxSeats, setMaxSeats] = useState<number>(15);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        /*requestUpcomingSemesterID().then(r=>console.log("Semester loaded"));
+        requestUpcomingSemester().then(r=>console.log("Semester loaded"));
         requestAllCourseIDs().then(r=>console.log("CourseIDs loaded"));
-        requestAllRooms().then(r=>console.log("Rooms loaded"));
-        requestAvailableRoomTimeslots().then(r=>console.log("Timeslots loaded"));
-        requestAvailableFaculty().then(r=>console.log("Timeslots loaded"));*/
-        const ts = [
-            {TimeslotID:1, Name:"M", StartTime:"2:00:00", EndTime:"3:00:00"},
-            {TimeslotID:2, Name:"W", StartTime:"11:00:00", EndTime:"12:00:00"},
-            {TimeslotID:3, Name:"F", StartTime:"5:00:00", EndTime:"6:00:00"}
-        ]
-        console.log(ts);
-        setTimeslots(ts);
-        console.log(timeslots)
+        requestAllRooms().then(r=>console.log("Classrooms loaded"));
     }, [])
 
     async function requestUpcomingSemester() {
         await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getUpcomingSemester"
+                func: "getSemesterWithRegistrationAvailable"
             }
         }).then(res => {
-            let {error, semesterID} = res.data;
-            setSemester(semesterID);
-            console.log(semesterID);
+            let {error, SemesterID} = res.data;
+            setSemester(SemesterID?.at(0));
+            console.log(SemesterID);
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -57,9 +47,9 @@ function CreateCourseSection() {
                 func: "getAllCourseIDs"
             }
         }).then(res => {
-            let {error, courseIDs} = res.data;
-            setCourseIDs(courseIDs);
-            console.log(courseIDs);
+            let {error, courses} = res.data;
+            setCourseIDs(courses);
+            console.log(courses);
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -68,7 +58,7 @@ function CreateCourseSection() {
     async function requestAllRooms() {
         await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getAllRooms"
+                func: "getAllClassrooms"
             }
         }).then(res => {
             let {error, rooms} = res.data;
@@ -82,12 +72,14 @@ function CreateCourseSection() {
     async function requestAvailableRoomTimeslots() {
         await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getAvailableRoomTimeslotsBySemesterIDAndRoomID"
+                func: "getAvailableRoomTimeslotsBySemesterIDAndRoomID",
+                sid: semester.SemesterID,
+                rid: selectedRoomID
             }
         }).then(res => {
             let {error, timeslots} = res.data;
             setTimeslots(timeslots);
-            console.log(timeslots);
+            console.log("timeslots", res.data);
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -96,57 +88,67 @@ function CreateCourseSection() {
     async function requestAvailableFaculty() {
         await axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getAvailableFacultyByTimeslotIDAndSemesterID"
+                func: "getAvailableFacultyByTimeslotIDAndSemesterID",
+                sid: semester.SemesterID,
+                cid: selectedCourseID,
+                ts1: selectedTimeslotIDA,
+                ts2: selectedTimeslotIDB
             }
         }).then(res => {
             let {error, faculty} = res.data;
             setFaculty(faculty);
-            console.log(faculty);
+            console.log(res.data);
         }).catch(function(err) {
             console.log(err.message);
         })
     }
 
     async function requestCreateCourseSection() {
-        /*
-        await axios.post(process.env["REACT_APP_API_CATALOG"] as string, {
+        await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
             params: {
-                post: "createCourseSection",
-                programName: programName,
-                programTypeID: selectedProgramType,
-                description,
-                departmentID: selectedDepartment
+                func: "createNewCourseSection",
+                courseID: selectedCourseID,
+                roomID: selectedRoomID,
+                semesterID: semester.SemesterID,
+                timeslot1: selectedTimeslotIDA,
+                timeslot2: selectedTimeslotIDB,
+                facultyID: selectedFaculty,
+                seatMax: maxSeats,
+                seatMin: minSeats
             }
         }).then(res => {
             const {status} = res;
-            console.log("Res: ", status)
-            if(status == 200) {
-                handleReset()
-                const typeSel = document.getElementById("programTypes");
-                typeSel?.setAttribute('value', '')
-            }
+            console.log("Res: ", res.data)
         }).catch(function(err) {
             console.log(err.message);
         })
-        */
     }
 
     const handleChangeCourseID = (event:any) => {
         event.preventDefault();
         console.log(event.target.value)
         setSelectedCourseID(event.target.value);
+        requestAvailableFaculty().then(r=>console.log("Faculty loaded"))
+        setSelectedTimeslotIDA(0)
+        setSelectedTimeslotIDB(0)
+        setSelectedFaculty('');
     };
 
     const handleChangeRoomID = (event:any) => {
         event.preventDefault();
         console.log(event.target.value)
         setSelectedRoomID(event.target.value);
+        requestAvailableRoomTimeslots().then(r=>console.log("Timeslots loaded"));
+        setSelectedFaculty('');
+        setSelectedTimeslotIDA(0)
+        setSelectedTimeslotIDB(0)
     };
 
     const handleChangeTimeslotIDA = (event:any) => {
         event.preventDefault();
         console.log(event.target.value);
         setSelectedTimeslotIDA(event.target.value);
+        setSelectedFaculty('')
         setSelectedTimeslotIDB(0)
     };
 
@@ -154,6 +156,14 @@ function CreateCourseSection() {
         event.preventDefault();
         console.log(event.target.value);
         setSelectedTimeslotIDB(event.target.value);
+        setSelectedFaculty('')
+        requestAvailableFaculty().then(r=>console.log("Faculty loaded"));
+    };
+
+    const handleChangeFaculty = (event:any) => {
+        event.preventDefault();
+        console.log(event.target.value);
+        setSelectedFaculty(event.target.value);
     };
 
     const handleSelectMinSeats = (event:any) => {
@@ -166,14 +176,14 @@ function CreateCourseSection() {
     const handleSelectMaxSeats = (event:any) => {
         event.preventDefault();
         console.log(event.target.value)
-        setMaxSeats(Math.max(event.target.value, maxSeats));
+        setMaxSeats(Math.max(event.target.value, minSeats));
     };
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
         console.log(selectedCourseID, semester.SemesterID, selectedRoomID, selectedTimeslotIDA, selectedTimeslotIDB, minSeats, maxSeats)
-        console.log(!!selectedCourseID, !!semester.SemesterID , !!selectedRoomID, !!selectedTimeslotIDA, !!selectedTimeslotIDB, minSeats>0, maxSeats>0)
-        if(!!selectedCourseID && !!semester.SemesterID && !!selectedRoomID && !!selectedTimeslotIDA && !!selectedTimeslotIDB && minSeats>0 && maxSeats>0)
+        console.log(!!selectedCourseID, !!semester.SemesterID , selectedRoomID.length>0, selectedTimeslotIDA>0, selectedTimeslotIDB>0, minSeats>0, maxSeats>0)
+        if(!!selectedCourseID && !!semester.SemesterID && selectedRoomID.length>0 && selectedTimeslotIDA>0 && selectedTimeslotIDB>0 && minSeats>0 && maxSeats>0)
             requestCreateCourseSection().then(r=>console.log("Creation request complete"));
     }
 
@@ -238,6 +248,7 @@ function CreateCourseSection() {
                                     <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Timeslot 1</label>
                                     <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
                                         <select name={"departments"} id={"departments"}
+                                                disabled={selectedRoomID.length<=0}
                                                 onChange={handleChangeTimeslotIDA} value={selectedTimeslotIDA}>
                                             <option key={'-1'} value={-1}>-Any-</option>
                                             {
@@ -257,6 +268,7 @@ function CreateCourseSection() {
                                     <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Timeslot 2</label>
                                     <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
                                         <select name={"departments"} id={"departments"}
+                                                disabled={selectedTimeslotIDA<=0}
                                                 onChange={handleChangeTimeslotIDB} value={selectedTimeslotIDB}>
                                             <option key={'-1'} value={-1}>-Any-</option>
                                             {
@@ -276,11 +288,12 @@ function CreateCourseSection() {
                                     <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Faculty</label>
                                     <div className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}>
                                         <select name={"departments"} id={"departments"}
-                                                onChange={handleChangeTimeslotIDB} value={selectedFaculty}>
+                                                disabled={selectedTimeslotIDB<=0}
+                                                onChange={handleChangeFaculty} value={selectedFaculty}>
                                             <option key={'-1'} value={-1}>-Any-</option>
                                             {
                                                 faculty?.map((f: any, key: any) => (
-                                                    <option key={key} value={f.UID}>({f.UID}) {convertTime(f.FirstN)} {convertTime(f.LastN)}</option>
+                                                    <option key={key} value={f.FacultyID}>({f.FacultyID}) {f.FirstName} {f.LastName}</option>
                                                 ))
                                             }
                                         </select>

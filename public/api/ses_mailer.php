@@ -21,8 +21,8 @@ function sendEmail($sender, $recipient, $header, $message){
         $mail->SMTPAuth = true;                                             //Enable SMTP authentication
         $mail->Username = 'AKIAZRL3E4HTZDTE6JPY';                           //SMTP username
         $mail->Password = 'BDbjkdO2cDhuMkRYOQHXbpZbz+PZ7FTgJszlJaf1shrT';   //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;                    //Enable implicit TLS encryption
-        $mail->Port = 465;                                                  //TCP port to connect to;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  //PHPMailer::ENCRYPTION_STARTTLS;                  //Enable implicit TLS encryption
+        $mail->Port = 465; //587;//                                                 //TCP port to connect to;
                                                                             //use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients

@@ -22,6 +22,10 @@ switch($func) {
         getAllCourses($conn);
         return;
     }
+    case 'getAllCourseIDs': {
+        getAllCourseIDs($conn);
+        return;
+    }
     case 'getCourseCount': {
         getCourseCount($conn);
         return;
@@ -194,8 +198,36 @@ switch($func) {
         createNewCourse($conn);
         return;
     }
+    case 'createNewCourseSection': {
+        createNewCourseSection($conn);
+        return;
+    }
     case 'getAvailableOffices': {
         getAvailableOffices($conn);
+        return;
+    }
+    case 'getAllClassrooms': {
+        getAllClassrooms($conn);
+        return;
+    }
+    case 'getAvailableFacultyByTimeslotIDAndSemesterID': {
+        getAvailableFacultyByTimeslotIDAndSemesterID($conn);
+        return;
+    }
+    case 'getAvailableRoomTimeslotsBySemesterIDAndRoomID': {
+        getAvailableRoomTimeslotsBySemesterIDAndRoomID($conn);
+        return;
+    }
+    case 'getAvailableFacultyForDepartmentHeadBySchoolID': {
+        getAvailableFacultyForDepartmentHeadBySchoolID($conn);
+        return;
+    }
+    case 'createNewDepartment': {
+        createNewDepartment($conn);
+        return;
+    }
+    case 'createNewUser': {
+        createNewUser($conn);
         return;
     }
     default: {
@@ -224,11 +256,6 @@ switch ($post) {
     case 'createNewProgram':
     {
         createNewProgram($conn, $params);
-        return;
-    }
-    case 'createNewCourse':
-    {
-        createNewCourse($conn, $params);
         return;
     }
     default:
@@ -344,6 +371,32 @@ function getAllCourses($conn) {
 
     $final_arr['courses'] = $completeArray;
     $final_arr['count'] = $stmt->num_rows;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAllCourseIDs($conn) {
+
+    $stmt = $conn->prepare("CALL getAllCourseIDs()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['CourseID']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['courses'] = $completeArray;
 
     echo(json_encode($final_arr));
 
@@ -1899,6 +1952,44 @@ function getAvailableAdvisorsUsingProgramID($conn) {
     mysqli_close($conn);
 }
 
+function getAvailableFacultyByTimeslotIDAndSemesterID($conn) {
+    if(!(isset($_GET['sid'],$_GET['cid'],$_GET['ts1'],$_GET['ts2']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $sid = $_GET['sid'];
+    $cid = $_GET['cid'];
+    $ts1 = $_GET['ts1'];
+    $ts2 = $_GET['ts2'];
+
+    $stmt = $conn->prepare("CALL getAvailableFacultyByTimeslotIDAndSemesterID(?,?,?,?)");
+    $stmt->bind_param("ssss", $sid, $cid, $ts1, $ts2);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['FacultyID'],
+        $out_schedule['FirstName'],
+        $out_schedule['LastName']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['faculty'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
 function setStudentToMajorMinor($conn) {
     if(!(isset($_GET['id'], $_GET['p1'], $_GET['f1']))) {
         $out = ['error' => 'Incomplete request.'];
@@ -1955,6 +2046,91 @@ function createNewCourse($conn) {
 
 }
 
+function createNewCourseSection($conn) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($_GET['courseID'], $_GET['roomID'], $_GET['semesterID'], $_GET['timeslot1'], $_GET['timeslot2'], $_GET['facultyID'], $_GET['seatMax'], $_GET['seatMin']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $courseID = $_GET['courseID'];
+    $roomID = $_GET['roomID'];
+    $semesterID = $_GET['semesterID'];
+    $timeslot1 = $_GET['timeslot1'];
+    $timeslot2 = $_GET['timeslot2'];
+    $facultyID = $_GET['facultyID'];
+    $maxSeats = $_GET['seatMax'];
+    $minSeats = $_GET['seatMin'];
+
+    $stmt = $conn->prepare("CALL setNewCourseSection(?,?,?,?,?,?,?,?)");
+    $stmt->bind_param("ssssssss", $courseID, $roomID, $semesterID, $timeslot1, $timeslot2, $facultyID, $maxSeats, $minSeats);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['CRN'],
+        $out_schedule['SectionID']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['result'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+
+}
+
+function createNewDepartment($conn) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($_GET['fid'], $_GET['sid'], $_GET['did'], $_GET['desc'], $_GET['rid'], $_GET['phn']))) {
+        $arr ['status'] = "Incomplete request";
+        $final_arr['result'] = $arr;
+        echo(json_encode($final_arr));
+    }
+
+    $fid = $_GET['fid'];
+    $sid = $_GET['sid'];
+    $did = $_GET['did'];
+    $desc = $_GET['desc'];
+    $rid = $_GET['rid'];
+    $phn = $_GET['phn'];
+
+    $stmt = $conn->prepare("CALL setNewDepartment(?,?,?,?,?,?)");
+    $stmt->bind_param("ssssss", $fid, $sid, $did, $desc, $rid, $phn);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['ERROR']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['result'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+
+}
+
 function getAvailableOffices($conn) {
 
     $stmt = $conn->prepare("CALL getAvailableOffices()");
@@ -1979,4 +2155,178 @@ function getAvailableOffices($conn) {
     echo(json_encode($final_arr));
 
     mysqli_close($conn);
+}
+
+function getAllClassrooms($conn) {
+
+    $stmt = $conn->prepare("CALL getAllClassrooms()");
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['RoomID']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['rooms'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAvailableRoomTimeslotsBySemesterIDAndRoomID($conn) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($_GET['sid'], $_GET['rid']))) {
+        $arr ['status'] = "Incomplete request";
+    }
+
+    $tsid = $_GET['sid'];
+    $n = $_GET['rid'];
+
+    $stmt = $conn->prepare("CALL getAvailableRoomTimeslotsBySemesterIDAndRoomID(?,?)");
+    $stmt->bind_param("ss", $tsid, $n);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['TimeslotID'],
+        $out_schedule['Name'],
+        $out_schedule['StartTime'],
+        $out_schedule['EndTime']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['timeslots'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+
+}
+
+function getAvailableFacultyForDepartmentHeadBySchoolID($conn) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset($_GET['sid']))) {
+        $arr ['status'] = "Incomplete request";
+        echo(json_encode($arr));
+        return;
+    }
+
+    $sid = $_GET['sid'];
+
+    $stmt = $conn->prepare("CALL getAvailableFacultyForDepartmentHeadBySchoolID(?)");
+    $stmt->bind_param("s", $sid);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['FacultyID'],
+        $out_schedule['FirstName'],
+        $out_schedule['LastName']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['faculty'] = $completeArray;
+    $final_arr['status'] = $arr['status'];
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+
+}
+
+function createNewUser($conn) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset(
+        $_GET['userType'],$_GET['subType'],$_GET['gradType'],$_GET['time'],
+        $_GET['departmentID'],$_GET['timeslot'],$_GET['rank'],
+        $_GET['password'],
+        $_GET['ssn'],$_GET['fName'],$_GET['lName'],$_GET['pNum'],$_GET['gender'],$_GET['honor'],$_GET['bdate'],
+        $_GET['addrHN'],$_GET['addrStr'],$_GET['addrCi'],$_GET['addSta'],$_GET['addrCo'],$_GET['addrZ'])))
+    {
+        $arr ['status'] = "Incomplete request";
+        $final_arr['result'] = $arr;
+        echo(json_encode($final_arr));
+    }
+
+    $userType = $_GET['userType'];
+    $subType = $_GET['subType'];
+    $gradType = $_GET['gradType'];
+    $time = $_GET['time'];
+    $departmentID = $_GET['departmentID'];
+    $timeslot = $_GET['timeslot'];
+    $rank = $_GET['rank'];
+    $password = $_GET['password'];
+    $ssn = $_GET['ssn'];
+    $fName = $_GET['fName'];
+    $lName = $_GET['lName'];
+    $pNum = $_GET['pNum'];
+    $gender = $_GET['gender'];
+    $honor = $_GET['honor'];
+    $bdate = $_GET['bdate'];
+    $addrHN = $_GET['addrHN'];
+    $addrStr = $_GET['addrStr'];
+    $addrCi = $_GET['addrCi'];
+    $addSta = $_GET['addSta'];
+    $addrCo = $_GET['addrCo'];
+    $addr = $_GET['addrZ'];
+
+    $stmt = $conn->prepare("CALL setNewUser(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+    $stmt->bind_param("sssssssssssssssssssss",
+        $userType, $subType, $gradType, $time,
+        $departmentID, $timeslot, $rank,
+        $password,
+        $ssn, $fName, $lName, $pNum, $gender, $honor, $bdate,
+        $addrHN, $addrStr, $addrCi, $addSta, $addrCo, $addr);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['ERROR']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['result'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+
 }

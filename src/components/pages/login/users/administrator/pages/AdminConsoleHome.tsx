@@ -41,6 +41,13 @@ function AdminConsoleHome() {
                         <div className={'page-bubble-description'}>Provides information about all Advisors and Advisees.</div>
                     </div>
                 </div>
+                <div style={{display:"flex", marginTop:32, marginBottom:32}}>
+                    <div className={'page-bubble'} onClick={()=>navigate('./../reset-password')}>
+                        <div className={'icon-profile-image'}/>
+                        <label className={'page-bubble-label'}>Reset Passwords</label>
+                        <div className={'page-bubble-description'}>Provides Administrator access to resetting passwords.</div>
+                    </div>
+                </div>
             </div>
         </Fragment>
     );

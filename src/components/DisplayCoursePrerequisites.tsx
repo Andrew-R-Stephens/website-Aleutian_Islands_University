@@ -46,7 +46,7 @@ function DisplayCoursePrerequisites(props:any) {
     return (
         <Fragment>
             <div style={{marginLeft: "auto", marginRight: "auto"}}>
-                {renderDetails()}
+                {/*renderDetails()*/}
             </div>
         </Fragment>);
 
