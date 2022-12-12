@@ -42,7 +42,7 @@ function DisplayProgramRequirements(props:any) {
         })
     }
 
-    function renderRequirements():any {
+    function renderRequirements() {
         return programRequirements.renderAdvanced();
     }
 

@@ -4,10 +4,11 @@ class CoursePrereqs {
 
     prerequisites: any[] = [];
 
-    master: PrereqMaster|undefined;
+    master: PrereqMaster;
 
     constructor(data:any | null) {
         this.parseFullData(data);
+        this.master = new PrereqMaster(this.prerequisites);
     }
 
     parseFullData(data:any) {
@@ -17,16 +18,10 @@ class CoursePrereqs {
             console.log("Found", {Course, MasterID, MasterLogic, Master_GroupID, GroupID, GroupLogic, PrereqCourse, MinGrade})
         });
 
-        this.parseToMaster();
         this.print();
     }
 
-    parseToMaster() {
-        this.master = new PrereqMaster(this.prerequisites);
-    }
-
     print() {
-        /*console.log(this.prerequisites);*/
         console.log(this.master?.print())
     }
 
@@ -58,61 +53,76 @@ class CoursePrereqs {
     }
 }
 
-class PrereqMaster {
+export class PrereqMaster {
 
     logic: Logic = Logic.NULL;
     groups: PrereqGroup[] = [];
 
     constructor(data:any) {
         if(this.groups?.length == 0 && data?.length > 0) {
-            this.groups.push(data[0])
-            this.logic = checkLogic(data.MasterLogic)
+            console.log("Creating first")
+            const {Master_GroupID, GroupLogic, PrereqCourse, MinGrade} = data[0];
+            this.groups.push(new PrereqGroup({Master_GroupID, GroupLogic, PrereqCourse, MinGrade}));
+            this.logic = checkLogic(data[0].MasterLogic)
+            console.log("first", this.groups[0], this.logic)
         }
         for(let i = 1; i < data?.length; i++) {
             const {Master_GroupID, GroupLogic, PrereqCourse, MinGrade} = data[i];
-            for(let j  = 0; j < this.groups?.length; j++) {
-                if(this.groups[i]?.groupID === data[j]?.GroupID) {
-                    this.groups[i]?.addPrereq({Master_GroupID, GroupLogic, PrereqCourse, MinGrade});
-                } else {
-                    this.groups.push(new PrereqGroup({Master_GroupID, GroupLogic, PrereqCourse, MinGrade}));
+            console.log("using", data[i], this.groups.includes(data[i].Master_GroupID), data[i].Master_GroupID);
+
+            var isFound = false;
+            for(let j  = 0; !isFound && j < this.groups?.length; j++) {
+                console.log("comparing", this.groups[j]?.master_groupID, data[i]?.Master_GroupID)
+                if(this.groups[j]?.master_groupID == data[i]?.Master_GroupID) {
+                    console.log("Add to existing")
+                    this.groups[j]?.addPrereq({Master_GroupID, GroupLogic, PrereqCourse, MinGrade});
+                    isFound = true;
                 }
             }
-            console.log("Parsing")
+            if(!isFound) {
+                console.log("adding")
+                this.groups.push(new PrereqGroup({Master_GroupID, GroupLogic, PrereqCourse, MinGrade}));
+            }
+
         }
     }
 
     print() {
+        console.log("ML", this.logic)
         this.groups.map((g:any)=> (
-            console.log(this.logic, g.print())
-            /*console.log(this.logic, g.print())*/
+            console.log(g.print())
         ))
     }
 }
 
-class PrereqGroup {
+export class PrereqGroup {
 
     logic: Logic = Logic.NULL;
     prereqs: Prereq[] = [];
-    groupID: number = 0;
+    master_groupID: number = 0;
 
     constructor(data:any) {
-        const {PrereqCourse, MinGrade} = data;
-        this.logic = checkLogic(data.GroupLogic);
+        const {Master_GroupID, GroupLogic, PrereqCourse, MinGrade} = data;
+        this.logic = checkLogic(GroupLogic);
+        this.master_groupID = Master_GroupID;
+
         this.prereqs.push(new Prereq({PrereqCourse, MinGrade}))
     }
 
     addPrereq(data:any) {
-        this.prereqs.push(data)
+        const {PrereqCourse, MinGrade} = data;
+        this.prereqs.push(new Prereq({PrereqCourse, MinGrade}));
     }
 
     print() {
-        /*this.prereqs.map((p:any)=> (
-            console.log(p.print())
-        ))*/
+        console.log("MGID", this.master_groupID, "GL", this.logic);
+        this.prereqs.map((p:any)=> (
+            p.print()
+        ))
     }
 }
 
-class Prereq {
+export class Prereq {
 
     courseID: string[] = [];
     grade: number = 0;
@@ -121,13 +131,12 @@ class Prereq {
         this.courseID = data.PrereqCourse;
         this.grade = data.MinGrade;
     }
-/*
     print() {
-        console.log(this.courseID, this.grade);
-    }*/
+        console.log("C", this.courseID, "G", this.grade);
+    }
 }
 
-enum Logic {
+export enum Logic {
     NULL, AND, OR
 }
 
