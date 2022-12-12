@@ -9,6 +9,8 @@ function DisplayCourseSectionAttendance(props:any) {
     const [dates, setDates] = useState<any[]>();
     const [attendance, setAttendance] = useState<AttendanceDetails>();
 
+    const [isLastEditable, setIsLastEditable] = useState();
+
     useEffect(() => {
         setCRN(targetCRN);
     }, [targetCRN])
@@ -16,6 +18,7 @@ function DisplayCourseSectionAttendance(props:any) {
     useEffect(() => {
         getPassedMeetingDates().then(r=>console.log(r))
         requestSectionAttendance().then(r=>console.log(r));
+        requestIsLastMeetingEditable().then(r=>console.log("Retrieved if today's meeting is editable"));
     }, [crn])
 
     useEffect(()=>(
@@ -32,6 +35,21 @@ function DisplayCourseSectionAttendance(props:any) {
             let {error, dates} = res.data;
             console.log(res.data)
             setDates(dates);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
+    async function requestIsLastMeetingEditable() {
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "isLastMeetingEditable",
+                crn: crn
+            }
+        }).then(res => {
+            let {error, isEditable} = res.data;
+            console.log(res.data)
+            setIsLastEditable(isEditable);
         }).catch(function(err) {
             console.log(err.message);
         })

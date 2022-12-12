@@ -57,7 +57,14 @@ function EditPassword(props:any) {
                         <div style={{display:"inline-block", textAlign:'left'}}>
                             <div className={'div-table-row'} style={{backgroundColor:"transparent", display:"flex", width:"100%"}}>
                                 <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>Current Password:</label>
-                                <input className={'div-table-col'} type={'text'} value={currentP} onChange={handleChangeCurrentPassword} style={{marginLeft:"auto", marginRight:0}}/>
+                                <input className={'div-table-col'} style={{marginLeft:"auto", marginRight:0}}
+                                       type={"text"}
+                                       autoComplete={'on'}
+                                       value={currentP}
+                                       onChange={handleChangeCurrentPassword}
+                                       pattern={'[A-z0-9 ]{8,16}'}
+                                       maxLength={16}
+                                />
                             </div>
                             <div className={'div-table-row'} style={{backgroundColor:"transparent",display:"flex", width:"100%"}}>
                                 <label className={'div-table-col'} style={{fontWeight:"bold", color:"black"}}>New Password:</label>

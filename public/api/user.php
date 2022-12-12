@@ -41,6 +41,11 @@ switch ($func) {
         sendEmailRequest($conn);
         return;
     }
+    case 'setNewUser':
+    {
+        setNewUser($conn);
+        return;
+    }
     default:
     {
         $arr ['status'] = "Error: No get function matching request.";
@@ -420,6 +425,97 @@ function sendEmailRequest($conn) {
 
     $arr['email'] = $sender;
     echo(json_encode($arr));
+
+    mysqli_close($conn);
+
+}
+
+function setNewUser($conn) {
+
+    $arr ['status'] = "Failed!";
+    if(!(isset(
+        $_GET['userType'], $_GET['password'],
+        $_GET['ssn'],$_GET['fName'],$_GET['lName'],$_GET['pNum'],$_GET['gender'],$_GET['honor'],$_GET['bdate'],
+        $_GET['addrHN'],$_GET['addrStr'],$_GET['addrCi'],$_GET['addSta'],$_GET['addrCo'],$_GET['addrZ'])))
+    {
+        $arr ['status'] = "Incomplete request";
+        $final_arr['result'] = $arr;
+        $final_arr['data'] = $_GET['userType'] .", ". $_GET['password'] .", ".
+        $_GET['ssn'] .", ". $_GET['fName'].", ".$_GET['lName'].", ".$_GET['pNum'].", ".$_GET['gender'].", ".$_GET['honor'].", ".$_GET['bdate'] .", ".
+        $_GET['addrHN'].", ".$_GET['addrStr'].", ".$_GET['addrCi'].", ".$_GET['addSta'].", ".$_GET['addrCo'] .", ". $_GET['addrZ'];
+        echo(json_encode($final_arr));
+        return;
+    }
+
+    $userType = $_GET['userType'];
+    $subType = isset($_GET['subType']) ? $_GET['subType'] : null;
+    $gradType = isset($_GET['gradType']) ? $_GET['gradType'] : null;
+    $time = isset($_GET['time']) ? $_GET['time'] : null;
+    $departmentID = isset($_GET['departmentID']) ? $_GET['departmentID'] : null;
+    $timeslot = isset($_GET['timeslot']) ? $_GET['timeslot'] : null;
+    $rank = isset($_GET['rank']) ? $_GET['rank'] : null;
+    $password = $_GET['password'];
+    $ssn = $_GET['ssn'];
+    $fName = $_GET['fName'];
+    $lName = $_GET['lName'];
+    $pNum = $_GET['pNum'];
+    $gender = $_GET['gender'];
+    $honor = $_GET['honor'];
+    $bdate = $_GET['bdate'];
+    $addrHN = $_GET['addrHN'];
+    $addrStr = $_GET['addrStr'];
+    $addrCi = $_GET['addrCi'];
+    $addSta = $_GET['addSta'];
+    $addrCo = $_GET['addrCo'];
+    $addr = $_GET['addrZ'];
+
+    $stmt = $conn->prepare("CALL setNewUser(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+    $stmt->bind_param("sssssssssssssssssssss",
+        $userType, $subType, $gradType, $time,
+        $departmentID, $timeslot, $rank,
+        $password,
+        $ssn, $fName, $lName, $pNum, $gender, $honor, $bdate,
+        $addrHN, $addrStr, $addrCi, $addSta, $addrCo, $addr);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['ERROR1'],
+        $out_schedule['ERROR2'],
+        $out_schedule['ERROR3'],
+        $out_schedule['ERROR4'],
+        $out_schedule['ERROR5'],
+        $out_schedule['ERROR6'],
+        $out_schedule['ERROR7'],
+        $out_schedule['ERROR8'],
+        $out_schedule['ERROR9'],
+        $out_schedule['ERROR10'],
+        $out_schedule['ERROR11'],
+        $out_schedule['ERROR12'],
+        $out_schedule['ERROR13'],
+        $out_schedule['ERROR14'],
+        $out_schedule['ERROR15'],
+        $out_schedule['ERROR16'],
+        $out_schedule['ERROR17'],
+        $out_schedule['ERROR18'],
+        $out_schedule['ERROR19'],
+        $out_schedule['ERROR20'],
+        $out_schedule['ERROR20']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['result'] = $completeArray;
+
+    echo(json_encode($final_arr));
 
     mysqli_close($conn);
 

@@ -371,7 +371,6 @@ function EditEnrollment(props:any) {
     function renderPage() {
         return (
             <Fragment>
-                {displayStudentInfo()}
                 <form onSubmit={handleSubmit}>
                     <fieldset>
                         <div id={'program-container'} style={{display:"flex", margin:"auto"}}>

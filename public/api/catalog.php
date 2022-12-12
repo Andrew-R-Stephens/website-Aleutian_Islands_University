@@ -210,6 +210,10 @@ switch($func) {
         getAllClassrooms($conn);
         return;
     }
+    case 'getAllTimeslots': {
+        getAllTimeslots($conn);
+        return;
+    }
     case 'getAvailableFacultyByTimeslotIDAndSemesterID': {
         getAvailableFacultyByTimeslotIDAndSemesterID($conn);
         return;
@@ -222,12 +226,12 @@ switch($func) {
         getAvailableFacultyForDepartmentHeadBySchoolID($conn);
         return;
     }
-    case 'createNewDepartment': {
-        createNewDepartment($conn);
+    case 'isLastMeetingEditable': {
+        isLastMeetingEditable($conn);
         return;
     }
-    case 'createNewUser': {
-        createNewUser($conn);
+    case 'createNewDepartment': {
+        createNewDepartment($conn);
         return;
     }
     default: {
@@ -1952,6 +1956,35 @@ function getAvailableAdvisorsUsingProgramID($conn) {
     mysqli_close($conn);
 }
 
+function getAllTimeslots($conn) {
+
+    $stmt = $conn->prepare("CALL getAllTimeslots()");
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['TimeslotID'],
+        $out_schedule['Name'],
+        $out_schedule['StartTime'],
+        $out_schedule['EndTime']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['timeslots'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
 function getAvailableFacultyByTimeslotIDAndSemesterID($conn) {
     if(!(isset($_GET['sid'],$_GET['cid'],$_GET['ts1'],$_GET['ts2']))) {
         $out = ['error' => 'Incomplete request.'];
@@ -2262,56 +2295,26 @@ function getAvailableFacultyForDepartmentHeadBySchoolID($conn) {
 
 }
 
-function createNewUser($conn) {
+function isLastMeetingEditable($conn) {
 
     $arr ['status'] = "Failed!";
-    if(!(isset(
-        $_GET['userType'],$_GET['subType'],$_GET['gradType'],$_GET['time'],
-        $_GET['departmentID'],$_GET['timeslot'],$_GET['rank'],
-        $_GET['password'],
-        $_GET['ssn'],$_GET['fName'],$_GET['lName'],$_GET['pNum'],$_GET['gender'],$_GET['honor'],$_GET['bdate'],
-        $_GET['addrHN'],$_GET['addrStr'],$_GET['addrCi'],$_GET['addSta'],$_GET['addrCo'],$_GET['addrZ'])))
-    {
+    if(!(isset($_GET['cid']))) {
         $arr ['status'] = "Incomplete request";
-        $final_arr['result'] = $arr;
-        echo(json_encode($final_arr));
+        echo(json_encode($arr));
+        return;
     }
 
-    $userType = $_GET['userType'];
-    $subType = $_GET['subType'];
-    $gradType = $_GET['gradType'];
-    $time = $_GET['time'];
-    $departmentID = $_GET['departmentID'];
-    $timeslot = $_GET['timeslot'];
-    $rank = $_GET['rank'];
-    $password = $_GET['password'];
-    $ssn = $_GET['ssn'];
-    $fName = $_GET['fName'];
-    $lName = $_GET['lName'];
-    $pNum = $_GET['pNum'];
-    $gender = $_GET['gender'];
-    $honor = $_GET['honor'];
-    $bdate = $_GET['bdate'];
-    $addrHN = $_GET['addrHN'];
-    $addrStr = $_GET['addrStr'];
-    $addrCi = $_GET['addrCi'];
-    $addSta = $_GET['addSta'];
-    $addrCo = $_GET['addrCo'];
-    $addr = $_GET['addrZ'];
+    $cid = $_GET['cid'];
 
-    $stmt = $conn->prepare("CALL setNewUser(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-
-    $stmt->bind_param("sssssssssssssssssssss",
-        $userType, $subType, $gradType, $time,
-        $departmentID, $timeslot, $rank,
-        $password,
-        $ssn, $fName, $lName, $pNum, $gender, $honor, $bdate,
-        $addrHN, $addrStr, $addrCi, $addSta, $addrCo, $addr);
+    $stmt = $conn->prepare("CALL checkMeetingNumber_Outer(?)");
+    $stmt->bind_param("s", $cid);
     $stmt->execute();
 
     $out_schedule = [];
     $stmt->bind_result(
-        $out_schedule['ERROR']
+        $out_schedule['FacultyID'],
+        $out_schedule['FirstName'],
+        $out_schedule['LastName']
     );
 
     $completeArray = [];
@@ -2323,7 +2326,8 @@ function createNewUser($conn) {
         $completeArray[] = $row;
     }
 
-    $final_arr['result'] = $completeArray;
+    $final_arr['faculty'] = $completeArray;
+    $final_arr['status'] = $arr['status'];
 
     echo(json_encode($final_arr));
 

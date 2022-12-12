@@ -4,6 +4,8 @@ import CreateUserStudent from "./createuser/CreateUserStudent";
 import CreateUserFaculty from "./createuser/CreateUserFaculty";
 import CreateUserResearcher from "./createuser/CreateUserResearcher";
 import CreateUserAdministrator from "./createuser/CreateUserAdministrator";
+import axios from "axios";
+import PersonalInformationDetails from "../../../../../../classes/PersonalInformationDetails";
 
 function CreateUser() {
 
@@ -14,22 +16,22 @@ function CreateUser() {
             case Roles.Student: {
                 return <CreateUserStudent
                     changePage={()=>setPage(-1)}
-                    createUser={(obj:{})=>requestCreateUser(obj)}/>
+                    createUser={requestCreateUser}/>
             }
             case Roles.Faculty: {
                 return <CreateUserFaculty
                     changePage={()=>setPage(-1)}
-                    createUser={(obj:{})=>requestCreateUser(obj)}/>
+                    createUser={requestCreateUser}/>
             }
             case Roles.Researcher: {
                 return <CreateUserResearcher
                     changePage={()=>setPage(-1)}
-                    createUser={(obj:{})=>requestCreateUser(obj)}/>
+                    createUser={requestCreateUser}/>
             }
             case Roles.Administrator: {
                 return <CreateUserAdministrator
                     changePage={()=>setPage(-1)}
-                    createUser={(obj:{})=>requestCreateUser(obj)}/>
+                    createUser={requestCreateUser}/>
             }
             default: {
                 return displayDefault();
@@ -37,9 +39,47 @@ function CreateUser() {
         }
     }
 
-    function requestCreateUser(params: {}) {
-        //todo: add all-encompassing api call *here*
-        console.log(params);
+    async function requestCreateUser(params: any) {
+        console.log("Sent:", params);
+        const {
+            userType, subType=undefined, gradType=undefined, time=undefined,
+            departmentID=undefined, timeslot=undefined, rank=undefined,
+            password,
+            ssn, fName, lName, phone, gender, honorific, birthdate,
+            houseNum, street, city, state, country, zip
+        } = params;
+
+        await axios.get(process.env["REACT_APP_API_USER"] as string, {
+            params: {
+                func: "setNewUser",
+                userType: userType,
+                subType: subType,
+                gradType: gradType,
+                time: time,
+                departmentID: departmentID,
+                timeslot: timeslot,
+                rank: rank,
+                password: password,
+                ssn: ssn,
+                fName: fName,
+                lName: lName,
+                pNum: phone,
+                gender: gender,
+                honor: honorific,
+                bdate: birthdate,
+                addrHN: houseNum,
+                addrStr: street,
+                addrCi: city,
+                addSta: state,
+                addrCo: country,
+                addrZ: zip
+            }
+        }).then(res => {
+            alert(res);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+
     }
 
     function displayDefault() {
