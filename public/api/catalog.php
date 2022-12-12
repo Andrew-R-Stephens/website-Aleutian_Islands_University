@@ -1127,15 +1127,16 @@ function getAdvisorByStudentID($conn) {
         $out_advisor['Name']
     );
 
-    $final_arr = [];
+    $arr = [];
     while ($stmt->fetch()) {
         $row = [];
         foreach ($out_advisor as $key => $val) {
             $row[$key] = $val;
         }
-        $final_arr['advisor'] = $row;
+        $arr[] = $row;
     }
 
+    $final_arr['advisors'] = $arr;
     echo(json_encode($final_arr));
 
     mysqli_close($conn);

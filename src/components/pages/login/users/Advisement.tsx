@@ -9,7 +9,7 @@ import "../../../../css/PeudoTable.css"
 
 function StudentAdvisement(props:any) {
 
-    const[advisor, setAdvisor] = useState<any>();
+    const[advisors, setAdvisors] = useState<any[]>();
 
     useEffect(() => {
         requestAdvisor().then(r => console.log("StudentAdvisement"));
@@ -22,8 +22,9 @@ function StudentAdvisement(props:any) {
                 id: props.targetStudent
             }
         }).then(res => {
-            let {error, advisor} = res.data;
-            setAdvisor(advisor);
+            let {error, advisors} = res.data;
+            console.log(res.data);
+            setAdvisors(advisors);
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -31,7 +32,7 @@ function StudentAdvisement(props:any) {
 
     return <div>
         {
-            advisor?
+            advisors?.map((advisor:any)=>(
                 <div style={{margin: 32, padding:16, borderRadius: 15, backgroundColor: "#cccccc"}}>
                     <div style={{fontSize:32, marginBottom: 16, fontWeight: "bold"}}><label></label>Advisor Information</div>
                     <div style={{fontSize:20, marginBottom: 16}}><label style={{fontWeight:"bold"}}>{advisor.FirstName} {advisor.LastName}</label></div>
@@ -39,7 +40,8 @@ function StudentAdvisement(props:any) {
                     <div style={{fontSize:20}}><label style={{fontWeight:"bold"}}>Email: </label>{advisor.Email}</div>
                     <div style={{fontSize:20, marginBottom: 16}}><label style={{fontWeight:"bold"}}>Location: </label><label>{advisor.RoomNum}, {advisor.BuildingName}</label></div>
                     <div style={{fontSize:20}}><label style={{fontWeight:"bold"}}>Office Hours: </label>{advisor.Name} {advisor.StartTime} - {advisor.EndTime}</div>
-                </div>:""
+                </div>
+            ))
         }
     </div>;
 }
@@ -606,13 +608,13 @@ function AdministratorAdvisement(props:any) {
                     <div style={{display:"flex", marginTop:32, marginLeft:"auto", marginRight:"auto"}}>
                         <div
                             className={'advisor-button'}
-                            role={viewAdvisorsOption===ViewAdvisorsOrAdvisees.advisees?'active':'inactive'}
+                            role={viewAdvisorsOption === ViewAdvisorsOrAdvisees.advisees?'active':'inactive'}
                             onClick={() => handleChangeDisplayAdvisorOrAdvisees(ViewAdvisorsOrAdvisees.advisees)}>
                             <label style={{textAlign: "center", padding: 4, fontWeight:"bold"}}>View Advisees</label>
                         </div>
                         <div
                             className={'advisor-button'}
-                            role={viewAdvisorsOption===ViewAdvisorsOrAdvisees.advisors?'active':'inactive'}
+                            role={viewAdvisorsOption === ViewAdvisorsOrAdvisees.advisors?'active':'inactive'}
                             onClick={() => handleChangeDisplayAdvisorOrAdvisees(ViewAdvisorsOrAdvisees.advisors)}>
                             <label style={{textAlign: "center", padding: 4, fontWeight:"bold"}}>View Advisors</label>
                         </div>

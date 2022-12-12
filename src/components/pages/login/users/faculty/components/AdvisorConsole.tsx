@@ -8,8 +8,6 @@ import Holds from "../../student/pages/Holds";
 import SemesterGrades from "../../student/pages/SemesterGrades";
 import SemesterSchedule from "../../SemesterSchedule";
 import UnofficialTranscript from "../../student/pages/UnofficialTranscript";
-import DisplayPersonalInfo from "../../DisplayPersonalInfo";
-import Registration from "../../student/pages/Registration";
 import Profile from "../../Profile";
 import EditRegistration from "../../student/pages/EditRegistration";
 import EditEnrollment from "../../student/pages/EditEnrollment";
