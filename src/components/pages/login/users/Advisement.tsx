@@ -654,7 +654,8 @@ function Advisement(props:any) {
             case AuthRole.Faculty: {
                 return displayFacultyAdvisement();
             }
-            case AuthRole.Administrator: {
+            case AuthRole.Administrator:
+            case AuthRole.Primary_Administrator: {
                 return displayAdministratorAdvisement();
             }
             default: return <Fragment>404 {userRole}</Fragment>

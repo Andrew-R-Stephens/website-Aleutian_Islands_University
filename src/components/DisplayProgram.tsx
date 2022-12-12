@@ -1,6 +1,4 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import '../stores/user-store';
-//import './../css/RequestTable.css';
 import DisplayProgramDetails from "./DisplayProgramDetails";
 import DisplayProgramRequirements from "./DisplayProgramRequirements";
 

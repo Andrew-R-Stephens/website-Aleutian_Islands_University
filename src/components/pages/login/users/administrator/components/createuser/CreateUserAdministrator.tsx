@@ -1,5 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
-import {UserAuthStore} from "../../../../../../../stores/AuthUserStore";
+import React, {Fragment, useState} from "react";
 
 function CreateUserAdministrator(props:any) {
     const {changePage, createUser} = props;

@@ -3,8 +3,7 @@ import axios from "axios";
 import DisplayCourseSectionAttendance from "./faculty/components/DisplayCourseSectionAttendance";
 import DisplayCourseSectionDetails from "./faculty/components/DisplayCourseSectionDetails";
 import DisplayCourseSectionRoster from "./faculty/components/DisplayCourseSectionRoster";
-import {scryRenderedComponentsWithType} from "react-dom/test-utils";
-import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
+import {AuthRole, UserAuthStore} from "../../../../stores/AuthUserStore";
 import DisplayCourseSectionRosterWithGrades from "./faculty/components/DisplayCourseSectionRosterWithGrades";
 
 function DisplayCourseSection(props:any) {
@@ -109,7 +108,8 @@ function DisplayCourseSection(props:any) {
             case AuthRole.Faculty: {
                 return displayFaculty();
             }
-            case AuthRole.Administrator: {
+            case AuthRole.Administrator:
+            case AuthRole.Primary_Administrator: {
                 return displayAdministrator();
             }
             default: {

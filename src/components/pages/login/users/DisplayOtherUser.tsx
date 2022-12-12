@@ -12,7 +12,8 @@ function DisplayOtherUser(props:any) {
             case AuthRole.Faculty: {
                 return displayAsFaculty();
             }
-            case AuthRole.Administrator: {
+            case AuthRole.Administrator:
+            case AuthRole.Primary_Administrator: {
                 return displayAsAdministrator();
             }
             default: {

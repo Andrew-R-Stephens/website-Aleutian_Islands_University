@@ -1,10 +1,10 @@
-import React, {Fragment, useCallback, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import '../../../../../../css/ConsoleHome.css';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import DisplaySemesterSchedule from "../../DisplaySemesterSchedule";
 import DisplayMasterSchedule from "../../../../../DisplayMasterSchedule";
 import axios from "axios";
-import {RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
 
 function EditRegistration(props:any) {
 
@@ -97,8 +97,8 @@ function EditRegistration(props:any) {
                     godRole={godRole}
                     targetUID={targetUID}
                     enableRegistration={true}
-                     registrableSemesterID={registrableSemesterID?.at(0)?.SemesterID}
-                     handleNavigateCourseSearch={(event:any)=>handlePageChange(event, Pages.CourseSearch)}/>
+                    registrableSemesterID={registrableSemesterID?.at(0)?.SemesterID}
+                    handleNavigateCourseSearch={(event:any)=>handlePageChange(event, Pages.CourseSearch)}/>
             </Fragment>
         );
     }
@@ -107,10 +107,11 @@ function EditRegistration(props:any) {
         return (
             <Fragment>
                 <h1>Registration Course Search</h1>
-                <DisplayMasterSchedule enableRegistration={true}
-                                       registrableSemesterID={registrableSemesterID?.at(0)?.SemesterID}
-                                       handleRegisterCourse={(crn:string)=>handleRegisterCourse(crn)}
-                                       handleBackButton={(event:any)=>handlePageChange(event, Pages.Add_Drop)}/>
+                <DisplayMasterSchedule
+                    enableRegistration={true}
+                   registrableSemesterID={registrableSemesterID?.at(0)?.SemesterID}
+                   handleRegisterCourse={(crn:string)=>handleRegisterCourse(crn)}
+                   handleBackButton={(event:any)=>handlePageChange(event, Pages.Add_Drop)}/>
             </Fragment>
         );
     }

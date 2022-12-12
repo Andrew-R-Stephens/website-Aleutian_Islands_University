@@ -1,8 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
-import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
+import {RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
 import EditEnrollment from "./EditEnrollment";
-import DisplayEnrollmentInfo from "../../DisplayEnrollmentInfo";
 
 function StudentEnrollment(props:any) {
 

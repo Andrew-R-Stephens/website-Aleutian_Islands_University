@@ -1,6 +1,6 @@
-import React, {Fragment, useCallback, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import '../../../../../../css/ConsoleHome.css';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import axios from "axios";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
 
@@ -253,7 +253,7 @@ function EditEnrollment(props:any) {
                     </div>
                 </div>
                 {
-                    userRole === AuthRole.Administrator ? displayFaculty1Option() : <Fragment/>
+                    userRole === AuthRole.Primary_Administrator ? displayFaculty1Option() : <Fragment/>
                 }
             </div>
         </Fragment>
@@ -284,7 +284,7 @@ function EditEnrollment(props:any) {
                     </div>
                 </div>
                 {
-                    userRole === AuthRole.Administrator ? displayFaculty2Option() : <Fragment/>
+                    userRole === AuthRole.Primary_Administrator ? displayFaculty2Option() : <Fragment/>
                 }
             </div>
         </Fragment>

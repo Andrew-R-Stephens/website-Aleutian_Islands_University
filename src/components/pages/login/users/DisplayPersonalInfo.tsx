@@ -1,8 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import '../../../../css/DisplayInfo.css';
 import axios from "axios";
-import '../../../../stores/user-store';
-import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import PersonalInformationDetails from "../../../../classes/PersonalInformationDetails";
 
 function DisplayPersonalInfo(props:any) {
@@ -133,6 +132,12 @@ function DisplayPersonalInfo(props:any) {
         </Fragment>);
     }
 
+    function displayEditButton() {
+        return (
+            userStoreRole === AuthRole.Primary_Administrator || targetUID === userStoreID
+        )
+    }
+
     return (
         <Fragment>
             <div className={'display-info'}>
@@ -171,9 +176,12 @@ function DisplayPersonalInfo(props:any) {
                         {displaySelectedAboutSection()}
                     </div>
 
-                    <div>
-                        <button onClick={()=>props.pageFun()}>Edit</button>
-                    </div>
+                    {
+                        displayEditButton() ?
+                        <div>
+                            <button onClick={() => props.pageFun()}>Edit</button>
+                        </div> : <Fragment/>
+                    }
                 </div>
 
             </div>

@@ -59,7 +59,7 @@ const RequireUserAuth = () => {
     const storedUserID = UserAuthStore.getState().userID;
     const location = useLocation();
 
-    console.log("User Auth working...", storedUserID)
+    console.log("User Auth working...", storedUserID, storedUserID && storedUserID as string > '0')
 
     return (
         (storedUserID && storedUserID as string > '0') ?
@@ -85,16 +85,22 @@ const DoRoleAuthRouting = () => {
                 <Navigate to="/u/faculty/profile" state={{from: location}}/>
             )
         }
+        case AuthRole.Researcher: {
+            console.log("Navigating to researcher");
+            return (
+                <Navigate to="/u/researcher/profile" state={{from: location}}/>
+            )
+        }
         case AuthRole.Administrator: {
             console.log("Navigating to admin");
             return (
                 <Navigate to="/u/administrator/profile" state={{from: location}}/>
             )
         }
-        case AuthRole.Researcher: {
-            console.log("Navigating to researcher");
+        case AuthRole.Primary_Administrator: {
+            console.log("Navigating to admin");
             return (
-                <Navigate to="/u/researcher/profile" state={{from: location}}/>
+                <Navigate to="/u/administrator/profile" state={{from: location}}/>
             )
         }
         default: {
@@ -170,7 +176,7 @@ function NavRoutes() {
                                         <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
                                     </Route>
                                     <Route path={"administrator"}
-                                           element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator]}/>}>
+                                           element={<RequireRoleAuth allowedRoles={[AuthRole.Administrator, AuthRole.Primary_Administrator]}/>}>
                                         <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                                         <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                                         <Route path={"console"} element={<UserConsole child={<Administrator/>}/>}/>

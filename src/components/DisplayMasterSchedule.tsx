@@ -1,9 +1,8 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
-import {Checkbox, TablePagination} from "@mui/material";
-import {blue} from "@mui/material/colors";
-import {useLocation, useNavigate} from "react-router-dom";
+import {TablePagination} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 import {convertTime} from "../Utils";
 
 function DisplayMasterSchedule(props:any) {
@@ -448,7 +447,7 @@ function DisplayMasterSchedule(props:any) {
 
     function displayButtonHCol() {
         return (
-            (enableRegistration || (userRole.current === AuthRole.Administrator && adminManagement)) ?
+            (enableRegistration || (userRole.current === AuthRole.Primary_Administrator && adminManagement)) ?
                 <Fragment>
                     <div className={'div-table-col'}><label></label></div>
                 </Fragment>
@@ -480,7 +479,7 @@ function DisplayMasterSchedule(props:any) {
                     </div>
                 </div>
             );
-        else if(userRoleID === AuthRole.Administrator && adminManagement){
+        else if(userRoleID === AuthRole.Primary_Administrator && adminManagement){
             return (
                 <Fragment>
                     <div className={'div-table-col'} style={{display: "inline-flex"}}>

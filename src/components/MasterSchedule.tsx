@@ -1,10 +1,6 @@
-import React, {Fragment, useEffect, useRef, useState} from "react";
-import axios from "axios";
+import React, {Fragment, useRef, useState} from "react";
 import {RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
-import {Checkbox, TablePagination} from "@mui/material";
-import {blue} from "@mui/material/colors";
-import {useLocation, useNavigate} from "react-router-dom";
-import {convertTime} from "../Utils";
+import {useLocation} from "react-router-dom";
 import DisplayMasterSchedule from "./DisplayMasterSchedule";
 
 function MasterSchedule(props:any) {

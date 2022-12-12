@@ -3,7 +3,6 @@ import axios from "axios";
 import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import "./../../../../css/PeudoTable.css"
 import DisplayCourseSection from "./DisplayCourseSection";
-import {convertTime} from "../../../../Utils";
 import DisplaySemesterSchedule from "./DisplaySemesterSchedule";
 
 function SemesterSchedule(props:any) {

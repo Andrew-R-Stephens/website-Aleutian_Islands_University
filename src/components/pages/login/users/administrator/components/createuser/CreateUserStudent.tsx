@@ -1,7 +1,5 @@
-import React, {Fragment, useEffect, useState} from "react";
-import {RoleAuthStore, UserAuthStore} from "../../../../../../../stores/AuthUserStore";
-import PersonalInformationDetails from "../../../../../../../classes/PersonalInformationDetails";
-import axios from "axios";
+import React, {Fragment, useState} from "react";
+import {UserAuthStore} from "../../../../../../../stores/AuthUserStore";
 
 function CreateUserStudent(props:any) {
     const {changePage, createUser} = props;

@@ -34,7 +34,8 @@ function UserConsole(props:any) {
 
     function generateByRole() {
         switch (role.current) {
-            case AuthRole.Administrator: {
+            case AuthRole.Administrator:
+            case AuthRole.Primary_Administrator: {
                 return administratorRoutes();
             }
             case AuthRole.Faculty: {

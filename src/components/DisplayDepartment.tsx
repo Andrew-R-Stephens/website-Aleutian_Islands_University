@@ -1,5 +1,4 @@
 import React, {Fragment, useState} from 'react';
-import '../stores/user-store';
 import DisplayDepartmentDetails from "./DisplayDepartmentDetails";
 
 function DisplayDepartment(props:any) {

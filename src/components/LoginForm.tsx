@@ -1,8 +1,7 @@
-import React, {Fragment, useRef, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import '../css/LoginForm.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import '../stores/user-store';
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
 
 function LoginForm() {
@@ -41,7 +40,8 @@ function LoginForm() {
                 pass
             }
         }).then(res => {
-            let {uid, role} = res.data;
+            let {uid, role, priority} = res.data;
+            console.log("login", uid, role, priority)
 
             setUserID(uid);
             console.log("Response:",uid);
@@ -53,7 +53,7 @@ function LoginForm() {
                 setUserRole(role);
 
                 setUserStoreID(uid);
-                invalidateRole(role);
+                invalidateRole((parseInt(role)+parseInt(priority))+"");
 
                 navigate("/u");
             }

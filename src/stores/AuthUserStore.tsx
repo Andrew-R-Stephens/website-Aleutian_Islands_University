@@ -5,16 +5,18 @@ export enum Roles {
     Visitor,
     Student,
     Faculty,
+    Researcher,
     Administrator,
-    Researcher
+    Primary_Administrator
 }
 
 export const AuthRole = {
     Visitor: '0',
     Student: '1',
     Faculty: '2',
-    Administrator: '3',
-    Researcher: '4'
+    Researcher: '3',
+    Administrator: '4',
+    Primary_Administrator: '5'
 }
 
 export const RoleAuthStore = create(persist((set:any, get:any) => ({
@@ -31,13 +33,17 @@ export const RoleAuthStore = create(persist((set:any, get:any) => ({
             console.log("Attempting F set")
             set(() => ({ authRole: AuthRole.Faculty }))
         },
-        setRole_Administrator: () => {
-            console.log("Attempting A set")
-            set(() => ({ authRole: AuthRole.Administrator }))
-        },
         setRole_Researcher: () => {
             console.log("Attempting R set")
             set(() => ({ authRole: AuthRole.Researcher }))
+        },
+        setRole_Administrator: () => {
+            console.log("Attempting A2 set")
+            set(() => ({ authRole: AuthRole.Administrator }))
+        },
+        setRole_PrimaryAdministrator: () => {
+            console.log("Attempting A1 set")
+            set(() => ({ authRole: AuthRole.Primary_Administrator }))
         },
         setDefaultRole: () => {
             console.log("Attempting D set")
@@ -58,12 +64,16 @@ export const RoleAuthStore = create(persist((set:any, get:any) => ({
                     RoleAuthStore.getState().setRole_Faculty();
                     return;
                 }
+                case AuthRole.Researcher: {
+                    RoleAuthStore.getState().setRole_Researcher();
+                    return;
+                }
                 case AuthRole.Administrator: {
                     RoleAuthStore.getState().setRole_Administrator();
                     return;
                 }
-                case AuthRole.Researcher: {
-                    RoleAuthStore.getState().setRole_Researcher();
+                case AuthRole.Primary_Administrator: {
+                    RoleAuthStore.getState().setRole_PrimaryAdministrator();
                     return;
                 }
             }

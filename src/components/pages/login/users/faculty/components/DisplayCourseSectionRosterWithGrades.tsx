@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
 import axios from "axios";
-import {UserAuthStore} from "../../../../../../stores/AuthUserStore";
 
 function DisplayCourseSectionRosterWithGrades(props:any) {
 

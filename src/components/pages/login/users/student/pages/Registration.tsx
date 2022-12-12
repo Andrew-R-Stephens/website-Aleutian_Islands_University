@@ -96,7 +96,7 @@ function Registration(props:any) {
     function displayRegistration() {
         switch(role) {
             case AuthRole.Student: {
-                return displayStudentAdvisement();
+                return displayStudentRegistration();
             }
             case AuthRole.Faculty: {
                 return displayFacultyRegistration();
@@ -107,7 +107,7 @@ function Registration(props:any) {
         }
     }
 
-    function displayStudentAdvisement(){
+    function displayStudentRegistration(){
         console.log("displaying  student registration", userID, role, godRole)
         return <StudentRegistration targetUID={userID} targetRole={role} godRole={godRole}/>
     }

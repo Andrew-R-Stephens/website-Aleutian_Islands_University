@@ -2,7 +2,6 @@ import React, {Fragment, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import '../../../../css/Account.css';
 import {UserAuthStore} from "../../../../stores/AuthUserStore";
-import DisplayAccountInfo from "./DisplayAccountInfo";
 import EditPassword from "./EditPassword";
 
 /**

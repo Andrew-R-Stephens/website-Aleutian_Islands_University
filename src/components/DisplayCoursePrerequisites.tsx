@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import '../stores/user-store';
 import CoursePrereqs, {Logic, Prereq, PrereqGroup} from "../classes/CoursePrereqs";
 
 function DisplayCoursePrerequisites(props:any) {

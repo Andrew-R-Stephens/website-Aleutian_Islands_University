@@ -72,7 +72,8 @@ function Academics() {
             case AuthRole.Student: {
                 return displayStudentAcademics();
             }
-            case AuthRole.Administrator: {
+            case AuthRole.Administrator:
+            case AuthRole.Primary_Administrator: {
                 return displayAdministratorAcademics();
             }
             default: return <Fragment/>

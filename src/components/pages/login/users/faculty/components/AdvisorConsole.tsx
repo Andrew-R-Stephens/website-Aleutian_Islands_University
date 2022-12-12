@@ -133,7 +133,8 @@ function AdvisorConsole() {
                                 : <Fragment/>
                         }
                         <div style={{display:"flex", marginTop: 32}}>
-                            {godRole === AuthRole.Administrator && userRole === AuthRole.Student ?
+                            {
+                                (godRole === AuthRole.Primary_Administrator) && userRole === AuthRole.Student ?
                                 <Fragment>
                                     <div className={'page-bubble'} onClick={() => handleSetPage(Page.Registration)}>
                                         <div className={'icon-registration'}/>

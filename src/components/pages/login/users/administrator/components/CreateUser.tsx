@@ -5,7 +5,6 @@ import CreateUserFaculty from "./createuser/CreateUserFaculty";
 import CreateUserResearcher from "./createuser/CreateUserResearcher";
 import CreateUserAdministrator from "./createuser/CreateUserAdministrator";
 import axios from "axios";
-import PersonalInformationDetails from "../../../../../../classes/PersonalInformationDetails";
 
 function CreateUser() {
 
@@ -28,7 +27,7 @@ function CreateUser() {
                     changePage={()=>setPage(-1)}
                     createUser={requestCreateUser}/>
             }
-            case Roles.Administrator: {
+            case Roles.Primary_Administrator: {
                 return <CreateUserAdministrator
                     changePage={()=>setPage(-1)}
                     createUser={requestCreateUser}/>
@@ -88,7 +87,7 @@ function CreateUser() {
                 <button onClick={()=>setPage(Roles.Student)}>Create Student</button>
                 <button onClick={()=>setPage(Roles.Faculty)}>Create Faculty</button>
                 <button onClick={()=>setPage(Roles.Researcher)}>Create Researcher</button>
-                <button onClick={()=>setPage(Roles.Administrator)}>Create Administrator</button>
+                <button onClick={()=>setPage(Roles.Primary_Administrator)}>Create Administrator</button>
             </Fragment>
         )
     }

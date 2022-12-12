@@ -1,7 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import '../../../../css/DisplayInfo.css';
 import axios from "axios";
-import '../../../../stores/user-store';
 import {RoleAuthStore, UserAuthStore} from "../../../../stores/AuthUserStore";
 import PersonalInformationDetails from "../../../../classes/PersonalInformationDetails";
 

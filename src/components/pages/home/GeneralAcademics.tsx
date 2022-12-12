@@ -1,8 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import HomeNavBanner from "../../HomeNavBanner";
 import CourseCatalog from "../../catalog/CourseCatalog";
-import {useNavigate} from "react-router-dom";
-import {shouldSkipGeneratingVar} from "@mui/material";
 import MasterSchedule from "../../MasterSchedule";
 
 function GeneralAcademics() {

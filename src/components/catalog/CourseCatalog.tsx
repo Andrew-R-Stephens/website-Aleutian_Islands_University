@@ -1,5 +1,4 @@
 import React, {Fragment, useState} from 'react';
-import '../../stores/user-store';
 import "../../css/CourseCatalog.css"
 import CatalogDisplayPrograms from "./CatalogDisplayPrograms";
 import CatalogDisplayCourses from "./CatalogDisplayCourses";

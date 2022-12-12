@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import '../stores/user-store';
 import DepartmentDetails from "../classes/DepartmentDetails";
 
 function DisplayProgramDetails(props:any) {

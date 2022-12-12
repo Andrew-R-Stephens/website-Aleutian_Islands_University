@@ -2,9 +2,9 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 
+use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 
 function sendEmail($sender, $recipient, $header, $message){
 //Load Composer's autoloader
