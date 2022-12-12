@@ -3,8 +3,6 @@ import '../../../../../../css/ConsoleHome.css';
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
-import DisplayEnrollmentInfo from "../../DisplayEnrollmentInfo";
-import student from "../Student";
 
 function EditEnrollment(props:any) {
 
@@ -20,30 +18,24 @@ function EditEnrollment(props:any) {
     const [userRole, setUserRole] = useState(targetRole?targetRole:userStoreRole);
 
     const [studentInfo, setStudentInfo] = useState<any[]>();
-    const [currentAdvisors, setCurrentAdvisors] = useState<any[]>();
-    const [enrolledPrograms, setEnrolledPrograms] = useState<any[]>();
     const [primaryPrograms, setPrimaryPrograms] = useState<any[]>();
     const [secondaryPrograms, setSecondaryPrograms] = useState<any[]>();
     const [primaryFaculty, setPrimaryFaculty] = useState<any[]>([]);
     const [secondaryFaculty, setSecondaryFaculty] = useState<any[]>([]);
 
     const [selectedPrimaryProgram, setSelectedPrimaryProgram] = useState<string>('');
-    const [selectedSecondaryProgram, setSelectedSecondaryProgram] = useState<string>();
+    const [selectedSecondaryProgram, setSelectedSecondaryProgram] = useState<string>('');
     const [selectedPrimaryFaculty, setSelectedPrimaryFaculty] = useState<string>('');
-    const [selectedSecondaryFaculty, setSelectedSecondaryFaculty] = useState<string>();
+    const [selectedSecondaryFaculty, setSelectedSecondaryFaculty] = useState<string>('');
 
     useEffect(() => {
-        requestCurrentAdvisors().then(r=>console.log());
-        requestCurrentEnrolledPrograms().then(r=>console.log());
         requestStudentGradType().then(r=>console.log());
         requestPrimaryPrograms().then(r=>console.log());
         requestSecondaryPrograms().then(r=>console.log());
     }, [userID])
 
     useEffect(() => {
-        requestPrimaryFaculty().then(r=>
-            (userRole === AuthRole.Student) ?
-                setSelectedPrimaryFaculty(primaryFaculty?.at(0)?.UID):'')
+        requestPrimaryFaculty().then(r=>console.log("Primary faculty acquired"))
     },[selectedPrimaryProgram])
 
     useEffect(() => {
@@ -58,43 +50,10 @@ function EditEnrollment(props:any) {
 
     useEffect(() => {
         if(userRole === AuthRole.Student)
-            setSelectedSecondaryFaculty(secondaryFaculty?.at(0)?.UID)
+            setSelectedSecondaryFaculty(secondaryFaculty?.at(0)?.UID ?
+                    secondaryFaculty?.at(0)?.UID
+                    : '')
     },[secondaryFaculty])
-
-    async function requestCurrentAdvisors() {
-        await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
-            params: {
-                func: "getAdvisorByStudentID",
-                id: userID
-            }
-        }).then(res => {
-            const {
-                advisors
-            } = res.data;
-
-            setCurrentAdvisors(advisors);
-            console.log("requestCurrentAdvisors", res.data);
-
-        }).catch(function(err) {
-            console.log("requestCurrentAdvisors", err.message);
-        })
-    }
-
-    async function requestCurrentEnrolledPrograms() {
-        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
-            params: {
-                func: "getProgramEnrollmentByStudentID",
-                id: userID
-            }
-        }).then(res => {
-            let {error, schedule} = res.data;
-            console.log("requestCurrentEnrolledPrograms", res.data)
-            setEnrolledPrograms(schedule);
-            console.log("user",  userID)
-        }).catch(function(err) {
-            console.log("requestCurrentEnrolledPrograms", err.message);
-        })
-    }
 
     async function requestStudentGradType() {
         await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
@@ -239,8 +198,26 @@ function EditEnrollment(props:any) {
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
-        console.log(selectedPrimaryProgram, selectedPrimaryFaculty, selectedSecondaryProgram, selectedSecondaryFaculty);
+        console.log(selectedPrimaryProgram, selectedPrimaryFaculty, "."+selectedSecondaryProgram+".", "."+selectedSecondaryFaculty+".");
         requestSetEnrollments().then(r=>console.log("Enrollments requested"));
+    }
+
+    function disableSubmit():boolean {
+        console.log("Check submit", "prog",selectedPrimaryProgram, "fac",selectedPrimaryFaculty+"", "prog",selectedSecondaryProgram, "fac",(selectedSecondaryFaculty+""))
+        console.log(
+            (selectedPrimaryProgram?.length>0 && (selectedPrimaryFaculty+"")?.length>0),
+            (
+                ((selectedSecondaryProgram?.length<=0 && (selectedSecondaryFaculty+"")?.length<=0)) ||
+                ((selectedSecondaryProgram?.length>0 && (selectedSecondaryFaculty+"")?.length>0))
+            )
+        );
+        return !(
+            (selectedPrimaryProgram?.length>0 && (selectedPrimaryFaculty+"")?.length>0) &&
+            (
+                ((selectedSecondaryProgram?.length<=0 && (selectedSecondaryFaculty+"")?.length<=0)) ||
+                ((selectedSecondaryProgram?.length>0 && (selectedSecondaryFaculty+"")?.length>0))
+            )
+        )
     }
 
     function displayStudentInfo() {
@@ -381,7 +358,11 @@ function EditEnrollment(props:any) {
                                 : <Fragment/>
                             }
                         </div>
-                        <button type={'submit'}>Apply</button>
+                        <button type={'submit'}
+                                style={{marginTop: 16}}
+                                disabled={disableSubmit()}>
+                            Apply
+                        </button>
                     </fieldset>
                 </form>
             </Fragment>
