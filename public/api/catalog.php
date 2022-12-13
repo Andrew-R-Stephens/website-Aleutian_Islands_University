@@ -146,6 +146,10 @@ switch($func) {
         getProgramEnrollmentByStudentID($conn);
         return;
     }
+    case 'getUnofficialTranscript': {
+        getUnofficialTranscript($conn);
+        return;
+    }
     case 'getHistoryByStudentIDAndSemesterID': {
         getHistoryByStudentIDAndSemesterID($conn);
         return;
@@ -1339,6 +1343,49 @@ function getProgramEnrollmentByStudentID($conn) {
     }
 
     $final_arr['enrollments'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getUnofficialTranscript($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getUnofficialTranscript(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_schedule = [];
+    $stmt->bind_result(
+        $out_schedule['StudentID'],
+        $out_schedule['Name'],
+        $out_schedule['CourseID'],
+        $out_schedule['ID'],
+        $out_schedule['GradeID'],
+        $out_schedule['SemesterID'],
+        $out_schedule['Term'],
+        $out_schedule['Year'],
+        $out_schedule['GPA'],
+        $out_schedule['CreditHours'],
+        $out_schedule['QualityPoints']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_schedule as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['transcript'] = $completeArray;
 
     echo(json_encode($final_arr));
 
