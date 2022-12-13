@@ -410,9 +410,9 @@ function DisplayMasterSchedule(props:any) {
         navigate('./../course-section', {state:{targetCRN:CRN, godRole:userRoleID}});
     }
 
-    function handleRegistration(event:any, CRN:string){
+    function handleRegistration(event:any, CRN:string, courseID:string){
         event.preventDefault();
-        handleRegisterCourse(CRN);
+        handleRegisterCourse(CRN, courseID);
         handleBackButton(event);
     }
 
@@ -473,7 +473,7 @@ function DisplayMasterSchedule(props:any) {
                 <div className={'div-table-col'} style={{display: "inline-flex"}}>
                     <div className={'div-table-button-wrapper'}>
                         <div className={'div-table-button'}
-                             onClick={(event)=> handleRegistration(event, s.CRN)}>
+                             onClick={(event)=> handleRegistration(event, s.CRN, s.CourseID)}>
                             <div className={'div-table-button-content'}><label>Add</label></div>
                         </div>
                     </div>

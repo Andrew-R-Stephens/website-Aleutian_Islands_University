@@ -5,6 +5,9 @@ import DisplaySemesterSchedule from "../../DisplaySemesterSchedule";
 import DisplayMasterSchedule from "../../../../../DisplayMasterSchedule";
 import axios from "axios";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
+import StudentHistory from "../../../../../../classes/StudentHistory";
+import CoursePrereqs from "../../../../../../classes/CoursePrereqs";
+import PrereqComparable from "../../../../../../classes/PrereqComparable";
 
 function EditRegistration(props:any) {
 
@@ -28,11 +31,26 @@ function EditRegistration(props:any) {
     const [page, setPage] = useState(0);
     const [registrableSemesterID, setRegistrableSemesterID] = useState<any>()
 
-    // const navigate = useNavigate();
+    const [chosenData, setChosenData] = useState<any>();
+    const [studentHistory, setStudentHistory] = useState<StudentHistory>();
+    const [coursePrereqs, setCoursePrereqs] = useState<CoursePrereqs>();
 
     useEffect(() => {
-        requestSemesterWithRegistrationAvailable().then(r=>console.log())
+        requestSemesterWithRegistrationAvailable().then(r=>console.log("Semester registrations requested"))
+        requestStudentHistory().then(r=>console.log("Student History requested"))
     }, [])
+
+    useEffect(() => {
+        requestCoursePrerequisites(chosenData?.courseID).then(r =>
+            console.log("Requested prereqs!")
+        )
+    }, [chosenData])
+
+    useEffect(() => {
+        new PrereqComparable(coursePrereqs?.master).isSatisfied(studentHistory) ?
+            requestAddCourseSection(chosenData?.crn)
+            : console.log("Unsatisfied.")
+    }, [coursePrereqs])
 
     async function requestSemesterWithRegistrationAvailable() {
         await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
@@ -52,8 +70,49 @@ function EditRegistration(props:any) {
         })
     }
 
-    async function requestAddCourseSection(crn:string) {
-        await axios.post(process.env["REACT_APP_API_CATALOG"] as string, {
+    async function requestStudentHistory() {
+        await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
+            params: {
+                func: "getStudentHistory",
+                id: userID
+            }
+        }).then(res => {
+            const {
+                history
+            } = res.data;
+            console.log("History", res.data);
+
+            setStudentHistory(new StudentHistory(history));
+
+        }).catch(function(err) {
+            console.log("available sems", err.message);
+        })
+    }
+
+
+    async function requestCoursePrerequisites(courseID:string) {
+        console.log("Course Prereqs Requested", courseID)
+        await axios.get(process.env["REACT_APP_API_CATALOG"] as string, {
+            params: {
+                func: "getCoursePrerequisites",
+                id: courseID
+            }
+        }).then(res => {
+            const {error, coursePrereqs} = res.data;
+            console.log("res Course Prereqs", coursePrereqs, "data", res.data)
+            setCoursePrereqs(new CoursePrereqs(coursePrereqs));
+        }).catch(function(err) {
+            if(axios.isCancel(err)) {
+                console.log("canceled!")
+            }
+            console.log(err.message);
+        })
+    }
+
+
+    function requestAddCourseSection(crn:string) {
+        console.log("Add course Requested", crn)
+        axios.post(process.env["REACT_APP_API_CATALOG"] as string, {
             params: {
                 post: "addCourseSection",
                 uid: userID,
@@ -84,8 +143,8 @@ function EditRegistration(props:any) {
         setPage(newPage)
     }
 
-    function handleRegisterCourse(crn:string) {
-        requestAddCourseSection(crn).then(r => console.log("Attempted to register course"));
+    function handleRegisterCourse(crn:string, courseID:string) {
+        setChosenData({crn, courseID});
     }
 
     function displayAddDrop() {
@@ -110,7 +169,7 @@ function EditRegistration(props:any) {
                 <DisplayMasterSchedule
                     enableRegistration={true}
                    registrableSemesterID={registrableSemesterID?.at(0)?.SemesterID}
-                   handleRegisterCourse={(crn:string)=>handleRegisterCourse(crn)}
+                   handleRegisterCourse={(crn:string, courseID:string)=>handleRegisterCourse(crn, courseID)}
                    handleBackButton={(event:any)=>handlePageChange(event, Pages.Add_Drop)}/>
             </Fragment>
         );

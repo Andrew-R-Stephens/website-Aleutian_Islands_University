@@ -1,5 +1,4 @@
 import React from "react";
-import {queryAllByAltText} from "@testing-library/react";
 
 class CoursePrereqs {
 
@@ -77,10 +76,9 @@ export class Transcript {
                 total += t.calcQualityHours()
                 : total += 0
         ))
-        let avg = (total / (i+1));
-        console.log("sum", total, "end", (i+1), "gpa", avg);
+        console.log("sum", total, "end", (i+1), "gpa", total);
         console.log('---')
-        return avg;
+        return total;
     }
     calcGPAHours(i:number):number {
         let total = 0;
@@ -89,10 +87,9 @@ export class Transcript {
                 total += t.calcGPAHours()
                 : total += 0
         ))
-        let avg = (total / (i+1));
-        console.log("sum", total, "end", (i+1), "gpa", avg);
+        console.log("sum", total, "end", (i+1), "gpa", total);
         console.log('---')
-        return avg;
+        return total;
     }
     calcPassedHours(i:number):number {
         let total = 0;
@@ -101,10 +98,9 @@ export class Transcript {
                 total += t.calcPassedHours()
                 : total += 0
         ))
-        let avg = (total / (i+1));
-        console.log("sum", total, "end", (i+1), "gpa", avg);
+        console.log("sum", total, "end", (i+1), "gpa", total);
         console.log('---')
-        return avg;
+        return total;
     }
 
     calcEarnedHours(i:number):number {
@@ -114,10 +110,9 @@ export class Transcript {
                 total += t.calcPassedHours()
                 : total += 0
         ))
-        let avg = (total / (i+1));
-        console.log("sum", total, "end", (i+1), "gpa", avg);
+        console.log("sum", total, "end", (i+1), "gpa", total);
         console.log('---')
-        return avg;
+        return total;
     }
 
     calcAttemptHours(i:number):number {
@@ -127,10 +122,9 @@ export class Transcript {
                 total += t.calcAttemptHours()
                 : total += 0
         ))
-        let avg = (total / (i+1));
-        console.log("sum", total, "end", (i+1), "gpa", avg);
+        console.log("sum", total, "end", (i+1), "gpa", total);
         console.log('---')
-        return avg;
+        return total;
     }
 
     calcTotalGPA():number {
@@ -290,9 +284,9 @@ export class TranscriptCourse {
         this.title = Name;
         this.grade = GradeID;
         this.gradeVal = parseInt(ID);
-        this.gpa = parseInt(GPA);
-        this.creditHours = parseInt(CreditHours);
-        this.qualityPoints = parseInt(QualityPoints);
+        this.gpa = parseFloat(GPA);
+        this.creditHours = parseFloat(CreditHours);
+        this.qualityPoints = parseFloat(QualityPoints);
     }
 
     print() {

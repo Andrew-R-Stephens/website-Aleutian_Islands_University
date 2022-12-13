@@ -100,8 +100,8 @@ function DisplayUnofficialTranscript(props:any) {
                                             <div className={'div-table-col'}><label>{t.course}</label></div>
                                             <div className={'div-table-col'}><label>{t.title}</label></div>
                                             <div className={'div-table-col'}><label>{t.grade}</label></div>
-                                            <div className={'div-table-col'}><label>{t.creditHours}</label></div>
-                                            <div className={'div-table-col'}><label>{t.qualityPoints}</label></div>
+                                            <div className={'div-table-col'}><label>{t.creditHours.toFixed(2)}</label></div>
+                                            <div className={'div-table-col'}><label>{t.qualityPoints.toFixed(2)}</label></div>
                                         </div>
                                     ))
                                 }

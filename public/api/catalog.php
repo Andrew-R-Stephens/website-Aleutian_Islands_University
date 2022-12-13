@@ -238,6 +238,10 @@ switch($func) {
         createNewDepartment($conn);
         return;
     }
+    case 'getStudentHistory': {
+        getStudentHistory($conn);
+        return;
+    }
     default: {
         $arr ['status'] = "Error: No post function matching request.";
         break;
@@ -469,7 +473,8 @@ function getCoursePrerequisites($conn) {
         $out_courses['GroupID'],
         $out_courses['GroupLogic'],
         $out_courses['PrereqCourse'],
-        $out_courses['MinGrade']
+        $out_courses['MinGrade'],
+        $out_courses['MinGradeWeight']
     );
 
     $completeArray = [];
@@ -1785,10 +1790,39 @@ function addStudentToCourseSection($conn, $params) {
     $stmt->bind_param("ss", $uid, $crn);
     $status = $stmt->execute();
 
+
     if($status === false)
         trigger_error($stmt->error, E_USER_ERROR);
     else
         $arr ['status'] = "$uid $crn";
+
+    $out = [];
+    $completeArray = [];
+    try {
+        $stmt->bind_result(
+            $out['SeatsFilled'],
+            $out['HasPassingGrade'],
+            $out['AlreadyRegistered'],
+            $out['HasHolds'],
+            $out['CreditsExceeded'],
+            $out['TimeWindowExceeded'],
+            $out['TimeslotConflict']
+        );
+
+
+        while ($stmt->fetch()) {
+            $row = [];
+            foreach ($out as $key => $val) {
+                $row[$key] = $val;
+            }
+            $completeArray[] = $row;
+        }
+    } catch (ArgumentCountError $ex) {
+        $out['ERROR'] = 'none';
+    }
+
+    $arr['ERRORS'] = $out;
+    $arr['results'] = $completeArray;
 
     echo(json_encode($arr));
 
@@ -2381,4 +2415,39 @@ function isLastMeetingEditable($conn) {
 
     mysqli_close($conn);
 
+}
+
+function getStudentHistory($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getStudentHistory(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['CourseID'],
+        $out_courses['GradeVal'],
+        $out_courses['GradeLet']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['history'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
 }

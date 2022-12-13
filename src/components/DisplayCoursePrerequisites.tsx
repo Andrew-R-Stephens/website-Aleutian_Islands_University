@@ -38,21 +38,36 @@ function DisplayCoursePrerequisites(props:any) {
         })
     }
 
+    function displayLogicVerbose(value: number)  {
+        switch(value){
+            case Logic.AND:{
+                return "Complete all:";
+            }
+            case Logic.OR: {
+                return "Choose one:"
+            }
+        }
+    }
+
     function renderDetails() {
 
         return (
 
             <Fragment>
-                <div>{Logic[(coursePrereqs?.master?.logic)??0]}</div>
+                <div><label style={{fontSize:24, fontWeight:"bold"}}>Prerequisites</label></div>
+                <div><label style={{fontSize:14}}>Courses may only be used once.</label></div>
+                <div style={{fontWeight:"bold", marginTop:16, marginBottom:16}}>{displayLogicVerbose(coursePrereqs?.master?.logic??0)}</div>
                 <div style={{display:"flex", margin:"auto"}}>
                     {
                         coursePrereqs?.master?.groups?.map((g:PrereqGroup)=>(
                             <div style={{display:"inline-block", margin:"auto"}}>
-                                <div>{Logic[(g.logic)]}</div>
+                                <div style={{fontWeight:"bold"}}>{displayLogicVerbose((g.logic)??0)}</div>
                                 <div>
                                     {
                                         g.prereqs.map((p:Prereq)=> (
-                                            <div>{p.courseID}: {p.grade}</div>
+                                            <div>{p.courseID}{p.gradeVal<11?
+                                                ":"+ p.gradeLet
+                                                :""}</div>
                                         ))
                                     }
                                 </div>
@@ -68,7 +83,7 @@ function DisplayCoursePrerequisites(props:any) {
 
     return (
         <Fragment>
-            <div style={{marginLeft: "auto", marginRight: "auto"}}>
+            <div style={{marginLeft: "auto", marginRight: "auto", maxWidth:700, backgroundColor:"#dddddd", borderRadius:15, padding:16}}>
                 {renderDetails()}
             </div>
         </Fragment>);
