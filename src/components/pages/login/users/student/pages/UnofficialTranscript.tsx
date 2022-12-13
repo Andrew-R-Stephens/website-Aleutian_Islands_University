@@ -163,17 +163,17 @@ function DisplayUnofficialTranscript(props:any) {
                             <div className={'div-table-row'} style={{display:"flex"}}>
                                 <div className={'div-table-col'}><label>Overall</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcAttemptHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcTotalAttemptHours().toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcPassedHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcTotalPassedHours().toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcEarnedHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcTotalEarnedHours().toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcGPAHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcTotalGPAHours().toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcQualityHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcTotalQualityHours().toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcGPA(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcTotalGPA().toFixed(2)}</label></div>
                             </div>
                         </div>
                     </div>

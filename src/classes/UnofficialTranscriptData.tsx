@@ -133,6 +133,55 @@ export class Transcript {
         return avg;
     }
 
+    calcTotalGPA():number {
+        let total = 0;
+        this.terms.map((t:TranscriptTerm, index:number)=>(
+                total += t.calcGPA()
+        ))
+        let avg = (total / (this.terms.length));
+        console.log("sum", total, "end", this.terms.length, "gpa", avg);
+        console.log('---')
+        return avg;
+    }
+    calcTotalQualityHours():number {
+        let total = 0;
+        this.terms.map((t:TranscriptTerm, index:number)=>(
+                total += t.calcQualityHours()
+        ))
+        return total;
+    }
+    calcTotalGPAHours():number {
+        let total = 0;
+        this.terms.map((t:TranscriptTerm, index:number)=>(
+
+                total += t.calcGPAHours()
+        ))
+        return total;
+    }
+    calcTotalPassedHours():number {
+        let total = 0;
+        this.terms.map((t:TranscriptTerm, index:number)=>(
+                total += t.calcPassedHours()
+        ))
+        return total;
+    }
+
+    calcTotalEarnedHours():number {
+        let total = 0;
+        this.terms.map((t:TranscriptTerm, index:number)=>(
+                total += t.calcPassedHours()
+        ))
+        return total;
+    }
+
+    calcTotalAttemptHours():number {
+        let total = 0;
+        this.terms.map((t:TranscriptTerm, index:number)=>(
+                total += t.calcAttemptHours()
+        ))
+        return total;
+    }
+
     print() {
         this.terms.map((t:any)=> (
             console.log(t.print())
