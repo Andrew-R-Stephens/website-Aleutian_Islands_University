@@ -76,10 +76,12 @@ function DisplayUnofficialTranscript(props:any) {
 
     function displayBody() {
         return (
-            <Fragment>
+            <div style={{display:"inline-block", width:"100%"}}>
                 {
                     studentHistory?.transcript?.terms?.map((term:TranscriptTerm, index:number) => (
-                        <div style={{display:"inline-block", borderColor:"#cccccc", borderStyle:"solid", borderRadius:15, marginBottom:32, padding:16}}>
+                        <div style={{display:"inline-block",
+                            borderColor:"#cccccc", borderStyle:"solid", borderRadius:15,
+                            padding:32, width:"100%", marginTop: 32}}>
                             <div style={{display:"flex", backgroundColor:"#051e35", borderRadius:15, padding:16, fontSize:24}}>
                                 <div style={{fontWeight:"bold", color:"whitesmoke", marginRight:8}}>Term:</div>
                                 <div style={{color:"whitesmoke"}}>{term.term} {term.year}</div>
@@ -118,28 +120,28 @@ function DisplayUnofficialTranscript(props:any) {
                                     </div>
                                     <div className={'div-table-row'} style={{display:"flex"}}>
                                         <div className={'div-table-col'}><label>Current Term</label></div>
-                                        <div className={'div-table-col'}><label>{term?.calcAttemptHours()}</label></div>
-                                        <div className={'div-table-col'}><label>{term?.calcPassedHours()}</label></div>
-                                        <div className={'div-table-col'}><label>{term?.calcEarnedHours()}</label></div>
-                                        <div className={'div-table-col'}><label>{term?.calcGPAHours()}</label></div>
-                                        <div className={'div-table-col'}><label>{term?.calcQualityHours()}</label></div>
-                                        <div className={'div-table-col'}><label>{term?.calcGPA()}</label></div>
+                                        <div className={'div-table-col'}><label>{term?.calcAttemptHours().toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{term?.calcPassedHours().toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{term?.calcEarnedHours().toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{term?.calcGPAHours().toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{term?.calcQualityHours().toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{term?.calcGPA().toFixed(2)}</label></div>
                                     </div>
                                     <div className={'div-table-row'} style={{display:"flex"}}>
                                         <div className={'div-table-col'}><label>Cumulative</label></div>
-                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcAttemptHours(index)}</label></div>
-                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcPassedHours(index)}</label></div>
-                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcEarnedHours(index)}</label></div>
-                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcGPAHours(index)}</label></div>
-                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcQualityHours(index)}</label></div>
-                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcGPA(index)}</label></div>
+                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcAttemptHours(index).toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcPassedHours(index).toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcEarnedHours(index).toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcGPAHours(index).toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcQualityHours(index).toFixed(2)}</label></div>
+                                        <div className={'div-table-col'}><label>{studentHistory?.transcript?.calcGPA(index).toFixed(2)}</label></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     ))
                 }
-            </Fragment>
+            </div>
         );
     }
 
@@ -161,17 +163,17 @@ function DisplayUnofficialTranscript(props:any) {
                             <div className={'div-table-row'} style={{display:"flex"}}>
                                 <div className={'div-table-col'}><label>Overall</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcAttemptHours(studentHistory?.transcript?.terms?.length-1)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcAttemptHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcPassedHours(studentHistory?.transcript?.terms?.length-1)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcPassedHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcEarnedHours(studentHistory?.transcript?.terms?.length-1)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcEarnedHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcGPAHours(studentHistory?.transcript?.terms?.length-1)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcGPAHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcQualityHours(studentHistory?.transcript?.terms?.length-1)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcQualityHours(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
                                 <div className={'div-table-col'}>
-                                    <label>{studentHistory?.transcript?.calcGPA(studentHistory?.transcript?.terms?.length-1)}</label></div>
+                                    <label>{studentHistory?.transcript?.calcGPA(studentHistory?.transcript?.terms?.length-1).toFixed(2)}</label></div>
                             </div>
                         </div>
                     </div>
@@ -182,18 +184,22 @@ function DisplayUnofficialTranscript(props:any) {
 
     return (
         <Fragment>
-            <div>
-                <h1>Curriculum Information</h1>
+            <div>{/*
+                <div style={{display:"inline-block"}}>
+                    <div>
+                        <h1>Curriculum Information</h1>
+                    </div>
+                    {displayHeader()}
+                </div>*/}
+                <div>
+                    <div>
+                        <h1>Institution Credit</h1>
+                        <div style={{margin:32}}>{displayBody()}</div>
+                        <h1>Transcript Totals</h1>
+                        <div>{displayTotals()}</div>
+                    </div>
+                </div>
             </div>
-            {displayHeader()}
-            <div>
-                <h1>Institution Credit</h1>
-            </div>
-            {displayBody()}
-            <div>
-                <h1>Transcript Totals</h1>
-            </div>
-            {displayTotals()}
         </Fragment>
     );
 }

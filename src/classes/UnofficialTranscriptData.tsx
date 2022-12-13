@@ -58,7 +58,7 @@ export class Transcript {
         }
     }
 
-    calcGPA(i:number){
+    calcGPA(i:number):number {
         let total = 0;
         this.terms.map((t:TranscriptTerm, index:number)=>(
             (index<=i) ?
@@ -68,9 +68,9 @@ export class Transcript {
         let avg = (total / (i+1));
         console.log("sum", total, "end", (i+1), "gpa", avg);
         console.log('---')
-        return avg.toFixed(2);
+        return avg;
     }
-    calcQualityHours(i:number) {
+    calcQualityHours(i:number):number {
         let total = 0;
         this.terms.map((t:TranscriptTerm, index:number)=>(
             (index<=i) ?
@@ -80,9 +80,9 @@ export class Transcript {
         let avg = (total / (i+1));
         console.log("sum", total, "end", (i+1), "gpa", avg);
         console.log('---')
-        return avg.toFixed(2);
+        return avg;
     }
-    calcGPAHours(i:number) {
+    calcGPAHours(i:number):number {
         let total = 0;
         this.terms.map((t:TranscriptTerm, index:number)=>(
             (index<=i) ?
@@ -92,9 +92,9 @@ export class Transcript {
         let avg = (total / (i+1));
         console.log("sum", total, "end", (i+1), "gpa", avg);
         console.log('---')
-        return avg.toFixed(2);
+        return avg;
     }
-    calcPassedHours(i:number) {
+    calcPassedHours(i:number):number {
         let total = 0;
         this.terms.map((t:TranscriptTerm, index:number)=>(
             (index<=i) ?
@@ -104,10 +104,10 @@ export class Transcript {
         let avg = (total / (i+1));
         console.log("sum", total, "end", (i+1), "gpa", avg);
         console.log('---')
-        return avg.toFixed(2);
+        return avg;
     }
 
-    calcEarnedHours(i:number) {
+    calcEarnedHours(i:number):number {
         let total = 0;
         this.terms.map((t:TranscriptTerm, index:number)=>(
             (index<=i) ?
@@ -117,10 +117,10 @@ export class Transcript {
         let avg = (total / (i+1));
         console.log("sum", total, "end", (i+1), "gpa", avg);
         console.log('---')
-        return avg.toFixed(2);
+        return avg;
     }
 
-    calcAttemptHours(i:number) {
+    calcAttemptHours(i:number):number {
         let total = 0;
         this.terms.map((t:TranscriptTerm, index:number)=>(
             (index<=i) ?
@@ -130,7 +130,7 @@ export class Transcript {
         let avg = (total / (i+1));
         console.log("sum", total, "end", (i+1), "gpa", avg);
         console.log('---')
-        return avg.toFixed(2);
+        return avg;
     }
 
     print() {
@@ -172,7 +172,7 @@ export class TranscriptTerm {
         this.courses.map((c:TranscriptCourse)=>(
             total += c.creditHours
         ))
-        return parseFloat(total.toFixed(2));
+        return total;
     }
 
     calcPassedHours():number {
@@ -180,7 +180,7 @@ export class TranscriptTerm {
         this.courses.map((c:TranscriptCourse)=>(
             c.qualityPoints <= 7 ? total += c.creditHours : total +=0
         ))
-        return parseFloat(total.toFixed(2));
+        return total;
     }
 
     calcEarnedHours():number {
@@ -188,7 +188,7 @@ export class TranscriptTerm {
         this.courses.map((c:TranscriptCourse)=>(
             c.qualityPoints < 13 ? total += c.creditHours : total+=0
         ))
-        return parseFloat(total.toFixed(2));
+        return total;
     }
 
     calcGPAHours():number {
@@ -196,7 +196,7 @@ export class TranscriptTerm {
         this.courses.map((c:TranscriptCourse)=>(
             total += c.creditHours
         ))
-        return parseFloat(total.toFixed(2));
+        return total;
     }
 
     calcQualityHours():number {
@@ -204,7 +204,7 @@ export class TranscriptTerm {
         this.courses.map((c:TranscriptCourse)=>(
             total += c.creditHours
         ))
-        return parseFloat(total.toFixed(2));
+        return total;
     }
 
     calcGPA():number {
@@ -213,7 +213,7 @@ export class TranscriptTerm {
             total += c.qualityPoints
         ))
         total /= this.courses.length;
-        return parseFloat(total.toFixed(2));
+        return total;
     }
 
     hasFinalGrade() {
