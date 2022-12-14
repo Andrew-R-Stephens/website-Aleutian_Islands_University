@@ -16,7 +16,8 @@
     display: table-row;
     clear: both;
     color: whitesmoke;
-    background-color: #333333;
+    /*background-color: #333333;*/
+    background-color: #406e8a;
     border-radius: 15px;
     padding: 4px;
     margin-left: auto;
@@ -79,7 +80,8 @@
 }
 
 .div-list-item:hover {
-    background-color: #3d3d3d;
+    background-color: #051e35;
+    /*background-color: #3d3d3d;*/
 }
 
 .div-table-button:hover .div-table-button-content{

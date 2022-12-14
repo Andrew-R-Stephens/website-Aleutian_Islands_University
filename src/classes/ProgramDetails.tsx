@@ -79,7 +79,8 @@ class ProgramDetails {
                         </div>
                     </div>
                 </div>
-            </div>);
+            </div>
+        );
     }
 }
 

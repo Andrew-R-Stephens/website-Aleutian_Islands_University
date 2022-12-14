@@ -84,10 +84,15 @@ function CreateUser() {
     function displayDefault() {
         return (
             <Fragment>
-                <button onClick={()=>setPage(Roles.Student)}>Create Student</button>
-                <button onClick={()=>setPage(Roles.Faculty)}>Create Faculty</button>
-                <button onClick={()=>setPage(Roles.Researcher)}>Create Researcher</button>
-                <button onClick={()=>setPage(Roles.Primary_Administrator)}>Create Administrator</button>
+                <div>
+                    <h1>Create a User</h1>
+                </div>
+                <div>
+                    <button onClick={()=>setPage(Roles.Student)}>Create Student</button>
+                    <button onClick={()=>setPage(Roles.Faculty)}>Create Faculty</button>
+                    <button onClick={()=>setPage(Roles.Researcher)}>Create Researcher</button>
+                    <button onClick={()=>setPage(Roles.Primary_Administrator)}>Create Administrator</button>
+                </div>
             </Fragment>
         )
     }

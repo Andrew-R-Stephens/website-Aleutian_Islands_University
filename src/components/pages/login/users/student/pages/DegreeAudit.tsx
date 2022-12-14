@@ -1,20 +1,18 @@
 import React, {Fragment, useEffect, useState} from "react";
-import ProgramRequirements from "../../../../../ProgramRequirements";
+import ProgramRequirements from "../../../../../../classes/ProgramRequirements";
 import axios from "axios";
 import {RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
 
 function DegreeAudit(props:any) {
 
-    const {targetUID, targetRole} = props;
+    const {targetUID} = props;
 
     const userStoreID = UserAuthStore((state:any) => state.userID);
-    const userStoreRole = RoleAuthStore((state:any) => state.authRole);
     const [userID, setID] = useState(targetUID?targetUID:userStoreID);
-    const [userRole, setUserRole] = useState(targetRole?targetRole:userStoreRole);
 
     const [programIDOptions, setProgramIDOptions] = useState<any[]>();
 
-    const [chosenProgramID, setChosenProgramID] = useState();
+    const [chosenProgramID, setChosenProgramID] = useState<number>();
     const [programRequirements, setProgramRequirements] = useState(new ProgramRequirements(null));
 
     useEffect(() => {
@@ -68,13 +66,29 @@ function DegreeAudit(props:any) {
         })
     }
 
-    function renderRequirements():any {
-        return programRequirements.renderAdvanced();
+    function handleProgramSelect(event:any, p:any)  {
+        event.preventDefault();
+        setChosenProgramID(p);
+    }
+
+    function renderRequirements() {
+        return (
+            programRequirements.renderAdvanced()
+        );
     }
 
     return (
         <Fragment>
             <div style={{ width: "50vw", marginLeft: "auto", marginRight: "auto"}}>
+                <div style={{display:"flex", margin:32, maxWidth: 700}}>
+                    {
+                        programIDOptions?.map((p:any)=>(
+                            <div style={{display:"flex", margin:"auto"}}>
+                                <button onClick={(event:any)=>handleProgramSelect(event, p.ProgramID)}>{p.ProgramName}</button>
+                            </div>
+                        ))
+                    }
+                </div>
                 {renderRequirements()}
             </div>
         </Fragment>);

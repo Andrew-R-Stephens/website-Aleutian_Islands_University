@@ -239,7 +239,11 @@ switch($func) {
         return;
     }
     case 'getStudentHistory': {
-        getStudentHistory($conn);
+        getStudentHistory_past($conn);
+        return;
+    }
+    case 'getStudentHistory_past': {
+        getStudentHistory_past($conn);
         return;
     }
     default: {
@@ -2426,6 +2430,41 @@ function getStudentHistory($conn) {
     $id = $_GET['id'];
 
     $stmt = $conn->prepare("CALL getStudentHistory(?)");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['CourseID'],
+        $out_courses['GradeVal'],
+        $out_courses['GradeLet']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['history'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getStudentHistory_past($conn) {
+    if(!(isset($_GET['id']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("CALL getStudentHistory_Past(?)");
     $stmt->bind_param("s", $id);
     $stmt->execute();
 

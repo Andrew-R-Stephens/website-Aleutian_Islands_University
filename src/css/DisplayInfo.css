@@ -3,7 +3,8 @@
 }
 
 .cover {
-    background-color: #353535;
+    /*background-color: #353535;*/
+    background-color: #051e35;
     color: #FFFFFF;
     height:10vh;
     max-height: 15vh;
@@ -55,7 +56,7 @@
 }
 
 .main-section {
-    background-color: #373737;
+    background-color: #2d455b;
     color: #FFFFFF;
     padding: 16px 32px 16px 32px;
     margin-top: 16px;
@@ -89,7 +90,7 @@
 
 
 button:active{
-    background-color: #406e8a;
+    background-color: #2d455b;
 }
 
 .wrapper {
@@ -101,7 +102,8 @@ button:active{
 }
 
 .wrapper .default-button:hover{
-    background-color: #555555;
+    /*background-color: #555555;*/
+    background-color: #406e8a;
 }
 
 .wrapper .default-button{

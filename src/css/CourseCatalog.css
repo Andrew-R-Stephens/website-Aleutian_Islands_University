@@ -3,10 +3,16 @@
     background-color: transparent;
     height: 25px;
     aspect-ratio: 1/1;
+    filter: brightness(0) saturate(100%) invert(12%) sepia(7%) saturate(6470%) hue-rotate(169deg) brightness(94%) contrast(102%);
+}
+
+.div-list-item:hover .img-arrow-select-right {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(10%) saturate(42%) hue-rotate(183deg) brightness(114%) contrast(92%);
 }
 
 .icon-catalog {
-    filter: invert(25%);
+    /*filter: invert(25%);*/
+    filter: brightness(0) saturate(100%) invert(12%) sepia(7%) saturate(6470%) hue-rotate(169deg) brightness(94%) contrast(102%);
 }
 
 .icon-catalog-courses {
@@ -42,9 +48,18 @@
     padding: 8px;
 }
 
-.selected {
+.selected .icon-catalog-departments, .selected .icon-catalog-programs, .selected .icon-catalog-courses{
     pointer-events: none;
-    filter: brightness(75%);
+    filter: brightness(0) saturate(100%) invert(38%) sepia(18%) saturate(1136%) hue-rotate(159deg) brightness(98%) contrast(88%);
+}
+
+div .selected > * {
+    pointer-events: none;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(10%) saturate(42%) hue-rotate(183deg) brightness(114%) contrast(92%);
+}
+
+div .selected {
+    background-color: #0b2844;
 }
 
 .label-icon-container {
@@ -64,7 +79,7 @@
 }
 
 .label-icon-container:hover {
-    background-color: #dddddf;
+    filter:brightness(125%);
 }
 
 .div-list-item {
@@ -82,7 +97,8 @@
 }
 
 .div-list-item:hover {
-    background-color: #3d3d3d;
+    background-color: #051e35;
+    /*background-color: #3d3d3d;*/
 }
 
 .div-list-item:hover .div-list-item-content{

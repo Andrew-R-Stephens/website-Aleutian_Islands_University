@@ -70,7 +70,7 @@ class ProgramRequirements {
     }
 }
 
-class Group {
+export class Group {
     GID: any;
     gName: any;
     priority: any;
@@ -113,7 +113,7 @@ class Group {
 
 }
 
-class Course {
+export class Course {
     CID: any;
     courseName: any;
     courseCredits: any;

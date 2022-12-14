@@ -39,11 +39,16 @@ function AdminPlayground() {
 
     return (
         <Fragment>
-            <button onClick={()=>handlePageChange(Pages.Create_Course)}>Create Course</button>
-            <button onClick={()=>handlePageChange(Pages.Create_Department)}>Create Department</button>
-            <button onClick={()=>handlePageChange(Pages.Create_Course_Section)}>Create Course Section</button>
-            <button onClick={()=>handlePageChange(Pages.Create_User)}>Create User</button>
-            <button onClick={()=>handlePageChange(Pages.Create_Program)}>Create Program</button>
+            <div>
+                <h1>Creator Sandbox</h1>
+            </div>
+            <div>
+                <button onClick={()=>handlePageChange(Pages.Create_Course)}>Create Course</button>
+                <button onClick={()=>handlePageChange(Pages.Create_Department)}>Create Department</button>
+                <button onClick={()=>handlePageChange(Pages.Create_Course_Section)}>Create Course Section</button>
+                <button onClick={()=>handlePageChange(Pages.Create_User)}>Create User</button>
+                <button onClick={()=>handlePageChange(Pages.Create_Program)}>Create Program</button>
+            </div>
         </Fragment>
     );
 }
