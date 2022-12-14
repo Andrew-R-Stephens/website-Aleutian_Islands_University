@@ -9,3 +9,15 @@
     margin-right: auto;
     width: 50%;
 }
+
+.icon-checkmark {
+    content:url("./../res/icon-checkmark.svg");
+    filter: brightness(0) saturate(100%) invert(55%) sepia(46%) saturate(1536%) hue-rotate(51deg) brightness(95%) contrast(101%);
+    background-color: transparent;
+    max-height: 25px;
+    aspect-ratio: 1/1;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}

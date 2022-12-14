@@ -246,6 +246,10 @@ switch($func) {
         getStudentHistory_past($conn);
         return;
     }
+    case 'getStudentHistory_Fulfilled': {
+        getStudentHistory_Fulfilled($conn);
+        return;
+    }
     default: {
         $arr ['status'] = "Error: No post function matching request.";
         break;
@@ -2473,6 +2477,45 @@ function getStudentHistory_past($conn) {
         $out_courses['CourseID'],
         $out_courses['GradeVal'],
         $out_courses['GradeLet']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['history'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getStudentHistory_Fulfilled($conn) {
+    if(!(isset($_GET['pid'], $_GET['uid']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $pid = $_GET['pid'];
+    $uid = $_GET['uid'];
+
+    $stmt = $conn->prepare("CALL getStudentHistory_Fulfilled(?,?)");
+    $stmt->bind_param("ss", $pid, $uid);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['CourseID'],
+        $out_courses['GradeVal'],
+        $out_courses['GradeLet'],
+        $out_courses['SemesterID'],
+        $out_courses['Term'],
+        $out_courses['Year']
     );
 
     $completeArray = [];

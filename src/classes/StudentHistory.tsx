@@ -14,8 +14,8 @@ class StudentHistory {
 
     parseFullData(data:any) {
         data?.map((row: any, key: number) => {
-            const {CourseID, GradeVal, GradeLet} = row;
-            this.history.push({CourseID, GradeVal, GradeLet})
+            const {CourseID, GradeVal, GradeLet, SemesterID, Term, Year} = row;
+            this.history.push({CourseID, GradeVal, GradeLet, SemesterID, Term, Year})
         });
     }
 
