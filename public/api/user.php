@@ -481,27 +481,7 @@ function setNewUser($conn) {
 
     $out_schedule = [];
     $stmt->bind_result(
-        $out_schedule['ERROR1'],
-        $out_schedule['ERROR2'],
-        $out_schedule['ERROR3'],
-        $out_schedule['ERROR4'],
-        $out_schedule['ERROR5'],
-        $out_schedule['ERROR6'],
-        $out_schedule['ERROR7'],
-        $out_schedule['ERROR8'],
-        $out_schedule['ERROR9'],
-        $out_schedule['ERROR10'],
-        $out_schedule['ERROR11'],
-        $out_schedule['ERROR12'],
-        $out_schedule['ERROR13'],
-        $out_schedule['ERROR14'],
-        $out_schedule['ERROR15'],
-        $out_schedule['ERROR16'],
-        $out_schedule['ERROR17'],
-        $out_schedule['ERROR18'],
-        $out_schedule['ERROR19'],
-        $out_schedule['ERROR20'],
-        $out_schedule['ERROR20']
+        $out_schedule['ERROR1']
     );
 
     $completeArray = [];

@@ -74,7 +74,16 @@ function CreateUser() {
                 addrZ: zip
             }
         }).then(res => {
-            alert(res);
+            console.log(res.data)
+            const {result} = res.data;
+            const output = result?.at(0)?.ERROR1;
+            if(output == 0)
+                alert("Successfully created new User.");
+            else
+                if(isNaN(output))
+                    alert("There was an error with " + result.at(0).ERROR1);
+                else
+                    alert("Some conflict prevented the creation of this User.");
         }).catch(function(err) {
             console.log(err.message);
         })

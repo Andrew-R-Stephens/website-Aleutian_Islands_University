@@ -2244,6 +2244,8 @@ function createNewCourseSection($conn) {
     $arr ['status'] = "Failed!";
     if(!(isset($_GET['courseID'], $_GET['roomID'], $_GET['semesterID'], $_GET['timeslot1'], $_GET['timeslot2'], $_GET['facultyID'], $_GET['seatMax'], $_GET['seatMin']))) {
         $arr ['status'] = "Incomplete request";
+        echo(json_encode($arr['status']));
+        return;
     }
 
     $courseID = $_GET['courseID'];
