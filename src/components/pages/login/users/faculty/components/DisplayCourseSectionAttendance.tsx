@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import AttendanceDetails, {StudentAttendance} from "./../../../../../../classes/AttendanceDetails";
+import AttendanceDetails, {Attendance, StudentAttendance} from "./../../../../../../classes/AttendanceDetails";
 import axios from "axios";
 import {AuthRole} from "../../../../../../stores/AuthUserStore";
 
@@ -11,7 +11,8 @@ function DisplayCourseSectionAttendance(props:any) {
     const [attendance, setAttendance] = useState<AttendanceDetails>();
     const [canSetAttendance, setCanSetAttendance] = useState<boolean>(false);
 
-    const [isLastEditable, setIsLastEditable] = useState();
+    const [, updateState] = useState<any>();
+
 
     useEffect(() => {
         setCRN(targetCRN);
@@ -81,7 +82,9 @@ function DisplayCourseSectionAttendance(props:any) {
             tempAttArr[index] = {
                 studentID:s.studentID,
                 meetNum:s.attendance.length,
-                status:parseInt(s.attendance.at(s.attendance.length-1)+"")
+                status:parseInt(s.attendance.at(s.attendance.length-1)?.status+"") >= 0 ?
+                    parseInt(s.attendance.at(s.attendance.length-1)?.status+"")
+                    : 0
             }
         ))
 
@@ -109,7 +112,6 @@ function DisplayCourseSectionAttendance(props:any) {
     }
 
     const handleChangeAttendance = (event:any, sID:number, aIndex:number) => {
-        event.preventDefault();
         const temp = attendance;
         temp?.updateMeeting(sID, aIndex+1, parseInt(event.target.value));
         setAttendance(temp);
@@ -121,10 +123,10 @@ function DisplayCourseSectionAttendance(props:any) {
     }
 
 
-    function displayAttendanceOptions(sID:number, attendance:any, mNum:number) {
+    function displayAttendanceOptions(sID:number, attendance:Attendance, mNum:number) {
         return  (
             <Fragment>
-                <select value={attendance.Status} onChange={(event:any)=>
+                <select defaultValue={attendance.status} onChange={(event:any)=>
                         handleChangeAttendance(event, sID, mNum)}
                 >
                     <option value={1}><span>&#10003;</span></option>
@@ -136,11 +138,11 @@ function DisplayCourseSectionAttendance(props:any) {
 
     function displayStatus() {
         return(
-            attendance?.students.map((sa:any, sIndex:number) => (
+            attendance?.students.map((sa:StudentAttendance, sIndex:number) => (
                 <div className={'div-table-row'} style={{display:"flex"}}>
                     <div className={'div-table-col'}>{sa?.studentID}</div>
                     {
-                        sa.attendance.map((a:any, mNum:number)=> (
+                        sa.attendance.map((a:Attendance, mNum:number)=> (
                             mNum==sa.attendance.length-1 && canSetAttendance && godRole !== AuthRole.Administrator ?
                                 <div className={'div-table-col'}>
                                     {

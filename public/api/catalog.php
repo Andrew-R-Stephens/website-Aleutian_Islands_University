@@ -2740,7 +2740,7 @@ function assignAttendance($conn) {
     $res_arr = [];
     for($i=0; $i < count($attendance); $i++) {
         $stmt = $conn->prepare("CALL assignAttendance(?,?,?,?)");
-        //echo "\n".$grades[$i]['StudentID'] ." ". $crn ." ". $grades[$i]['ID'];
+        echo "\n".$attendance[$i]['studentID']." ".$crn." ".$attendance[$i]['meetNum']." ".$attendance[$i]['status'];
 
         $stmt->bind_param("ssss", $attendance[$i]['studentID'], $crn, $attendance[$i]['meetNum'], $attendance[$i]['status']);
         $stmt->execute();

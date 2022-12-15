@@ -69,12 +69,12 @@ export class StudentAttendance {
 export class Attendance {
 
     meetNum: number = 0;
-    status: number = -1;
+    status: number = 0;
 
     constructor(data: any | null) {
         const {MeetingNumber, Status} = data;
         this.meetNum = MeetingNumber;
-        this.status = Status;
+        this.status = Status?Status:this.status;
     }
 
     update(status: number) {
