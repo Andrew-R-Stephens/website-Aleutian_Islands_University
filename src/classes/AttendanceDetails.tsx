@@ -27,6 +27,12 @@ class AttendanceDetails {
         });
     }
 
+    updateMeeting(sID:number, meetNum:number, status:number) {
+        this.students.map((s:StudentAttendance)=>(
+            s.studentID == sID ? s.updateMeeting(meetNum, status) : ""
+        ))
+    }
+
     print() {
         console.log("Printing attendance")
         this.students?.map((item: any) => {
@@ -36,7 +42,7 @@ class AttendanceDetails {
 
 }
 
-class StudentAttendance {
+export class StudentAttendance {
 
     studentID: any;
     attendance: Attendance[];
@@ -51,9 +57,16 @@ class StudentAttendance {
     registerMeeting(data:any){
         this.attendance.push(new Attendance(data));
     }
+
+    updateMeeting(meetNum:number, status:number) {
+        console.log("Student Match")
+        this.attendance.map((a:Attendance) => (
+            a.meetNum == meetNum ?a.update(status) : ""
+        ))
+    }
 }
 
-class Attendance {
+export class Attendance {
 
     meetNum: number = 0;
     status: number = -1;
@@ -62,6 +75,11 @@ class Attendance {
         const {MeetingNumber, Status} = data;
         this.meetNum = MeetingNumber;
         this.status = Status;
+    }
+
+    update(status: number) {
+        console.log("Meeting match")
+        this.status= status;
     }
 }
 

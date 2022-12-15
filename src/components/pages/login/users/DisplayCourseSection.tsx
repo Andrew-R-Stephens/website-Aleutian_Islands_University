@@ -94,8 +94,8 @@ function DisplayCourseSection(props:any) {
         return (
             <Fragment>
                 <DisplayCourseSectionDetails targetCRN={crn}/>
-                <DisplayCourseSectionRosterWithGrades targetCRN={crn}/>
-                <DisplayCourseSectionAttendance targetCRN={crn}/>
+                <DisplayCourseSectionRosterWithGrades targetCRN={crn} godRole={godRole}/>
+                <DisplayCourseSectionAttendance targetCRN={crn} godRole={godRole}/>
             </Fragment>
         );
     }

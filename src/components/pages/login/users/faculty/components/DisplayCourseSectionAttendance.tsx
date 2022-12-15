@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react";
-import AttendanceDetails from "./../../../../../../classes/AttendanceDetails";
+import AttendanceDetails, {StudentAttendance} from "./../../../../../../classes/AttendanceDetails";
 import axios from "axios";
+import {AuthRole} from "../../../../../../stores/AuthUserStore";
 
 function DisplayCourseSectionAttendance(props:any) {
     const{targetCRN, godRole} = props;
@@ -8,6 +9,7 @@ function DisplayCourseSectionAttendance(props:any) {
     const [crn, setCRN] = useState(targetCRN);
     const [dates, setDates] = useState<any[]>();
     const [attendance, setAttendance] = useState<AttendanceDetails>();
+    const [canSetAttendance, setCanSetAttendance] = useState<boolean>(false);
 
     const [isLastEditable, setIsLastEditable] = useState();
 
@@ -16,13 +18,13 @@ function DisplayCourseSectionAttendance(props:any) {
     }, [targetCRN])
 
     useEffect(() => {
-        getPassedMeetingDates().then(r=>console.log(r))
-        requestSectionAttendance().then(r=>console.log(r));
-        requestIsLastMeetingEditable().then(r=>console.log("Retrieved if today's meeting is editable"));
+        getPassedMeetingDates().then(r=>console.log("Passed Meetings acquired"))
+        requestSectionAttendance().then(r=>console.log("Attendance acquired"));
+        requestCanSetAttendance().then(r=>console.log("Can Set attendance acquired"));
     }, [crn])
 
     useEffect(()=>(
-        attendance?.print()
+        console.log(attendance)
     ), [attendance])
 
     async function getPassedMeetingDates() {
@@ -35,21 +37,6 @@ function DisplayCourseSectionAttendance(props:any) {
             let {error, dates} = res.data;
             console.log(res.data)
             setDates(dates);
-        }).catch(function(err) {
-            console.log(err.message);
-        })
-    }
-
-    async function requestIsLastMeetingEditable() {
-        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
-            params: {
-                func: "isLastMeetingEditable",
-                crn: crn
-            }
-        }).then(res => {
-            let {error, isEditable} = res.data;
-            console.log(res.data)
-            setIsLastEditable(isEditable);
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -71,6 +58,109 @@ function DisplayCourseSectionAttendance(props:any) {
         })
     }
 
+    async function requestCanSetAttendance() {
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "checkMeetingNumber_Outer",
+                crn
+
+            }
+        }).then(res => {
+            let {error, status} = res.data;
+            console.log("Attendance",res.data, status?.at(0).Status)
+            setCanSetAttendance(status?.at(0).Status);
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
+    async function requestAssignAttendance() {
+
+        const tempAttArr = [{}];
+        attendance?.students?.map((s:StudentAttendance, index:number) => (
+            tempAttArr[index] = {
+                studentID:s.studentID,
+                meetNum:s.attendance.length,
+                status:parseInt(s.attendance.at(s.attendance.length-1)+"")
+            }
+        ))
+
+        axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
+            params: {
+                func: "assignAttendance",
+                crn: crn,
+                attendance: JSON.stringify(tempAttArr)
+            }
+        }).then(res => {
+            console.log(res)
+            const {result} = res.data;
+            if(result?.record?.length>0)
+                switch(result?.record?.at(0)){
+                    case 0: {
+                        alert("There was a problem updating attendance.");
+                        break;
+                    }
+                    default: alert("Successfully updated attendance.");
+                }
+
+        }).catch(function(err) {
+            console.log(err.message);
+        })
+    }
+
+    const handleChangeAttendance = (event:any, sID:number, aIndex:number) => {
+        event.preventDefault();
+        const temp = attendance;
+        temp?.updateMeeting(sID, aIndex+1, parseInt(event.target.value));
+        setAttendance(temp);
+    }
+
+    const handleSubmitAttendance = (event:any) => {
+        event.preventDefault();
+        requestAssignAttendance().then(r=>"Update Attendance requested");
+    }
+
+
+    function displayAttendanceOptions(sID:number, attendance:any, mNum:number) {
+        return  (
+            <Fragment>
+                <select value={attendance.Status} onChange={(event:any)=>
+                        handleChangeAttendance(event, sID, mNum)}
+                >
+                    <option value={1}><span>&#10003;</span></option>
+                    <option value={0}><span>&#x2717;</span></option>
+                </select>
+            </Fragment>
+        );
+    }
+
+    function displayStatus() {
+        return(
+            attendance?.students.map((sa:any, sIndex:number) => (
+                <div className={'div-table-row'} style={{display:"flex"}}>
+                    <div className={'div-table-col'}>{sa?.studentID}</div>
+                    {
+                        sa.attendance.map((a:any, mNum:number)=> (
+                            mNum==sa.attendance.length-1 && canSetAttendance && godRole !== AuthRole.Administrator ?
+                                <div className={'div-table-col'}>
+                                    {
+                                        displayAttendanceOptions(sa.studentID, a, mNum)
+                                    }
+                                </div>
+                                : <div className={'div-table-col'}>
+                                    {
+                                        a?.status===1 ?
+                                            <span style={{color:"green"}}>&#10003;</span>
+                                            :<span style={{color:"red"}}>&#x2717;</span>}
+                                </div>
+                        ))
+                    }
+                </div>
+            ))
+        );
+    }
+
+
     function displayAttendance() {
         return <div className={'div-table'}>
             <div className={'div-table-header'} style={{display:"flex"}}>
@@ -87,19 +177,7 @@ function DisplayCourseSectionAttendance(props:any) {
             </div>
             <div>
                 {
-                    attendance?.students.map((sa:any) => (
-                        <div className={'div-table-row'} style={{display:"flex"}}>
-                            <div className={'div-table-col'}>{sa?.studentID}</div>
-                            {
-                                sa.attendance.map((a:any)=> (
-                                    <div className={'div-table-col'}>
-                                        {a?.status===1?<span>&#10003;</span>:<span>&#x2717;</span>}
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    ))
-
+                    displayStatus()
                 }
             </div>
         </div>
@@ -123,9 +201,16 @@ function DisplayCourseSectionAttendance(props:any) {
     }
 
     return <Fragment>
-        {
-            display()
-        }
+        <form onSubmit={handleSubmitAttendance}>
+            {
+                display()
+            }
+            {
+                (canSetAttendance)
+                    ? <button type={"submit"}>Submit</button>
+                    :<Fragment/>
+            }
+        </form>
     </Fragment>
 }
 

@@ -1,5 +1,6 @@
 import React, {Fragment, useEffect, useState} from "react";
 import axios from "axios";
+import {AuthRole, RoleAuthStore} from "../../../../../../stores/AuthUserStore";
 
 function DisplayCourseSectionRosterWithGrades(props:any) {
 
@@ -8,18 +9,25 @@ function DisplayCourseSectionRosterWithGrades(props:any) {
     const [crn, setCRN] = useState(targetCRN);
     const [roster, setRoster] = useState<any[]>();
     const [grades, setGrades] = useState<any[]>();
+    const [oldGrades, setOldGrades] = useState<any[]>();
     const [gradeOptions, setGradeOptions] = useState<any[]>();
     const [canSetMidterm, setCanSetMidterm] = useState<boolean>(false);
     const [canSetFinal, setCanSetFinal] = useState<boolean>(false);
-    const [canSetAttendance, setCanSetAttendance] = useState<boolean>(false);
 
     useEffect(() => {
         setCRN(targetCRN);
     }, [targetCRN])
 
     useEffect(() => {
-        requestSectionRoster().then(r=>console.log(r));
-        requestSectionGrades().then(r=>console.log(r));
+        console.log("grades", grades)
+    }, [grades])
+
+    useEffect(() => {
+        requestSectionRoster().then(r=>console.log("Section Roster requested"));
+        requestSectionGrades().then(r=>console.log("Section Grades requested"));
+        requestPossibleGrades().then(r=>console.log("Possible grades requested"));
+        requestCanSetMidtermGrades().then(r=>console.log("Midterm Grades requested"));
+        requestCanSetFinalGrades().then(r=>console.log("Final Grades requested"));
     }, [crn])
 
     async function requestSectionRoster() {
@@ -47,21 +55,22 @@ function DisplayCourseSectionRosterWithGrades(props:any) {
             let {error, grades} = res.data;
             console.log(res.data)
             setGrades(grades);
+            setOldGrades(grades);
         }).catch(function(err) {
             console.log(err.message);
         })
     }
 
-    /*
     async function requestCanSetMidtermGrades() {
         axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "canSetMidtermGrades"
+                func: "checkIfCanSetMidtermGrades",
+                crn
             }
         }).then(res => {
-            let {error, canSet} = res.data;
-            console.log(res.data)
-            setCanSetMidterm(canSet);
+            let {error, status} = res.data;
+            console.log("MistermGradeCheck", !!(status.at(0).CanGrade))
+            setCanSetMidterm(!!(status?.at(0).CanGrade));
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -70,12 +79,13 @@ function DisplayCourseSectionRosterWithGrades(props:any) {
     async function requestCanSetFinalGrades() {
         axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "canSetFinalGrades"
+                func: "checkIfCanSetFinalGrades",
+                crn
             }
         }).then(res => {
-            let {error, canSet} = res.data;
-            console.log(res.data)
-            setCanSetFinal(canSet);
+            let {error, status} = res.data;
+            console.log("FinalGradeCheck", !!(status.at(0).CanGrade))
+            setCanSetFinal(!!(status?.at(0).CanGrade));
         }).catch(function(err) {
             console.log(err.message);
         })
@@ -84,42 +94,83 @@ function DisplayCourseSectionRosterWithGrades(props:any) {
     async function requestPossibleGrades() {
         axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getPossibleGrades"
+                func: "getAvailableGrades"
             }
         }).then(res => {
             let {error, grades} = res.data;
-            console.log(res.data)
-            setGrades(grades);
+            console.log("GradeOptions",grades)
+            setGradeOptions(grades);
         }).catch(function(err) {
             console.log(err.message);
         })
     }
 
-    async function requestCanSetAttendance() {
+    async function requestAssignGrades() {
+        console.log(JSON.stringify(grades));
         axios.get(process.env['REACT_APP_API_CATALOG'] as string, {
             params: {
-                func: "getCanSetAttendance",
-                crn
-
+                func: "assignGrades",
+                crn,
+                grades: JSON.stringify(grades)
             }
         }).then(res => {
-            let {error, grades} = res.data;
             console.log(res.data)
-            setGrades(grades);
+            const {result} = res.data;
+            if(result?.record?.length>0)
+                switch(result?.record?.at(0)){
+                    case 0: {
+                        alert("There was a problem updating grades.");
+                        break;
+                    }
+                    default: alert("Successfully updated grades.");
+                }
+
         }).catch(function(err) {
             console.log(err.message);
         })
     }
-    */
+
+    const handleChangeGrade = (event:any, index:number) => {
+        event.preventDefault();
+        const temp = JSON.parse(JSON.stringify(grades));
+        if(gradeOptions) {
+            temp[index].ID = gradeOptions[parseInt(event.target.value)].ID;
+            temp[index].GradeID = gradeOptions[parseInt(event.target.value)].GradeID;
+        }
+        setGrades(temp);
+    }
+
+    const handleSubmitGrade = (event:any) => {
+        event.preventDefault();
+        requestAssignGrades().then(r=>"Update Grades requested");
+    }
+
+    function displayGradeList(grade:any, index:number) {
+        return  (
+            <Fragment>
+                <select value={grade.ID} onChange={(event:any)=>handleChangeGrade(event, index)}>
+                    <option value={grade.ID}>{grade.GradeID}</option>
+                    {
+                        gradeOptions?.map((g:any, i:number)=>(
+                            <option value={i}>{g.GradeID}</option>
+                        ))
+                    }
+                </select>
+            </Fragment>
+        );
+    }
 
     function displayGrades(rosterEntity:any) {
         return(
-            grades?.map((g:any) => (
+            grades?.map((g:any, index:number) => (
                 g.StudentID === rosterEntity.StudentID ?
                     <Fragment>
-                        <div className={'div-table-col'}>{g.GradeID?g.GradeID:"NA"}</div>
+                        {
+                            (canSetMidterm || canSetFinal) && grades && godRole !== AuthRole.Administrator?
+                                <div className={'div-table-col'}>{displayGradeList(g, index)}</div>
+                                : <div className={'div-table-col'}>{g.GradeID??"NA"}</div>
+                        }
                         <div className={'div-table-col'}>{g.SemPeriod?g.SemPeriod:"NA"}</div>
-                        {/*<div className={'div-table-col'}>{g.SemPeriod?g.SemPeriod:"NA"}</div>*/}
                     </Fragment>
                     : <Fragment/>
             ))
@@ -165,9 +216,16 @@ function DisplayCourseSectionRosterWithGrades(props:any) {
     }
 
     return <Fragment>
-        {
-            display()
-        }
+        <form onSubmit={handleSubmitGrade}>
+            {
+                display()
+            }
+            {
+                (canSetMidterm || canSetFinal) && grades
+                    ? <button type={"submit"}>Submit</button>
+                    :<Fragment/>
+            }
+        </form>
     </Fragment>
 }
 

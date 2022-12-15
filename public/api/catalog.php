@@ -250,6 +250,30 @@ switch($func) {
         getStudentHistory_Fulfilled($conn);
         return;
     }
+    case 'checkIfCanSetMidtermGrades': {
+        checkIfCanSetMidtermGrades($conn);
+        return;
+    }
+    case 'checkIfCanSetFinalGrades': {
+        checkIfCanSetFinalGrades($conn);
+        return;
+    }
+    case 'getAvailableGrades': {
+        getAvailableGrades($conn);
+        return;
+    }
+    case 'checkMeetingNumber_Outer': {
+        checkMeetingNumber_Outer($conn);
+        return;
+    }
+    case 'assignGrades': {
+        assignGrades($conn);
+        return;
+    }
+    case 'assignAttendance': {
+        assignAttendance($conn);
+        return;
+    }
     default: {
         $arr ['status'] = "Error: No post function matching request.";
         break;
@@ -1607,7 +1631,8 @@ function getCourseSectionRosterByCRN($conn) {
         $out_roster['FirstName'],
         $out_roster['LastName'],
         $out_roster['StudentType'],
-        $out_roster['Time']
+        $out_roster['Time'],
+        $out_roster['Email']
     );
 
     $completeArray = [];
@@ -2528,6 +2553,214 @@ function getStudentHistory_Fulfilled($conn) {
     }
 
     $final_arr['history'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function checkIfCanSetMidtermGrades($conn) {
+    if(!(isset($_GET['crn']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $crn = $_GET['crn'];
+
+    $stmt = $conn->prepare("CALL checkIfCanSetMidtermGrades(?)");
+    $stmt->bind_param("s", $crn);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['CanGrade']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['status'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function checkIfCanSetFinalGrades($conn) {
+    if(!(isset($_GET['crn']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $crn = $_GET['crn'];
+
+    $stmt = $conn->prepare("CALL checkIfCanSetFinalGrades(?)");
+    $stmt->bind_param("s", $crn);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['CanGrade']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['status'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function getAvailableGrades($conn) {
+    $stmt = $conn->prepare("CALL getAvailableGrades()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['GradeID'],
+        $out_courses['Weight'],
+        $out_courses['QualityPoints'],
+        $out_courses['ID'],
+        $out_courses['SemPeriod'],
+        $out_courses['Description']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['grades'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function checkMeetingNumber_Outer($conn) {
+    if(!(isset($_GET['crn']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $crn = $_GET['crn'];
+
+
+    $stmt = $conn->prepare("CALL checkMeetingNumber_Outer(?)");
+    $stmt->bind_param("s", $crn);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['Status']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['status'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function assignGrades($conn) {
+    if(!(isset($_GET['crn'], $_GET['grades']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $crn = $_GET['crn'];
+    $grades = json_decode($_GET['grades'], true);
+
+    $res_arr = [];
+    for($i=0; $i < count($grades); $i++) {
+        $stmt = $conn->prepare("CALL assignGrade(?,?,?)");
+        //echo "\n".$grades[$i]['StudentID'] ." ". $crn ." ". $grades[$i]['ID'];
+
+        $stmt->bind_param("sss", $grades[$i]['StudentID'], $crn, $grades[$i]['ID']);
+        $stmt->execute();
+        $out_courses = [];
+        $stmt->bind_result(
+            $out_courses['ERROR']
+        );
+        $completeArray = [];
+        while ($stmt->fetch()) {
+            $row = [];
+            foreach ($out_courses as $key => $val) {
+                $row[$key] = $val;
+            }
+            $completeArray[] = $row;
+        }
+        $res_arr['record'] = $completeArray;
+        $stmt->close();
+    }
+
+    $final_arr['result'] = $res_arr;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function assignAttendance($conn) {
+    if(!(isset($_GET['crn'], $_GET['attendance']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $crn = $_GET['crn'];
+    $attendance = json_decode($_GET['attendance'], true);
+
+    $res_arr = [];
+    for($i=0; $i < count($attendance); $i++) {
+        $stmt = $conn->prepare("CALL assignAttendance(?,?,?,?)");
+        //echo "\n".$grades[$i]['StudentID'] ." ". $crn ." ". $grades[$i]['ID'];
+
+        $stmt->bind_param("ssss", $attendance[$i]['studentID'], $crn, $attendance[$i]['meetNum'], $attendance[$i]['status']);
+        $stmt->execute();
+        $out_courses = [];
+        $stmt->bind_result(
+            $out_courses['ERROR']
+        );
+        $completeArray = [];
+        while ($stmt->fetch()) {
+            $row = [];
+            foreach ($out_courses as $key => $val) {
+                $row[$key] = $val;
+            }
+            $completeArray[] = $row;
+        }
+        $res_arr['record'] = $completeArray;
+        $stmt->close();
+    }
+
+    $final_arr['result'] = $res_arr;
 
     echo(json_encode($final_arr));
 
