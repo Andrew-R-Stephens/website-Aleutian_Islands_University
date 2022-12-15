@@ -262,6 +262,10 @@ switch($func) {
         getAvailableGrades($conn);
         return;
     }
+    case 'getAllGrades_Passing': {
+        getAllGrades_Passing($conn);
+        return;
+    }
     case 'checkMeetingNumber_Outer': {
         checkMeetingNumber_Outer($conn);
         return;
@@ -272,6 +276,14 @@ switch($func) {
     }
     case 'assignAttendance': {
         assignAttendance($conn);
+        return;
+    }
+    case 'setNewPrerequisite': {
+        setNewPrerequisite($conn);
+        return;
+    }
+    case 'setNewRequirement': {
+        setNewRequirement($conn);
         return;
     }
     default: {
@@ -2655,6 +2667,36 @@ function getAvailableGrades($conn) {
     mysqli_close($conn);
 }
 
+function getAllGrades_Passing($conn) {
+    $stmt = $conn->prepare("CALL getAllGrades_Passing()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['GradeID'],
+        $out_courses['Weight'],
+        $out_courses['QualityPoints'],
+        $out_courses['ID'],
+        $out_courses['SemPeriod'],
+        $out_courses['Description']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['grades'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
 function checkMeetingNumber_Outer($conn) {
     if(!(isset($_GET['crn']))) {
         $out = ['error' => 'Incomplete request.'];
@@ -2761,6 +2803,74 @@ function assignAttendance($conn) {
     }
 
     $final_arr['result'] = $res_arr;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function setNewPrerequisite($conn) {
+    if(!(isset($_GET['cid'], $_GET['minG']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $cid = $_GET['cid'];
+    $minG = $_GET['minG'];
+
+    $stmt = $conn->prepare("CALL setNewPrerequisite(?,?)");
+    $stmt->bind_param("ss", $cid, $minG);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['ERROR']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['status'] = $completeArray;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+}
+
+function setNewRequirement($conn) {
+    if(!(isset($_GET['cid'], $_GET['minG']))) {
+        $out = ['error' => 'Incomplete request.'];
+        echo json_encode($out);
+        return;
+    }
+    $cid = $_GET['cid'];
+    $minG = $_GET['minG'];
+
+    $stmt = $conn->prepare("CALL setRequirement(?,?)");
+    $stmt->bind_param("ss", $cid, $minG);
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['ERROR']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['status'] = $completeArray;
 
     echo(json_encode($final_arr));
 

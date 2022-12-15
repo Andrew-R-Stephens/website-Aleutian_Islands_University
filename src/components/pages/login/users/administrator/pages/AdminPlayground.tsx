@@ -10,7 +10,9 @@ function AdminPlayground() {
         Create_Department,
         Create_Course_Section,
         Create_User,
-        Create_Program
+        Create_Program,
+        Create_Prerequisite,
+        Create_Requirement
     }
     function handlePageChange(page:number) {
         switch (page) {
@@ -34,6 +36,14 @@ function AdminPlayground() {
                 navigate("./../create-program");
                 break;
             }
+            case Pages.Create_Prerequisite: {
+                navigate("./../create-prerequisite");
+                break;
+            }
+            case Pages.Create_Requirement: {
+                navigate("./../create-requirement");
+                break;
+            }
         }
     }
 
@@ -42,12 +52,27 @@ function AdminPlayground() {
             <div>
                 <h1>Creator Sandbox</h1>
             </div>
-            <div>
-                <button onClick={()=>handlePageChange(Pages.Create_Course)}>Create Course</button>
-                <button onClick={()=>handlePageChange(Pages.Create_Department)}>Create Department</button>
-                <button onClick={()=>handlePageChange(Pages.Create_Course_Section)}>Create Course Section</button>
-                <button onClick={()=>handlePageChange(Pages.Create_User)}>Create User</button>
-                <button onClick={()=>handlePageChange(Pages.Create_Program)}>Create Program</button>
+            <div style={{display:"inline-block"}}>
+                <div style={{marginBottom:32, display:"inline-block"}}>
+                    <div style={{marginBottom:32, display:"flex"}}>
+                        <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Course)}>Create Course</button></div>
+                        <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Department)}>Create Department</button></div>
+                        <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Course_Section)}>Create Course Section</button></div>
+                        <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_User)}>Create User</button></div>
+                        <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Program)}>Create Program</button></div>
+                    </div>
+                    <div style={{marginBottom:32, display:"flex"}}>
+                        <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Prerequisite)}>Create Prerequisite</button></div>
+                        <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Requirement)}>Create Requirement</button></div>
+                    </div>
+                </div>
+                {/*<div style={{marginBottom:32, display:"flex"}}>
+                    <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Course)}>Create Prerequisite</button></div>
+                    <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Department)}>Create Requirement</button></div>
+                    <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Course_Section)}>Create Course Section</button></div>
+                    <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_User)}>Create User</button></div>
+                    <div style={{margin:"auto"}}><button onClick={()=>handlePageChange(Pages.Create_Program)}>Create Program</button></div>
+                </div>*/}
             </div>
         </Fragment>
     );

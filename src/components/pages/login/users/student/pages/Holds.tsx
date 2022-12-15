@@ -65,6 +65,7 @@ function Holds(props:any) {
                         <div className={'div-table-col'}><label>Issue Date</label></div>
                     </div>
                     {
+                        holds && holds?.length>0?
                         holds?.map((h:any) => (
                             <div className={'div-table-row'} style={{display:"flex", borderStyle:"solid", borderWidth:2, borderColor:"#D14D31"}}>
                                 <div className={'div-table-col'}><div className={'icon-wrapper'}><div className={'icon-error'}></div></div></div>
@@ -73,6 +74,9 @@ function Holds(props:any) {
                                 <div className={'div-table-col'}><label>{h.Date}</label></div>
                             </div>
                         ))
+                        : <div className={'div-table-row'} style={{display:"flex"}}>
+                                <div className={'div-table-col'}><label style={{fontWeight:"bold"}}>Nothing to show.</label></div>
+                        </div>
                     }
                 </div>
                 <div style={{padding:16}}>

@@ -39,6 +39,8 @@ import CreateDepartment from "./login/users/administrator/components/CreateDepar
 import CreateUser from "./login/users/administrator/components/CreateUser";
 import CreateProgram from "./login/users/administrator/components/CreateProgram";
 import AdminPasswordReset from "../AdminPasswordReset";
+import CreatePrerequisite from "./login/users/administrator/components/CreatePrerequisite";
+import CreateRequirement from "./login/users/administrator/components/CreateRequirement";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -197,6 +199,8 @@ function NavRoutes() {
                                         <Route path={"create-department"} element={<UserConsole child={<CreateDepartment/>}/>}/>
                                         <Route path={"create-user"} element={<UserConsole child={<CreateUser/>}/>}/>
                                         <Route path={"create-program"} element={<UserConsole child={<CreateProgram/>}/>}/>
+                                        <Route path={"create-prerequisite"} element={<UserConsole child={<CreatePrerequisite/>}/>}/>
+                                        <Route path={"create-requirement"} element={<UserConsole child={<CreateRequirement/>}/>}/>
                                         <Route path={"reset-password"} element={<UserConsole child={<AdminPasswordReset/>}/>}/>
                                     </Route>
                                     <Route path={"researcher"}
