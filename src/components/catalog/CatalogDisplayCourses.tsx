@@ -2,8 +2,8 @@ import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
 import '../../css/RequestTable.css';
 import {TablePagination} from "@mui/material";
-import DisplayCourseDetails from "../DisplayCourseDetails";
-import DisplayCoursePrerequisites from "../DisplayCoursePrerequisites";
+import DisplayCourseDetails from "./DisplayCourseDetails";
+import DisplayCoursePrerequisites from "./DisplayCoursePrerequisites";
 
 function CatalogDisplayCourses(props:any) {
 

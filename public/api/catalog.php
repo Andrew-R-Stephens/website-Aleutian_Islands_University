@@ -82,6 +82,10 @@ switch($func) {
         getAllStudents_Identifiable($conn);
         return;
     }
+    case 'getAllUsers_Identifiable': {
+        getAllUsers_Identifiable($conn);
+        return;
+    }
     case 'getUserRoleByUID': {
         getUserRoleByUID($conn);
         return;
@@ -927,6 +931,35 @@ function getAllStudents_Identifiable($conn) {
 
     $final_arr['Students'] = $completeArray;
     $final_arr['TotalResults'] = $stmt->num_rows;
+
+    echo(json_encode($final_arr));
+
+    mysqli_close($conn);
+
+}
+
+function getAllUsers_Identifiable($conn) {
+    $stmt = $conn->prepare("CALL getAllUsers_Identifiable()");
+    $stmt->execute();
+
+    $out_courses = [];
+    $stmt->bind_result(
+        $out_courses['UID'],
+        $out_courses['firstName'],
+        $out_courses['lastName'],
+        $out_courses['UserType']
+    );
+
+    $completeArray = [];
+    while ($stmt->fetch()) {
+        $row = [];
+        foreach ($out_courses as $key => $val) {
+            $row[$key] = $val;
+        }
+        $completeArray[] = $row;
+    }
+
+    $final_arr['Users'] = $completeArray;
 
     echo(json_encode($final_arr));
 

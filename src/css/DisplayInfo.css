@@ -88,7 +88,6 @@
     text-align: left;
 }
 
-
 button:active{
     background-color: #2d455b;
 }
@@ -112,6 +111,10 @@ button:active{
     margin: 1px 0 1px 0;
     padding: 8px;
     float: left;
+}
+
+.wrapper [role=active] {
+    background-color: #335d77;
 }
 
 .options-left {

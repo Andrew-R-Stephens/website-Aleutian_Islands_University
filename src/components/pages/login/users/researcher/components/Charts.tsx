@@ -25,5 +25,3 @@ export function PieChart(props:any) {
 
     return <Pie data={chartData} />;
 }
-
-export default Bar;

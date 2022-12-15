@@ -149,11 +149,16 @@ function AdvisorConsole() {
                                 </Fragment>
                                 :<Fragment/>
                             }
-                            <div className={'page-bubble'} onClick={()=>handleSetPage(Page.SemesterSchedules)}>
-                                <div className={'icon-semester-schedule'}/>
-                                <label className={'page-bubble-label'}>Semester Schedule</label>
-                                <div className={'page-bubble-description'}>Todo</div>
-                            </div>
+                            {
+                                (userRole !== AuthRole.Administrator && userRole !== AuthRole.Primary_Administrator) ?
+                                <div className={'page-bubble'}
+                                     onClick={() => handleSetPage(Page.SemesterSchedules)}>
+                                    <div className={'icon-semester-schedule'}/>
+                                    <label className={'page-bubble-label'}>Semester Schedule</label>
+                                    <div className={'page-bubble-description'}>Todo</div>
+                                </div>
+                                :<Fragment/>
+                            }
                         </div>
                     </div>
                 </div>

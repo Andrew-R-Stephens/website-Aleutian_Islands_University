@@ -72,13 +72,20 @@ function UserConsole(props:any) {
                     <div className={'navLink-child'} onClick={(event:any) =>
                         handleSelectLinkPayload(event,2, './../master-schedule',
                             {state:{adminManagement:true}},20)}
-                         role={childPage===20?'active':'inactive'}>Manage Master Schedule</div>
+                         role={childPage===20?'active':'inactive'}>Master Schedule</div>
                     <div className={'navLink-child'} onClick={(event:any) =>
                         handleSelectLink(event,2, './../catalog',21)}
                          role={childPage===21?'active':'inactive'}>Course Catalog</div>
                     <div className={'navLink-child'} onClick={(event:any) =>
                         handleSelectLink(event,2, './../manage-users',22)}
-                         role={childPage===22?'active':'inactive'}>Manage Users</div>
+                         role={childPage===22?'active':'inactive'}>All Users</div>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLink(event,2, './../advisement',23)}
+                         role={childPage===23?'active':'inactive'}>Advisement</div>
+                    <div className={'navLink-child'} onClick={(event:any) =>
+                        handleSelectLinkPayload(event,2, './../admin-playground',
+                            {state:{adminManagement:true}},24)}
+                         role={childPage===24?'active':'inactive'}>Creator Sandbox</div>
                 </div>
                 <div className={'navLink item-last'} onClick={(event:any) =>
                     handleSelectLink(event,3, '/login')}

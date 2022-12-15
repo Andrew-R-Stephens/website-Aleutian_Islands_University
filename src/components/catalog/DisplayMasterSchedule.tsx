@@ -1,9 +1,9 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import axios from "axios";
-import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../../stores/AuthUserStore";
 import {TablePagination} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {convertTime} from "../Utils";
+import {convertTime} from "../../Utils";
 
 function DisplayMasterSchedule(props:any) {
     const {targetUID} = props;

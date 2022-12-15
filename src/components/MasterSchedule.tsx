@@ -1,7 +1,7 @@
 import React, {Fragment, useRef, useState} from "react";
 import {RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
 import {useLocation} from "react-router-dom";
-import DisplayMasterSchedule from "./DisplayMasterSchedule";
+import DisplayMasterSchedule from "./catalog/DisplayMasterSchedule";
 
 function MasterSchedule(props:any) {
 

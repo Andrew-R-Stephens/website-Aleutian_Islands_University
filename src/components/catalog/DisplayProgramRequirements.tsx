@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import ProgramRequirements, {Course, Group} from "../classes/ProgramRequirements";
+import ProgramRequirements, {Course, Group} from "../../classes/ProgramRequirements";
 
 function DisplayProgramRequirements(props:any) {
 

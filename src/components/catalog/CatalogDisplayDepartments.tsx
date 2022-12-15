@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import "../../css/CourseCatalog.css"
 import axios from "axios";
-import DisplayDepartment from "../DisplayDepartment";
+import DisplayDepartment from "./DisplayDepartment";
 
 function CatalogDisplayDepartments(props:any) {
 

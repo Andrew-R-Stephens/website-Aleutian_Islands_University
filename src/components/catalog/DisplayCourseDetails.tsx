@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import CourseDetails from "../classes/CourseDetails";
+import CourseDetails from "../../classes/CourseDetails";
 
 function DisplayCourseDetails(props:any) {
 

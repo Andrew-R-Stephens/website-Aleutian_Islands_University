@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import "../../css/CourseCatalog.css"
 import axios from "axios";
-import DisplayProgram from "../DisplayProgram";
+import DisplayProgram from "./DisplayProgram";
 
 function CatalogDisplayPrograms(props:any) {
 

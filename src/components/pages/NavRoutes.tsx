@@ -17,7 +17,7 @@ import Researcher from "./login/users/researcher/Researcher";
 import GeneralAcademics from "./home/GeneralAcademics";
 import UserConsole from "./login/users/UserConsole";
 import CourseCatalog from "../catalog/CourseCatalog";
-import DisplayAllStudents from "../DisplayAllStudents";
+import DisplayAllStudents from "./login/users/administrator/components/DisplayAllUsers";
 import Academics from "./login/users/Academics";
 import Registration from "./login/users/student/pages/Registration";
 import Advisement from "./login/users/Advisement";
@@ -41,6 +41,8 @@ import CreateProgram from "./login/users/administrator/components/CreateProgram"
 import AdminPasswordReset from "../AdminPasswordReset";
 import CreatePrerequisite from "./login/users/administrator/components/CreatePrerequisite";
 import CreateRequirement from "./login/users/administrator/components/CreateRequirement";
+import Statistics from "./login/users/researcher/pages/Statistics";
+import DisplayAllUsers from "./login/users/administrator/components/DisplayAllUsers";
 
 const RequireRoleAuth = ( props:any ) => {
     const {allowedRoles} = props;
@@ -183,7 +185,7 @@ function NavRoutes() {
                                         <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                                         <Route path={"console"} element={<UserConsole child={<Administrator/>}/>}/>
                                         <Route path={"master-schedule"} element={<UserConsole child={<MasterSchedule/>}/>}/>
-                                        <Route path={"manage-users"} element={<UserConsole child={<DisplayAllStudents/>}/>}/>
+                                        <Route path={"manage-users"} element={<UserConsole child={<DisplayAllUsers/>}/>}/>
                                         <Route path={"academics"} element={<UserConsole child={<Academics/>}/>}/>
                                         <Route path={"registration"} element={<UserConsole child={<Registration/>}/>}/>
                                         <Route path={"register-course"} element={<UserConsole child={<RegisterCourse/>}/>}/>
@@ -211,6 +213,7 @@ function NavRoutes() {
                                         <Route path={"master-schedule"} element={<UserConsole child={<MasterSchedule/>}/>}/>
                                         <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                                         <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
+                                        <Route path={"statistics"} element={<UserConsole child={<Statistics/>}/>}/>
                                     </Route>
                                 </Route>
                             </Route>

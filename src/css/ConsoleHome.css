@@ -173,3 +173,30 @@
     padding: 8px;
     aspect-ratio: 1/1;
 }
+
+.icon-stats {
+    content:url("./../res/icon-stats.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-users {
+    content:url("./../res/icon-users.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}
+
+.icon-password-reset {
+    content:url("./../res/icon-password-reset.svg");
+    background-color: transparent;
+    height: 100px;
+    width: 100%;
+    padding: 8px;
+    aspect-ratio: 1/1;
+}

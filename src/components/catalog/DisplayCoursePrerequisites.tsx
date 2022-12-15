@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
-import CoursePrereqs, {Logic, Prereq, PrereqGroup} from "../classes/CoursePrereqs";
+import CoursePrereqs, {Logic, Prereq, PrereqGroup} from "../../classes/CoursePrereqs";
 
 function DisplayCoursePrerequisites(props:any) {
 

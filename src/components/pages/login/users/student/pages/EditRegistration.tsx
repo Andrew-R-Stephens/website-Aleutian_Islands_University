@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import '../../../../../../css/ConsoleHome.css';
 import {useLocation} from "react-router-dom";
 import DisplaySemesterSchedule from "../../DisplaySemesterSchedule";
-import DisplayMasterSchedule from "../../../../../DisplayMasterSchedule";
+import DisplayMasterSchedule from "../../../../../catalog/DisplayMasterSchedule";
 import axios from "axios";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../../../../../stores/AuthUserStore";
 import StudentHistory from "../../../../../../classes/StudentHistory";
