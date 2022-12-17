@@ -15,6 +15,11 @@
 #### Fullstack / Database<br/>&ensp;`Andrew Stephens`
 #### Back-end / Database <br/>&ensp;`Brian Mejia`, `Gwen Alessi`
 
+<h2 style="color: ghostwhite">Documentation</h2>
+
+#### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">SRS</a>
+#### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">Design Document</a>
+#### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">User Manual</a>
 
 <h2 style="color: ghostwhite">FRONT-END</h2>
 
@@ -39,7 +44,8 @@
 #### Operating System&emsp;&emsp;&emsp;&emsp;&ensp;`Ubuntu`
 #### Web Server Software&emsp;&emsp;&emsp;`Apache`
 #### Elastic IP Support?&emsp;&emsp;&emsp;&emsp;`Yes - AWS Elastic IP`
-#### SSL Certified?&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`No`
+#### Other Services&emsp;&emsp;&emsp;&emsp;`AWS SES, AWS Route 53, AWS IAM, AWS Certificate Manager`
+#### SSL Certified?&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`Yes`
 #### Registered Domain Name?&ensp;<code>Yes - <a href = "www.owsysdb.com">www.owsysdb.com</a></code>
 
 <br>
