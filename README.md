@@ -49,7 +49,7 @@
 #### Operating System&emsp;&emsp;&emsp;&emsp;&ensp;`Ubuntu`
 #### Web Server Software&emsp;&emsp;&emsp;`Apache`
 #### Elastic IP Support?&emsp;&emsp;&emsp;&emsp;`Yes - AWS Elastic IP`
-#### Other Services&emsp;&emsp;&emsp;&emsp;`AWS SES, AWS Route 53, AWS IAM, AWS Certificate Manager`
+#### Other Services&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;`AWS SES, AWS Route 53, AWS IAM, AWS Certificate Manager`
 #### SSL Certified?&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`Yes`
 #### Registered Domain Name?&ensp;<code>Yes - <a href = "www.owsysdb.com">www.owsysdb.com</a></code>
 
