@@ -24,14 +24,19 @@
 <h2 style="color: ghostwhite">FRONT-END</h2>
 
 #### Framework&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;`React v18.1.0`
+#### Language&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`Typescript`
 #### Markdown / Style&emsp;&emsp;&emsp;&emsp;&emsp;`HTML5`, `CSS`
 
 
 <h2 style="color: ghostwhite">BACK-END</h2>
 
-#### Scripting&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`Typescript`, `Javascript`, `PHP`
+#### Scripting&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`PHP`
 #### RDBMS&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`MySQL`
 
+<h2 style="color: ghostwhite">NPM Packages</h2>
+
+#### Material UI&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`Pagination Component`
+#### ChartsJS&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`Researcher Diagrams`
 
 <h2 style="color: ghostwhite">DATABASE</h2>
 
