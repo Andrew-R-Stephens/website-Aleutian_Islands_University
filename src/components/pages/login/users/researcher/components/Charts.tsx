@@ -9,19 +9,19 @@ export function BarChart(props:any) {
     const { chartData } = props;
     console.log(chartData)
 
-    return <Bar data={chartData} />;
+    return <Bar data={chartData}/>;
 }
 
 export function LineChart(props:any) {
     const { chartData } = props;
     console.log(chartData)
 
-    return <Line data={chartData} />;
+    return <Line data={chartData}  />;
 }
 
 export function PieChart(props:any) {
     const { chartData } = props;
     console.log(chartData)
 
-    return <Pie data={chartData} />;
+    return <Pie data={chartData}/>;
 }

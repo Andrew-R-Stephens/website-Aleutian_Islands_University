@@ -291,7 +291,7 @@ switch($func) {
         return;
     }
     default: {
-        $arr ['status'] = "Error: No post function matching request.";
+        $arr ['status'] = "Error: No get function matching request.";
         break;
     }
 }
