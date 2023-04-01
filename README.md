@@ -9,11 +9,24 @@
     <code>Goal</code><br/>&emsp;Our final deliverable will follow the assignment's directive which has been curated by the professor. It will also represent a culmination of abilities acquired over each contributors' time in university. We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance.<br/>
 </p>
 
+<h2 style="color: ghostwhite">Live Demo Website</h2>
+
+[www.owsysdb.com](https://www.owsysdb.com/)
+
+
+**Sample Logins:**
+<table>
+    <head><tr><th>User Type</th><th>Email</th><th>Password</th></tr></head>
+    <body><tr><td>Student</td><td>slowdh@aiuniversity.edu</td><td>inhachabit</td></tr></body>
+    <body><tr><td>Faculty</td><td>fsweet@aiuniversity.edu</td><td>suscipitaf</td></tr></body>
+    <body><tr><td>Administrator</td><td>asteph.aiu@aol.comu</td><td>hooplah</td></tr></body>
+</table>
+
 <h2 style="color: ghostwhite">CONTRIBUTORS</h2>
 
-#### Team Leader<br/>&ensp;`Andrew Stephens`
-#### Fullstack / Database<br/>&ensp;`Andrew Stephens`
-#### Back-end / Database <br/>&ensp;`Brian Mejia`, `Gwen Alessi`
+#### Team Leader<br/>&ensp;[Andrew Stephens](https://github.com/TRITIUMNITR0X])
+#### Fullstack / Database<br/>&ensp;[Andrew Stephens](https://github.com/TRITIUMNITR0X])
+#### Back-end / Database <br/>&ensp;[Brian Mejia](https://github.com/brintend0]), [Gwen Alessi](https://github.com/Alessi98)
 
 <h2 style="color: ghostwhite">Documentation</h2>
 
