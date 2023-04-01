@@ -1,12 +1,12 @@
 
-<h1 style="color: ghostwhite">ABOUT THE PROJECT</h1>
-<p>We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance.</p>
+<h1 style="color: ghostwhite">Aleutian Islands University Website</h1>
+<p>A completely functional university website which allows both student registration and administrative maintenance.</p>
 <p>
     <code>Content</code>&emsp;&ensp;Capstone Project<br/>
     <code>Where</code>&emsp;&emsp;&ensp;SUNY College at Old Westbury<br/>
     <code>Course</code>&emsp;&emsp;Systems Design and Engineering<br/>
-    <code>Professor</code>&ensp;Naresh Gupta<br/><br/>
-    <code>Goal</code><br/>&emsp;Our final deliverable will follow the assignment's directive which has been curated by the professor. It will also represent a culmination of abilities acquired over each contributors' time in university. We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance.<br/>
+    <code>Professor</code>&ensp;<a href="https://www.linkedin.com/in/naresh-gupta-8b62601a/">Naresh Gupta</a><br/><br/>
+    <code>Goal</code><br/>&emsp;We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance. Our final deliverable follows the assignment's directive which has been curated by the professor. We have expressed our accumulated abilities acquired over each contributors' time in university. We have expressed our ability to learn high level technologies outside of the classroom. This was done through our use of React.js, learning ES6 Javascript technologies through Typescript, PHP scripting CORS handling, Stored Procedures and other MySQL technologies, configuring HTTPS through Apache, configuring the LAMP stack and other such Devops, and using more involved AWS Cloud service services such as EC2, Elastic IP, Route 53, and SES.<br/>
 </p>
 
 <h2 style="color: ghostwhite">Live Demo Website</h2>
@@ -24,9 +24,9 @@
 
 <h2 style="color: ghostwhite">CONTRIBUTORS</h2>
 
-#### Team Leader<br/>&ensp;[Andrew Stephens](https://github.com/TRITIUMNITR0X])
-#### Fullstack / Database<br/>&ensp;[Andrew Stephens](https://github.com/TRITIUMNITR0X])
-#### Back-end / Database <br/>&ensp;[Brian Mejia](https://github.com/brintend0]), [Gwen Alessi](https://github.com/Alessi98)
+#### Team Leader<br/>&ensp;[Andrew Stephens](https://github.com/TRITIUMNITR0X)
+#### Fullstack / Database<br/>&ensp;[Andrew Stephens](https://github.com/TRITIUMNITR0X)
+#### Back-end / Database <br/>&ensp;[Brian Mejia](https://github.com/brintend0), [Gwen Alessi](https://github.com/Alessi98)
 
 <h2 style="color: ghostwhite">Documentation</h2>
 
