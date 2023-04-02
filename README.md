@@ -34,37 +34,60 @@
 #### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">Design Document</a>
 #### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">User Manual</a>
 
+<h2 style="color: ghostwhite">IDE's / Platforms</h2>
+
+<div style="display:float">
+    <img src="https://img.shields.io/badge/-IntelliJ%20Ultimate-000000?logo=intellij%20idea&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/MySQL%20Workbench-4479A1?logo=mysql&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Fillezilla-BF0000?logo=filezilla&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Git-Bash-F05032?logo=filezilla&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Github-181717?logo=github&logoColor=white&style=bold"/>
+</div>
+
 <h2 style="color: ghostwhite">FRONT-END</h2>
 
-#### Framework&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;`React v18.1.0`
-#### Language&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`Typescript`
-#### Markdown / Style&emsp;&emsp;&emsp;&emsp;&emsp;`HTML5`, `CSS`
-
+<div style="display:float">
+    <img src="https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=black&style=bold"/>
+    <img src="https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black&style=bold"/>
+    <img src="https://img.shields.io/badge/-Typescript-3178C6?logo=typescript&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/-CSS-1572B6?logo=css3&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white&style=bold"/>
+</div>
 
 <h2 style="color: ghostwhite">BACK-END</h2>
 
-#### Scripting&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`PHP`
-#### RDBMS&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`MySQL`
+<div style="display:float">
+    <img src="https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/-MySQL-4479A1?logo=mysql&logoColor=white&style=bold"/>
+</div>
+
 
 <h2 style="color: ghostwhite">NPM Packages</h2>
-
-#### Material UI&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`Pagination Component`
-#### ChartsJS&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`Researcher Diagrams`
+<div style="display:float">
+    <img src="https://img.shields.io/badge/MUI-Pagination-007FFF?logo=mui&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/ChartsJS-FF6384?logo=chart.js&logoColor=white&style=bold"/>
+</div>
 
 <h2 style="color: ghostwhite">DATABASE</h2>
 
-#### DBM Utility&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`MySQL Workbench`
+<div style="display:float">
+    <img src="https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white&style=bold"/>
+</div>
 
 <h2 style="color: ghostwhite">SERVER / HOSTING</h2>
 
-#### Platform&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;`Amazon Web Services (AWS)`
-#### Service&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;`EC2`
-#### Operating System&emsp;&emsp;&emsp;&emsp;&ensp;`Ubuntu`
-#### Web Server Software&emsp;&emsp;&emsp;`Apache`
-#### Elastic IP Support?&emsp;&emsp;&emsp;&emsp;`Yes - AWS Elastic IP`
-#### Other Services&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;`AWS SES, AWS Route 53, AWS IAM, AWS Certificate Manager`
-#### SSL Certified?&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;`Yes`
-#### Registered Domain Name?&ensp;<code>Yes - <a href = "www.owsysdb.com">www.owsysdb.com</a></code>
+<div style="display:float">
+    <img src="https://img.shields.io/badge/Ubuntu-E95420?logo=mysql&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Apache-D22128?logo=mysql&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/AWS-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/AWS-SES-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/AWS-Route%2053-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/AWS-IAM-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/AWS-Certificate%20Manager-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Amazon%20EC2-FF9900?logo=amazon%20ec2&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Amazon%20EC2-Elastic%20IP-FF9900?logo=amazon%20ec2&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Amazon%20EC2-Load%20Balancer-FF9900?logo=amazon%20ec2&logoColor=white&style=bold"/>
+</div>
 
 <br>
 
