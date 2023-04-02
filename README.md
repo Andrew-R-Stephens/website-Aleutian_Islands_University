@@ -6,10 +6,16 @@
     <code>Where</code>&emsp;&emsp;&ensp;SUNY College at Old Westbury<br/>
     <code>Course</code>&emsp;&emsp;Systems Design and Engineering<br/>
     <code>Professor</code>&ensp;<a href="https://www.linkedin.com/in/naresh-gupta-8b62601a/">Naresh Gupta</a><br/><br/>
-    <code>Goal</code><br/>&emsp;We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance. Our final deliverable follows the assignment's directive which has been curated by the professor. We have expressed our accumulated abilities acquired over each contributors' time in university. We have expressed our ability to learn high level technologies outside of the classroom. This was done through our use of React.js, learning ES6 Javascript technologies through Typescript, PHP scripting CORS handling, Stored Procedures and other MySQL technologies, configuring HTTPS through Apache, configuring the LAMP stack and other such Devops, and using more involved AWS Cloud service services such as EC2, Elastic IP, Route 53, and SES.<br/>
+    <code>Goal</code>
+<p>
+    We are instructed to develop a completely functional university website which allows both student registration and administrative maintenance. Our final deliverable follows the assignment's directive which has been curated by the professor.</p>
+<p>We have expressed our accumulated abilities acquired over each contributors' time in university. We have expressed our ability to learn high level technologies outside of the classroom. This was done through our use of React.js, implementing ES6 Javascript technologies through Typescript, API calls through PHP, CORS handling, Stored Procedures and other MySQL technologies, configuring HTTPS through Apache, configuring the LAMP stack and other such Devops, and using more involved AWS Cloud service services such as EC2, Elastic IP, Route 53, and SES.
+</p>
+<p>
+    Our Database was meticulously designed to house most information relevant to a university from the eyes of thousands of users -- students, faculty, administrators, and researchers. Thus, we modeled our data using the Course Catalogs of SUNY Old Westbury and SUNY Farmingdale to generate a very realistic model. Our system is able to handle the complexities of this real-world data. Courses have course prerequisites (which also have prerequisites), leading to course registration dependencies. Majors and minor programs have course requirements, subsections of credits and minimum grade and credit requirements, which controlled the ability to generate Degree Audits and Unofficial Transcripts. The system supports Full or Part Time Undergraduate, Graduate, and PhD levels; and any student would be allowed to enroll as single major, single minor, double majors, or major/minor. The system suppotrs Full Time or Part Time Faculty with specializations in subjects. The system suppotrs Primary and Secondary Administration, where the former is allowed to modify any user's personal/account information, registration, or enrollments. All aforementioned functionality is only scraping the surface of what the full system does.
 </p>
 
-<h2 style="color: ghostwhite">Live Demo Website</h2>
+<h2 style="color: ghostwhite">Live Demo</h2>
 
 [www.owsysdb.com](https://www.owsysdb.com/)
 
@@ -34,6 +40,7 @@
 #### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">Design Document</a>
 #### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">User Manual</a>
 
+
 <h2 style="color: ghostwhite">IDE's / Platforms</h2>
 
 <div style="display:float">
@@ -54,7 +61,7 @@
     <img src="https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white&style=bold"/>
 </div>
 
-<h2 style="color: ghostwhite">BACK-END</h2>
+<h2 style="color: ghostwhite">BACK-END / DATABASE</h2>
 
 <div style="display:float">
     <img src="https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white&style=bold"/>
@@ -68,17 +75,17 @@
     <img src="https://img.shields.io/badge/ChartsJS-FF6384?logo=chart.js&logoColor=white&style=bold"/>
 </div>
 
-<h2 style="color: ghostwhite">DATABASE</h2>
-
-<div style="display:float">
-    <img src="https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white&style=bold"/>
-</div>
-
-<h2 style="color: ghostwhite">SERVER / HOSTING</h2>
+<h2 style="color: ghostwhite">SERVER</h2>
 
 <div style="display:float">
     <img src="https://img.shields.io/badge/Ubuntu-E95420?logo=mysql&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=black&style=bold"/>
     <img src="https://img.shields.io/badge/Apache-D22128?logo=mysql&logoColor=white&style=bold"/>
+</div>
+
+<h2 style="color: ghostwhite">AWS HOSTING</h2>
+
+<div style="display:float">
     <img src="https://img.shields.io/badge/AWS-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/AWS-SES-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/AWS-Route%2053-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
