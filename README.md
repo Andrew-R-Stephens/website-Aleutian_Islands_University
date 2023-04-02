@@ -36,9 +36,9 @@
 
 <h2 style="color: ghostwhite">Documentation</h2>
 
-#### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">SRS</a>
-#### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">Design Document</a>
-#### <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">User Manual</a>
+#### <a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/Systems%20Design%20SRS.pdf">SRS</a>
+#### <a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20Design%20Document.pdf">Design Document</a>
+#### <a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20User%20Manual.pdf">User Manual</a>
 
 
 <h2 style="color: ghostwhite">IDE's / Platforms</h2>
