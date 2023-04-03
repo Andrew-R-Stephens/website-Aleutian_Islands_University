@@ -25,7 +25,7 @@
     <head><tr><th>User Type</th><th>Email</th><th>Password</th></tr></head>
     <body><tr><td>Student</td><td>slowdh@aiuniversity.edu</td><td>inhachabit</td></tr></body>
     <body><tr><td>Faculty</td><td>fsweet@aiuniversity.edu</td><td>suscipitaf</td></tr></body>
-    <body><tr><td>Administrator</td><td>asteph.aiu@aol.comu</td><td>hooplah</td></tr></body>
+    <body><tr><td>Administrator</td><td>asteph.aiu@aol.com</td><td>hooplah</td></tr></body>
 </table>
 
 <h2 style="color: ghostwhite">CONTRIBUTORS</h2>
