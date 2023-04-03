@@ -41,16 +41,6 @@
 #### <a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20User%20Manual.pdf">User Manual</a>
 
 
-<h2 style="color: ghostwhite">IDE's / Platforms</h2>
-
-<div style="display:float">
-    <img src="https://img.shields.io/badge/-IntelliJ%20Ultimate-000000?logo=intellij%20idea&logoColor=white&style=bold"/>
-    <img src="https://img.shields.io/badge/MySQL%20Workbench-4479A1?logo=mysql&logoColor=white&style=bold"/>
-    <img src="https://img.shields.io/badge/Fillezilla-BF0000?logo=filezilla&logoColor=white&style=bold"/>
-    <img src="https://img.shields.io/badge/Git-Bash-F05032?logo=filezilla&logoColor=white&style=bold"/>
-    <img src="https://img.shields.io/badge/Github-181717?logo=github&logoColor=white&style=bold"/>
-</div>
-
 <h2 style="color: ghostwhite">FRONT-END</h2>
 
 <div style="display:float">
@@ -67,7 +57,6 @@
     <img src="https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/-MySQL-4479A1?logo=mysql&logoColor=white&style=bold"/>
 </div>
-
 
 <h2 style="color: ghostwhite">NPM Packages</h2>
 <div style="display:float">
@@ -87,13 +76,27 @@
 
 <div style="display:float">
     <img src="https://img.shields.io/badge/AWS-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
+</div>
+<div style="display:float">
     <img src="https://img.shields.io/badge/AWS-SES-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/AWS-Route%2053-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/AWS-IAM-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/AWS-Certificate%20Manager-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
+</div>
+<div style="display:float">
     <img src="https://img.shields.io/badge/Amazon%20EC2-FF9900?logo=amazon%20ec2&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/Amazon%20EC2-Elastic%20IP-FF9900?logo=amazon%20ec2&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/Amazon%20EC2-Load%20Balancer-FF9900?logo=amazon%20ec2&logoColor=white&style=bold"/>
+</div>
+
+<h2 style="color: ghostwhite">IDE's / Platforms</h2>
+
+<div style="display:float">
+    <img src="https://img.shields.io/badge/-IntelliJ%20Ultimate-000000?logo=intellij%20idea&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/MySQL%20Workbench-4479A1?logo=mysql&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Fillezilla-BF0000?logo=filezilla&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Git-Bash-F05032?logo=git&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Github-181717?logo=github&logoColor=white&style=bold"/>
 </div>
 
 <br>
