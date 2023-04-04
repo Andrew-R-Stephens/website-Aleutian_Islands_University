@@ -30,8 +30,8 @@
 
 <h2 style="color: ghostwhite">CONTRIBUTORS</h2>
 
-#### Team Leader<br/>&ensp;[Andrew Stephens](https://github.com/TRITIUMNITR0X)
-#### Fullstack / Database<br/>&ensp;[Andrew Stephens](https://github.com/TRITIUMNITR0X)
+#### Team Leader<br/>&ensp;[Andrew Stephens](https://github.com/Andrew-R-Stephens)
+#### Fullstack / Database<br/>&ensp;[Andrew Stephens](https://github.com/Andrew-R-Stephens)
 #### Back-end / Database <br/>&ensp;[Brian Mejia](https://github.com/brintend0), [Gwen Alessi](https://github.com/Alessi98)
 
 <h2 style="color: ghostwhite">Documentation</h2>
