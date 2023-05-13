@@ -1,5 +1,29 @@
+<div style="display:float" align="center">
+    <img height="100%" src="https://github.com/Andrew-R-Stephens/website-Aleutian_Islands_University/blob/main/src/res/unilogo-simple.png"/>
+</div>
+
+<br>
+
+<div style="display:float" align="center">
+    <img src="https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=black&style=bold"/>
+    <img src="https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black&style=bold"/>
+    <img src="https://img.shields.io/badge/-Typescript-3178C6?logo=typescript&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/-CSS-1572B6?logo=css3&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/-MySQL-4479A1?logo=mysql&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=black&style=bold"/>
+    <img src="https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/AWS-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Git-Bash-F05032?logo=git&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Github-181717?logo=github&logoColor=white&style=bold"/>
+</div>
+
+<br>
 
 <h1 style="color: ghostwhite">Aleutian Islands University Website</h1>
+
 <p>A completely functional university website which allows both student registration and administrative maintenance.</p>
 <p>
     <code>Content</code>&emsp;&ensp;Capstone Project<br/>
@@ -67,9 +91,9 @@
 <h2 style="color: ghostwhite">SERVER</h2>
 
 <div style="display:float">
-    <img src="https://img.shields.io/badge/Ubuntu-E95420?logo=mysql&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=black&style=bold"/>
-    <img src="https://img.shields.io/badge/Apache-D22128?logo=mysql&logoColor=white&style=bold"/>
+    <img src="https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white&style=bold"/>
 </div>
 
 <h2 style="color: ghostwhite">AWS HOSTING</h2>
