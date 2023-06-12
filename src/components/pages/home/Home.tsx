@@ -14,7 +14,8 @@ function Home() {
                     <div className={'main-header'}>
                         <div className={'frame-outer'}>
                             <div className={'banner-video-wrapper'}>
-                                <iframe className={'banner-video'} src="https://player.vimeo.com/video/659049579?controls=0&title=0&byline=0&portrait=0&autoplay=1&loop=1&muted=1"
+                                <iframe className={'banner-video'}
+                                        src="https://player.vimeo.com/video/659049579?controls=0&title=0&byline=0&portrait=0&autoplay=1&loop=1&muted=1"
                                         allow="autoplay;" ></iframe>
                             </div>
                         </div>
