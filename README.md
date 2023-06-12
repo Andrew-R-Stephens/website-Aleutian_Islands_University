@@ -41,7 +41,7 @@
 
 <h2 style="color: ghostwhite">Live Demo</h2>
 
-[Aleutian Islands University Website](https://aiu.tritium-studios.com/)
+<b>Visit:</b> [Aleutian Islands University Website](https://aiu.tritium-studios.com/)
 
 
 **Sample Logins:**
