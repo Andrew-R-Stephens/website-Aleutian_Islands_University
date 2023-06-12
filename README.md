@@ -41,7 +41,7 @@
 
 <h2 style="color: ghostwhite">Live Demo</h2>
 
-[www.owsysdb.com](https://www.owsysdb.com/)
+<b>Visit:</b> [Aleutian Islands University Website](https://aiu.tritium-studios.com/)
 
 
 **Sample Logins:**
