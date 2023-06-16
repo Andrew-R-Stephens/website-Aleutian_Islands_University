@@ -1,16 +1,35 @@
+
+
+.banner-logo-wrapper {
+    display: block;
+}
+
+.banner-logo-top {
+    width: 100%;
+    min-height: 53px;
+    background: rgba(5,30,53,0.9);
+}
+
+.banner-logo-after {
+    width: 100%;
+    height: 3px;
+    background: rgba(5,30,53,0.9);
+}
+
 header {
-    background-color: whitesmoke;
-    text-align: center;
+    background-color: rgba(5,30,53,0.1);
+    text-align: left;
 }
 
 .banner-logo {
     content:url("./../res/unilogo-simple.svg");
+    filter: invert(9%) sepia(56%) saturate(728%) hue-rotate(165deg) brightness(90%) contrast(102%);
     background-color: transparent;
-    max-height: 150px;
+    /*max-height: 150px;*/
+    max-height: clamp(150px, 14svmin, 10svh);
+    max-width: clamp(266px, 25svmin, 18svw);
     aspect-ratio: 16/9;
-    margin-left: auto;
-    margin-right: auto;
-    top: 0;
+    margin: clamp(16px, 1svmin, 1svh) clamp(16px, 1svmin, 1svmin) clamp(16px, 1svmin, 1svh) clamp(32px, 5svmin, 5svw);
 }
 
 .banner-logo:hover {

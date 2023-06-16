@@ -5,6 +5,9 @@
   --primary-background-color: #F6FAF0;
   --secondary-background-color: #91ACCA;
   --tertiary-background-color: #15627A;
+
+  --light-accent-background-color: #051E35E5;
+  --dark-accent-background-color: #04182AFF;
 }
 
 .App {

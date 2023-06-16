@@ -82,8 +82,13 @@ function DisplayMasterSchedule(props:any) {
                 SemesterIDs
             } = res.data;
 
+            if(SemesterIDs.length == 0) {
+                SemesterIDs.push({SemesterID: 'F22', Term: 'Fall', Year: '2022'})
+                SemesterIDs.push({SemesterID: 'S23', Term: 'Spring', Year: '2023'})
+            }
+
             setSemesterIDs(SemesterIDs);
-            console.log(res.data);
+            console.log(SemesterIDs);
 
         }).catch(function(err) {
             console.log("getSemesterIDsInRange", err.message);

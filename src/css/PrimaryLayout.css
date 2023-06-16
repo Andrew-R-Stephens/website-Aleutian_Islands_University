@@ -27,6 +27,7 @@ div .main-body {
     text-align: center;
     display: flex;
     min-height: 80vh;
+    background-color: #dfe5ec;
 }
 
 div .inner-body {
@@ -39,7 +40,7 @@ div .inner-body {
 div .inner-body-constraints {
     margin: auto;
     text-align: center;
-    max-width: 85%;
+    max-width: clamp(720px, 100%, 1080px);
 }
 
 .main-footer {
@@ -96,4 +97,11 @@ img.logo {
     min-width: 100px;
     max-width: 250px;
     display: block;
+}
+
+.img-graduation-class {
+    content: url("./../res/graduatingclass2023.png");
+    background-size: cover;
+    height: fit-content;
+    width: 100%;
 }

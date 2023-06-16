@@ -1,7 +1,7 @@
 .bubble-container {
     display: inline-block;
     margin: auto;
-    width: 80vw;
+    width: 100%;
 }
 
 .page-bubble {

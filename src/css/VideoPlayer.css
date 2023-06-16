@@ -1,17 +1,43 @@
 .frame-outer {
-    display: flex;
+    display: block;
     overflow: hidden;
-    height: 30vh;
+    min-width: 100%;
+    width: auto;
+    aspect-ratio: 100/43.0;
+    min-height: 30svmin;
+    max-height: 30svh;
+    margin: auto;
+    position: relative;
 }
 
 .banner-video-wrapper {
-    background-color: transparent;
+    display: flex;
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    bottom: -50%;
+    right: -50%;
+    width: 100%;
+    margin: auto;
+    aspect-ratio: 100/43.0;
+    background: rgba(5,30,53,0.9);
 }
 
 .banner-video {
+    margin: auto;
     aspect-ratio: 100/43.0;
+    width:100%;
     border: 0;
-    width:100vw;
-    overflow:hidden; /* for html5 browsers the html attribute is depreciated */
-    background:#333333;
+    opacity: 0;
+    animation: fade-in-banner-video linear 500ms forwards;
+    animation-delay: 1s;
+}
+
+@keyframes fade-in-banner-video {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

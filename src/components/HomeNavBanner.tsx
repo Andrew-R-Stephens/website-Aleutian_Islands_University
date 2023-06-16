@@ -13,9 +13,9 @@ function HomeNavBanner(props:any) {
     return (
         <Fragment>
             <header className={'nav-header'}>
-            <ul>
-                {listItems}
-            </ul>
+                <ul>
+                    {listItems}
+                </ul>
             </header>
         </Fragment>
     );

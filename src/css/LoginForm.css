@@ -48,7 +48,7 @@ fieldset {
 .div-login {
     font-family: Veranda, sans-serif;
     display: table;
-    background-color: transparent;
+    background-color: whitesmoke;
     border-spacing: 5px;
     box-shadow: #333333 0 0 20px;
     border-radius: 5%/10%;
@@ -63,16 +63,11 @@ fieldset {
     color: #111111;
 }
 
-.div-table-header> .div-table-col {
-    color: whitesmoke;
-}
-
 .div-login-row {
     font-size: 14px;
     display: table-row;
     width: auto;
     clear: both;
-    background-color: #eeeeee;
     border-radius: 15px;
     padding: 4px;
 }

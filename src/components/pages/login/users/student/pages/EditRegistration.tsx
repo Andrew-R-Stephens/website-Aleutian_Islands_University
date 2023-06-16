@@ -63,6 +63,11 @@ function EditRegistration(props:any) {
             } = res.data;
             console.log("Semester Info", res.data);
 
+            if(SemesterID.length == 0) {
+                SemesterID.push({SemesterID: 'F22', Term: 'Fall', Year: '2022'})
+                SemesterID.push({SemesterID: 'S23', Term: 'Spring', Year: '2023'})
+            }
+
             setRegistrableSemesterID(SemesterID);
 
         }).catch(function(err) {

@@ -17,7 +17,7 @@ root.render(
         useInitialHook={useInitial}
     >
         <HashRouter>
-        <App/>
+            <App/>
         </HashRouter>
     </DevSupport>
 );

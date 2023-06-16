@@ -2,6 +2,8 @@ import React, {Fragment, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import HomeNavBanner from "../../../HomeNavBanner";
 import {AuthRole, RoleAuthStore} from "../../../../stores/AuthUserStore";
+import HomeFooter from "../../../HomeFooter";
+import ImageBanner from "../../../ImageBanner";
 
 function UserConsole(props:any) {
 
@@ -215,23 +217,37 @@ function UserConsole(props:any) {
         );
     }
 
+
+    return (
+        <div className={'banner-logo-wrapper'}>
+            <div className={'banner-logo-top'}/>
+            <ImageBanner className={"banner-logo"}/>
+            <div className={"banner-logo-after"}/>
+            <div className={'main-body'}>
+                <div className={'sidenav'}>
+                    {generateByRole()}
+                </div>
+                <div className={'inner-body'}>
+                    { child }
+                </div>
+            </div>
+            <HomeFooter/>
+        </div>
+    );
+
+/*
+
     return (
         <Fragment>
             <div className={'main'}>
                 <div className={'main-header'}>
                     <HomeNavBanner urls={[]} names={[]}/>
                 </div>
-                <div className={'main-body'}>
-                    <div className={'sidenav'}>
-                        {generateByRole()}
-                    </div>
-                    <div className={'inner-body'}>
-                        { child }
-                    </div>
-                </div>
+
             </div>
         </Fragment>
     );
+*/
 
 
 

@@ -17,7 +17,7 @@
     clear: both;
     color: whitesmoke;
     /*background-color: #333333;*/
-    background-color: #406e8a;
+    background-color: var(--light-accent-background-color);
     border-radius: 15px;
     padding: 4px;
     margin-left: auto;

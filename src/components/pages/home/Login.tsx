@@ -42,7 +42,7 @@ function Login() {
     function displayLoginForm() {
         return (
             <Fragment>
-                <div className = "div-login">
+                <div className = {"div-login"}>
                     <div className={'login-container'}>
                         <div className={'login-body'}>
                             <LoginForm/>
@@ -75,8 +75,8 @@ function Login() {
     return (
         <Fragment>
             <div className={'main-container'}>
-                <HomeNavBanner urls={["/", "/academics", "/about", "/login"]}
-                               names={["Home", "Academics", "About", "Login"]}/>
+                <HomeNavBanner urls={["/", "/academics", "/about"]}
+                               names={["Home", "Academics", "About"]}/>
                 <div className={'main'}>
                     <div className={'main-header'}>
                     </div>

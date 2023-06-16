@@ -6,8 +6,8 @@ function ErrorPage() {
     return (
         <Fragment>
             <div className={'main-container'}>
-                <HomeNavBanner urls={["/", "/academics", "/about", "/login"]}
-                               names={["Home", "Academics", "About", "Login"]}/>
+                <HomeNavBanner urls={["/", "/academics", "/about"]}
+                               names={["Home", "Academics", "About"]}/>
                 <div className={'main'}>
                     <div className={'main-header'}>
 
