@@ -49,13 +49,24 @@ function DisplayCoursePrerequisites(props:any) {
         }
     }
 
+    function hasPrerequisites(prerequisites:number|undefined):boolean {
+        const determinate: number|undefined = prerequisites;
+
+        if(determinate == undefined) return false;
+
+        return determinate > 0;
+    }
+
     function renderDetails() {
 
         return (
 
             <Fragment>
                 <div><label style={{fontSize:24, fontWeight:"bold"}}>Prerequisites</label></div>
-                <div><label style={{fontSize:14}}>Courses may only be used once.</label></div>
+                <div><label style={{fontSize:14}}>{
+                    (hasPrerequisites(coursePrereqs?.master?.groups?.length)) ?
+                    "Courses may only be used once." : "There are no prerequisites for this course."
+                }</label></div>
                 <div style={{fontWeight:"bold", marginTop:16, marginBottom:16}}>{displayLogicVerbose(coursePrereqs?.master?.logic??0)}</div>
                 <div style={{display:"flex", margin:"auto"}}>
                     {

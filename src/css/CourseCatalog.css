@@ -86,11 +86,11 @@ div .selected {
     text-align: left;
     margin-left: auto;
     margin-right: auto;
-    padding: 8px;
-    padding-left: 16px;
+    padding: 8px 8px 8px 16px;
     margin-bottom: 8px;
     display: flex;
     background-color: #DEDEDE;
+    border-color: #051e35;
     border-radius: 10px;
     width: 90%;
     font-size: 18px;
@@ -103,4 +103,5 @@ div .selected {
 
 .div-list-item:hover .div-list-item-content{
     color: #DEDEDE;
+    background-color: #0b2844;
 }
