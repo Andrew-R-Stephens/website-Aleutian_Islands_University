@@ -1,0 +1,10 @@
+*.ts linguist-detectable=true linguist-language=TypeScript
+*.tsx linguist-detectable=true linguist-language=TypeScript
+*.js linguist-detectable=true linguist-language=JavaScript
+*.jsx linguist-detectable=true linguist-language=JavaScript
+*.html linguist-detectable=true linguist-language=Html5
+*.php linguist-detectable=true linguist-language=PHP
+*.java linguist-detectable=true linguist-language=Java
+*.json linguist-detectable=true linguist-language=Json
+*.xml linguist-detectable=true linguist-language=XML
+*.gradle* linguist-detectable=true linguist-language=Gradle
