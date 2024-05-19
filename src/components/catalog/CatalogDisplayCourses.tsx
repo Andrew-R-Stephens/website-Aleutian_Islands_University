@@ -164,7 +164,7 @@ function CatalogDisplayCourses(props:any) {
                 <div style={{marginTop:64}}>
                     <h1>Course Search</h1>
                 </div>
-                <div style={{display:"flex", width:"100%"}}>
+                <div style={{display:"inline-flex", width:"100%", margin:"auto"}}>
                     <div style={{width:"100%"}}>
                         <TablePagination
                             style={{float:"left"}}

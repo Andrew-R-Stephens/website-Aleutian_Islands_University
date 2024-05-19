@@ -15,7 +15,7 @@ function ImageBanner(props: any) {
         return (
             <Fragment>
                 <header>
-                    <img className={className} alt="logo" onClick={() => doNavigate('/')}></img>
+                    <img className={className} alt="logo" onClick={() => doNavigate('/')} src={''}></img>
                 </header>
             </Fragment>
         );

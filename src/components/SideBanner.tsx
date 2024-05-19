@@ -21,35 +21,22 @@ function SideBanner(props:any) {
     return (
         <Fragment>
             <div className="sidenav">
-                <div className={'navLink'} onClick={(event:any) => handleSelectLink(event,0, './../profile')} role={activePage==0?'active':'inactive'}>Profile</div>
-                <div className={'navLink'} onClick={(event:any) => handleSelectLink(event,1, './../account')} role={activePage==1?'active':'inactive'}>Account</div>
-                <div className={'navLink'} onClick={(event:any) => handleSelectLink(event,2, './../administrator')} role={activePage==2?'active':'inactive'}>Admin</div>
-                <div className={'navLink'} onClick={(event:any) => handleSelectLink(event,3, '/login')} role={activePage==3?'active':'inactive'}>Logout</div>
+                <div className={'navLink'}
+                     onClick={(event:any) => handleSelectLink(event,0, './../profile')}
+                     role={activePage==0?'active':'inactive'}>Profile</div>
+                <div className={'navLink'}
+                     onClick={(event:any) => handleSelectLink(event,1, './../account')}
+                     role={activePage==1?'active':'inactive'}>Account</div>
+                <div className={'navLink'}
+                     onClick={(event:any) => handleSelectLink(event,2, './../administrator')}
+                     role={activePage==2?'active':'inactive'}>Admin</div>
+                <div className={'navLink'}
+                     onClick={(event:any) => handleSelectLink(event,3, '/login')}
+                     role={activePage==3?'active':'inactive'}>Logout</div>
             </div>
         </Fragment>
     );
 
-
-/*
-
-
-    const listItems = urls.map((elem:any, index:number) =>
-        {
-            return <Link className={classes[index]} role={roles[index]} key={index} to={urls[index]}>
-                {names[index]}
-            </Link>
-        }
-
-    );
-
-    return (
-        <Fragment>
-            <div className="sidenav">
-                {listItems}
-            </div>
-        </Fragment>
-    );
-*/
 }
 
 export default SideBanner;

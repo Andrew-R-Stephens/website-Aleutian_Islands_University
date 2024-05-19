@@ -1,50 +1,46 @@
 import React, {Fragment} from 'react';
-import {Navigate, Outlet, Route, Routes, useLocation} from "react-router-dom";
-import Home from "./home/Home";
-import Student from "./login/users/student/Student";
-import About from "./home/About";
-import Login from "./home/Login";
-import Account from "./login/users/Account";
-import Profile from "./login/users/Profile";
+import {Link, Navigate, Outlet, Route, Routes, useLocation} from "react-router-dom";
+import HomePage from "./home/HomePage";
+import Student from "./login/./usersHub/./studentHub/Student";
+import AboutPage from "./home/AboutPage";
+import LoginPage from "./home/LoginPage";
+import Account from "./login/usersHub/shared/Account";
+import Profile from "./login/usersHub/shared/Profile";
 import ErrorPage from "./home/ErrorPage";
 import '../../css/NavRoutes.css';
 import ImageBanner from "../ImageBanner";
 import HomeFooter from "../HomeFooter";
 import {AuthRole, RoleAuthStore, UserAuthStore} from "../../stores/AuthUserStore";
-import Administrator from "./login/users/administrator/Administrator";
-import Faculty from "./login/users/faculty/Faculty";
-import Researcher from "./login/users/researcher/Researcher";
-import GeneralAcademics from "./home/GeneralAcademics";
-import UserConsole from "./login/users/UserConsole";
+import Administrator from "./login/./usersHub/./administratorHub/Administrator";
+import Faculty from "./login/./usersHub/./facultyHub/Faculty";
+import Researcher from "./login/./usersHub/./researcherHub/Researcher";
+import UserConsole from "./login/usersHub/shared/UserConsole";
 import CourseCatalog from "../catalog/CourseCatalog";
-import DisplayAllStudents from "./login/users/administrator/components/DisplayAllUsers";
-import Academics from "./login/users/Academics";
-import Registration from "./login/users/student/pages/Registration";
-import Advisement from "./login/users/Advisement";
-import Holds from "./login/users/student/pages/Holds";
-import RegisterCourse from "./login/users/student/pages/EditRegistration";
-import Enrollment from "./login/users/student/pages/Enrollment";
-import SemesterSchedule from "./login/users/SemesterSchedule";
-import SemesterGrades from "./login/users/student/pages/SemesterGrades";
-import UnofficialTranscript from "./login/users/student/pages/UnofficialTranscript";
-import DegreeAudit from "./login/users/student/pages/DegreeAudit";
-import EducatorConsole from "./login/users/faculty/components/EducatorConsole";
-import AdvisorConsole from "./login/users/faculty/components/AdvisorConsole";
-import CourseSection from "./login/users/CourseSection";
+import DisplayAllUsers from "./login/./usersHub/./administratorHub/components/DisplayAllUsers";
+import AcademicsPage from "./login/usersHub/shared/AcademicsPage";
+import RegistrationControlPage from "./login/usersHub/studentHub/pages/RegistrationControlPage";
+import Advisement from "./login/usersHub/shared/Advisement";
+import DispllayHoldsPage from "./login/usersHub/studentHub/pages/DispllayHoldsPage";
+import RegisterCourse from "./login/usersHub/studentHub/pages/EditRegistrationPage";
+import DisplayEnrollmentPage from "./login/usersHub/studentHub/pages/DisplayEnrollmentPage";
+import SemesterSchedule from "./login/usersHub/shared/SemesterSchedule";
+import SemesterGrades from "./login/./usersHub/./studentHub/pages/SemesterGrades";
+import UnofficialTranscript from "./login/./usersHub/./studentHub/pages/UnofficialTranscript";
+import DegreeAuditPage from "./login/usersHub/studentHub/pages/DegreeAuditPage";
+import EducatorConsole from "./login/./usersHub/./facultyHub/components/EducatorConsole";
+import AdvisorConsole from "./login/./usersHub/./facultyHub/components/AdvisorConsole";
+import CourseSection from "./login/usersHub/shared/CourseSection";
 import MasterSchedule from "../MasterSchedule";
-import AdminPlayground from "./login/users/administrator/pages/AdminPlayground";
-import CreateCourse from "./login/users/administrator/components/CreateCourse";
-import CreateCourseSection from "./login/users/administrator/components/CreateCourseSection";
-import CreateDepartment from "./login/users/administrator/components/CreateDepartment";
-import CreateUser from "./login/users/administrator/components/CreateUser";
-import CreateProgram from "./login/users/administrator/components/CreateProgram";
+import AdminPlayground from "./login/./usersHub/./administratorHub/pages/AdminPlayground";
+import CreateCourse from "./login/./usersHub/./administratorHub/components/CreateCourse";
+import CreateCourseSection from "./login/./usersHub/./administratorHub/components/CreateCourseSection";
+import CreateDepartment from "./login/./usersHub/./administratorHub/components/CreateDepartment";
+import CreateUser from "./login/./usersHub/./administratorHub/components/CreateUser";
+import CreateProgram from "./login/./usersHub/./administratorHub/components/CreateProgram";
 import AdminPasswordReset from "../AdminPasswordReset";
-import CreatePrerequisite from "./login/users/administrator/components/CreatePrerequisite";
-import CreateRequirement from "./login/users/administrator/components/CreateRequirement";
-import Statistics from "./login/users/researcher/pages/Statistics";
-import DisplayAllUsers from "./login/users/administrator/components/DisplayAllUsers";
-
-import {Link} from "react-router-dom";
+import CreatePrerequisite from "./login/./usersHub/./administratorHub/components/CreatePrerequisite";
+import CreateRequirement from "./login/./usersHub/./administratorHub/components/CreateRequirement";
+import Statistics from "./login/./usersHub/./researcherHub/pages/Statistics";
 import '../../css/TopNavBanner.css';
 
 const RequireRoleAuth = ( props:any ) => {
@@ -167,10 +163,10 @@ function NavRoutes() {
         <Fragment>
             <Routes>
                 <Route path={"/"}>
-                    <Route index element={<PrimaryPage child={<Home/>}/>}/>
-                    <Route path={"/academics"} element={<PrimaryPage child={<GeneralAcademics/>}/>}/>
-                    <Route path={"/about"} element={<PrimaryPage child={<About/>}/>}/>
-                    <Route path={"/login"} element={<PrimaryPage child={<Login/>}/>}/>
+                    <Route index element={<PrimaryPage child={<HomePage/>}/>}/>
+                    <Route path={"/academics"} element={<PrimaryPage child={<AcademicsPage/>}/>}/>
+                    <Route path={"/about"} element={<PrimaryPage child={<AboutPage/>}/>}/>
+                    <Route path={"/login"} element={<PrimaryPage child={<LoginPage/>}/>}/>
                     <Route path={"/course-section"} element={<PrimaryPage child={<CourseSection/>}/>}/>
                     <Route element={<PrimaryPage child={<RequireUserAuth/>}/>}>
                         <Route path={"/u"}>
@@ -183,19 +179,19 @@ function NavRoutes() {
                             <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                             <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                             <Route path={"console"} element={<UserConsole child={<Student/>}/>}/>
-                            <Route path={"academics"} element={<UserConsole child={<Academics/>}/>}/>
-                            <Route path={"registration"} element={<UserConsole child={<Registration/>}/>}/>
+                            <Route path={"academics"} element={<UserConsole child={<AcademicsPage/>}/>}/>
+                            <Route path={"registration"} element={<UserConsole child={<RegistrationControlPage/>}/>}/>
                             <Route path={"register-course"} element={<UserConsole child={<RegisterCourse/>}/>}/>
-                            <Route path={"enroll-program"} element={<UserConsole child={<Enrollment/>}/>}/>
+                            <Route path={"enroll-program"} element={<UserConsole child={<DisplayEnrollmentPage/>}/>}/>
                             <Route path={"master-schedule"} element={<UserConsole child={<MasterSchedule/>}/>}/>
                             <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                             <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
                             <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
-                            <Route path={"holds"} element={<UserConsole child={<Holds/>}/>}/>
+                            <Route path={"holds"} element={<UserConsole child={<DispllayHoldsPage/>}/>}/>
                             <Route path={"semester-schedule"} element={<UserConsole child={<SemesterSchedule/>}/>}/>
                             <Route path={"semester-grades"} element={<UserConsole child={<SemesterGrades/>}/>}/>
                             <Route path={"unofficial-transcript"} element={<UserConsole child={<UnofficialTranscript/>}/>}/>
-                            <Route path={"degree-audit"} element={<UserConsole child={<DegreeAudit/>}/>}/>
+                            <Route path={"degree-audit"} element={<UserConsole child={<DegreeAuditPage/>}/>}/>
                             <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
                         </Route>
                         <Route path={"faculty"}
@@ -203,19 +199,19 @@ function NavRoutes() {
                             <Route path={"account"} element={<UserConsole child={<Account/>}/>}/>
                             <Route path={"profile"} element={<UserConsole child={<Profile/>}/>}/>
                             <Route path={"console"} element={<UserConsole child={<Faculty/>}/>}/>
-                            <Route path={"academics"} element={<UserConsole child={<Academics/>}/>}/>
-                            <Route path={"registration"} element={<UserConsole child={<Registration/>}/>}/>
+                            <Route path={"academics"} element={<UserConsole child={<AcademicsPage/>}/>}/>
+                            <Route path={"registration"} element={<UserConsole child={<RegistrationControlPage/>}/>}/>
                             <Route path={"register-course"} element={<UserConsole child={<RegisterCourse/>}/>}/>
-                            <Route path={"enroll-program"} element={<UserConsole child={<Enrollment/>}/>}/>
+                            <Route path={"enroll-program"} element={<UserConsole child={<DisplayEnrollmentPage/>}/>}/>
                             <Route path={"master-schedule"} element={<UserConsole child={<MasterSchedule/>}/>}/>
                             <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                             <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
                             <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
-                            <Route path={"holds"} element={<UserConsole child={<Holds/>}/>}/>
+                            <Route path={"holds"} element={<UserConsole child={<DispllayHoldsPage/>}/>}/>
                             <Route path={"semester-schedule"} element={<UserConsole child={<SemesterSchedule/>}/>}/>
                             <Route path={"semester-grades"} element={<UserConsole child={<SemesterGrades/>}/>}/>
                             <Route path={"unofficial-transcript"} element={<UserConsole child={<UnofficialTranscript/>}/>}/>
-                            <Route path={"degree-audit"} element={<UserConsole child={<DegreeAudit/>}/>}/>
+                            <Route path={"degree-audit"} element={<UserConsole child={<DegreeAuditPage/>}/>}/>
                             <Route path={"educator-console"} element={<UserConsole child={<EducatorConsole/>}/>}/>
                             <Route path={"advisor-console"} element={<UserConsole child={<AdvisorConsole/>}/>}/>
                             <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
@@ -227,14 +223,14 @@ function NavRoutes() {
                             <Route path={"console"} element={<UserConsole child={<Administrator/>}/>}/>
                             <Route path={"master-schedule"} element={<UserConsole child={<MasterSchedule/>}/>}/>
                             <Route path={"manage-users"} element={<UserConsole child={<DisplayAllUsers/>}/>}/>
-                            <Route path={"academics"} element={<UserConsole child={<Academics/>}/>}/>
-                            <Route path={"registration"} element={<UserConsole child={<Registration/>}/>}/>
+                            <Route path={"academics"} element={<UserConsole child={<AcademicsPage/>}/>}/>
+                            <Route path={"registration"} element={<UserConsole child={<RegistrationControlPage/>}/>}/>
                             <Route path={"register-course"} element={<UserConsole child={<RegisterCourse/>}/>}/>
                             <Route path={"advisement"} element={<UserConsole child={<Advisement/>}/>}/>
                             <Route path={"catalog"} element={<UserConsole child={<CourseCatalog/>}/>}/>
                             <Route path={"advisor-console"} element={<UserConsole child={<AdvisorConsole/>}/>}/>
                             <Route path={"course-section"} element={<UserConsole child={<CourseSection/>}/>}/>
-                            <Route path={"enroll-program"} element={<UserConsole child={<Enrollment/>}/>}/>
+                            <Route path={"enroll-program"} element={<UserConsole child={<DisplayEnrollmentPage/>}/>}/>
                             <Route path={"semester-schedule"} element={<UserConsole child={<SemesterSchedule/>}/>}/>
                             <Route path={"admin-playground"} element={<UserConsole child={<AdminPlayground/>}/>}/>
                             <Route path={"create-course"} element={<UserConsole child={<CreateCourse/>}/>}/>

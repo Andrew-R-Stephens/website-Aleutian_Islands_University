@@ -1,5 +1,5 @@
 import React from "react";
-import {Logic, Prereq, PrereqGroup, PrereqMaster} from "./CoursePrereqs";
+import {Logic, PrereqGroup, PrereqMaster} from "./CoursePrereqs";
 import StudentHistory, {Course} from "./StudentHistory";
 
 class PrereqComparable {
