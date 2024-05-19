@@ -1,8 +1,8 @@
 import React, {Fragment, useState} from 'react';
-import '../css/LoginForm.css';
+import '../../css/LoginForm.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {AuthRole, RoleAuthStore, UserAuthStore} from "../stores/AuthUserStore";
+import {AuthRole, RoleAuthStore, UserAuthStore} from "../../stores/AuthUserStore";
 
 function LoginForm() {
 

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import "../css/HideBar.css"
+import "../../css/HideBar.css"
 import useCollapse from "react-collapsed";
 
 function HideBar() {

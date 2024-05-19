@@ -1,6 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import '../css/SideBanner.css'
+import '../../css/SideBanner.css'
 
 /**
  * @deprecated Use UserConsole() instead

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import '../css/PrimaryLayout.css';
+import '../../css/PrimaryLayout.css';
 
 function HomeFooter() {
 

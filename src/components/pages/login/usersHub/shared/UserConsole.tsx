@@ -1,8 +1,8 @@
 import React, {useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {AuthRole, RoleAuthStore} from "../../../../../stores/AuthUserStore";
-import HomeFooter from "../../../../HomeFooter";
-import ImageBanner from "../../../../ImageBanner";
+import HomeFooter from "../../../../shared/HomeFooter";
+import ImageBanner from "../../../../shared/ImageBanner";
 
 function UserConsole(props:any) {
 

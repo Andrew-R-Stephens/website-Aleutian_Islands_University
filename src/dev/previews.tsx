@@ -1,9 +1,9 @@
 import React from 'react';
 import {ComponentPreview, Previews} from '@react-buddy/ide-toolbox';
 import {PaletteTree} from './palette';
-import SideBar from "../components/HideBar";
-import ImageBanner from "../components/ImageBanner";
-import SideBanner from "../components/SideBanner";
+import SideBar from "../components/shared/HideBar";
+import ImageBanner from "../components/shared/ImageBanner";
+import SideBanner from "../components/shared/SideBanner";
 
 const ComponentPreviews = () => {
     return (

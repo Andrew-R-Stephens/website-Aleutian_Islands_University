@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import '../css/LoginForm.css';
+import '../../css/LoginForm.css';
 import axios from "axios";
 
 function AdminPasswordReset(props:any) {
@@ -14,8 +14,6 @@ function AdminPasswordReset(props:any) {
         event.preventDefault();
         setNewP(event.target.value);
     }
-
-
 
     const handleEmailChange = (event:any) => {
         event.preventDefault();

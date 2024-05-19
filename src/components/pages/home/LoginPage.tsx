@@ -1,8 +1,8 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import LoginForm from "../../LoginForm";
-import HomeNavBanner from "../../HomeNavBanner";
+import LoginForm from "../../shared/LoginForm";
+import HomeNavBanner from "../../shared/HomeNavBanner";
 import {RoleAuthStore, UserAuthStore} from "../../../stores/AuthUserStore";
-import PasswordResetForm from "../../PasswordResetForm";
+import PasswordResetForm from "../../shared/PasswordResetForm";
 
 function LoginPage() {
 

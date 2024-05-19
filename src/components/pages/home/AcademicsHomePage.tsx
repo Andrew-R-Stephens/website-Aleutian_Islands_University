@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from 'react';
-import HomeNavBanner from "../../HomeNavBanner";
+import HomeNavBanner from "../../shared/HomeNavBanner";
 import CourseCatalog from "../../catalog/CourseCatalog";
-import MasterSchedule from "../../MasterSchedule";
+import MasterSchedule from "../../shared/MasterSchedule";
 
-function AcademicsPage() {
+function AcademicsHomePage() {
 
     enum Pages {
         Home,
@@ -103,4 +103,4 @@ function AcademicsPage() {
     );
 }
 
-export default AcademicsPage;
+export default AcademicsHomePage;

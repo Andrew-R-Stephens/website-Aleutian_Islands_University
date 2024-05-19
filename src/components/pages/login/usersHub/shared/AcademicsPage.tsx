@@ -34,8 +34,6 @@ function AdministratorAcademics(props:any) {
 
     const navigate = useNavigate();
 
-
-
     return <Fragment>
         <h1>Administrator Academics Management Console</h1>
         <div  className={'bubbles-container'}>

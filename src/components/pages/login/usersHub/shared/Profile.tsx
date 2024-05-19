@@ -1,6 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import SideBanner from "../../../../SideBanner";
+import SideBanner from "../../../../shared/SideBanner";
 import {RoleAuthStore, UserAuthStore} from "../../../../../stores/AuthUserStore";
 import DisplayPersonalInfo from "./DisplayPersonalInfo";
 import EditPersonalInfo from "./EditPersonalInfo";

@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect} from 'react';
-import HomeNavBanner from "../../HomeNavBanner";
+import HomeNavBanner from "../../shared/HomeNavBanner";
 import '../../../css/VideoPlayer.css'
 import '../../../css/PrimaryLayout.css';
 

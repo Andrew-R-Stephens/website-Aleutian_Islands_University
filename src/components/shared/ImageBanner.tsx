@@ -1,4 +1,4 @@
-import '../css/ImageBanner.css'
+import '../../css/ImageBanner.css'
 
 import React, {Fragment} from 'react';
 import {useNavigate} from "react-router-dom";

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App';
+import App from './components/shared/App';
 import reportWebVitals from './reportWebVitals';
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
@@ -16,9 +16,9 @@ root.render(
         ComponentPreviews={ComponentPreviews}
         useInitialHook={useInitial}
     >
-        <HashRouter>
+        {/*<HashRouter>*/}
             <App/>
-        </HashRouter>
+        {/*</HashRouter>*/}
     </DevSupport>
 );
 

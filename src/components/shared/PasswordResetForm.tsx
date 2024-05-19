@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import '../css/LoginForm.css';
+import '../../css/LoginForm.css';
 import axios from "axios";
 
 function PasswordResetForm(props:any) {

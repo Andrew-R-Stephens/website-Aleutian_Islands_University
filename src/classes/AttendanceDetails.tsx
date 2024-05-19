@@ -1,6 +1,5 @@
 import React from "react";
 
-
 class AttendanceDetails {
 
     students: StudentAttendance[];
@@ -19,11 +18,6 @@ class AttendanceDetails {
                 this.students.push(new StudentAttendance({StudentID, MeetingNumber, Status}));
             else
                 this.students?.at(index)?.registerMeeting({MeetingNumber, Status});
-            // this.students.map((s:any)=>(
-            //     s.studentID === StudentID ?
-            //         s.registerMeeting({MeetingNumber, Status}):
-            //         this.students.push(new StudentAttendance({StudentID, MeetingNumber, Status}))
-            // ))
         });
     }
 
