@@ -34,14 +34,18 @@
 
 <br>
 
-<div align='left'> 
-    <h2>Index</h2>
-    <div><a href="#live-demo">Live Demo</a></div>
-    <div><a href="#problem-statement">Problem Statement</a></div>
-    <div><a href="#design-and-architecture">Design and Architecture</a></div>
-    <div><a href="#acknowledgements">Acknoledgements</a></div>
-    <div><a href="#technologies">Technologies</a></div>
-</div>
+<div align='left'><h2>Index</h2><div>
+<div><a href="#problem-statement">Problem Statement</a></div>
+<div><a href="#live-demo">Live Demo</a></div>
+<div><label>&emsp;<a href="#demo-logins">Demo Logins</a></label></div>
+<div><label>&emsp;<a href="#sample-screenshots">Sample Screenshots</a></label></div>
+<div><a href="#design-and-architecture">Design and Architecture</a></div>
+<div><label>&emsp;<a href="#documentation">Documentation</a></label></div>
+<div><label>&emsp;<a href="#architecture">Architecture</a></label></div>
+<div><label>&emsp;&emsp;<a href="#high-level-architecture">High-Level Architecture</a></label></div>
+<div><label>&emsp;&emsp;<a href="#low-level-architecture">Low-Level Architecture</a></label></div>
+<div><label>&emsp;<a href="#technologies">Technologies</a></label></div>
+<div><a href="#acknowledgements">Contributors</a></div>
 
 <hr/>
 
@@ -57,7 +61,10 @@
 
 <b>Visit:</b> [Aleutian Islands University Website](https://aiu.tritium-studios.com/)
 
-**Sample Logins:**
+<br>
+
+**Demo Logins**
+> You may use these to test the system. Please respect the represented data. Changes are permanent.
 <table>
     <head><tr><th>User Type</th><th>Email</th><th>Password</th></tr></head>
     <body><tr><td>Student</td><td>slowdh@aiuniversity.edu</td><td>inhachabit</td></tr></body>
@@ -67,7 +74,13 @@
 
 <br>
 
-<div align='left'><h3>CONTRIBUTORS</h3></div>
+<div align='left'><h3>Sample Screenshots</h3></div>
+<blockquote>TODO</blockquote>
+<!-- TODO -->
+
+<br>
+
+<div align='left'><h3>Contributors</h3></div>
 
 #### Team Leader<br/>&ensp;[Andrew Stephens](https://github.com/Andrew-R-Stephens)
 #### Fullstack / Database<br/>&ensp;[Andrew Stephens](https://github.com/Andrew-R-Stephens)
@@ -77,9 +90,9 @@
 
 <div align='left'><h3>Documentation</h3></div>
 
-#### <a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/Systems%20Design%20SRS.pdf">SRS</a>
-#### <a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20Design%20Document.pdf">Design Document</a>
-#### <a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20User%20Manual.pdf">User Manual</a>
+<div><a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/Systems%20Design%20SRS.pdf">SRS</a></div>
+<div><a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20Design%20Document.pdf">Design Document</a></div>
+<div><a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20User%20Manual.pdf">User Manual</a></div>
 
 <br>
 
