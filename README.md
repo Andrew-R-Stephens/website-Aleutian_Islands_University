@@ -40,12 +40,12 @@
 <div><label>&emsp;<a href="#demo-logins">Demo Logins</a></label></div>
 <div><label>&emsp;<a href="#sample-screenshots">Sample Screenshots</a></label></div>
 <div><a href="#design-and-architecture">Design and Architecture</a></div>
+<div><label>&emsp;<a href="#technologies">Technologies</a></label></div>
 <div><label>&emsp;<a href="#documentation">Documentation</a></label></div>
 <div><label>&emsp;<a href="#architecture">Architecture</a></label></div>
 <div><label>&emsp;&emsp;<a href="#high-level-architecture">High-Level Architecture</a></label></div>
 <div><label>&emsp;&emsp;<a href="#low-level-architecture">Low-Level Architecture</a></label></div>
-<div><label>&emsp;<a href="#technologies">Technologies</a></label></div>
-<div><a href="#acknowledgements">Contributors</a></div>
+<div><a href="#contributors">Contributors</a></div>
 
 <hr/>
 
@@ -64,7 +64,7 @@
 <br>
 
 <h3>Demo Logins</h3>
-> You may use these to test the system. Please respect the represented data. Changes are permanent.
+<blockquote>You may use these to test the system. Please respect the represented data. Changes are permanent.</blockquote>
 <table>
     <head><tr><th>User Type</th><th>Email</th><th>Password</th></tr></head>
     <body><tr><td>Student</td><td>slowdh@aiuniversity.edu</td><td>inhachabit</td></tr></body>
@@ -88,11 +88,27 @@
 
 <br>
 
-<div align='left'><h3>Documentation</h3></div>
+<div align='left'><h3>Design and Architecture</h3></div>
+
+<br>
+
+<div align='left'><h4>Documentation</h4></div>
 
 <div><a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/Systems%20Design%20SRS.pdf">SRS</a></div>
 <div><a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20Design%20Document.pdf">Design Document</a></div>
 <div><a href="https://github.com/asteph11/SystemDesignProject/blob/main/documentation/AIU%20User%20Manual.pdf">User Manual</a></div>
+
+<br>
+
+<div align='left'><h4>Architecture</h4></div>
+
+<br>
+
+<div align='left'><h5>High-Level Architecture</h4></div>
+
+<br>
+
+<div align='left'><h5>Low-level Architecture</h4></div>
 
 <br>
 
