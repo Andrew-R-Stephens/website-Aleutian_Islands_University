@@ -74,11 +74,43 @@
 
 <br>
 
-<div align='left'><h3>Sample Screenshots</h3></div>
-<blockquote>TODO</blockquote>
-<!-- TODO -->
-
+<details closed>
+<summary><h3>Sample 'Guest User' Screenshots</h3></summary>
 <br>
+<h4>Home Page</h4>
+<div><img title="Home Page" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_1.png"/></div>
+<br>
+<h4>Course Catalog</h4>
+<div><img title="Course Catalog" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_2.png"/></div>
+<br>
+<h4>Catalog Department Information</h4>
+<div><img title="Catalog Department Information" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_3.png"/></div>
+<br>
+<h4>Catalog Program Information</h4>
+<div><img title="Catalog Program Information" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_4.png"/></div>
+<br>
+<h4>Login Page</h4>
+<div><img title="Login Page" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_5.png"/></div>
+</details>
+
+<details closed>
+<summary><h3>Sample 'Student User' Screenshots</h3></summary>
+<br>
+<h4>Student Account Information Page</h4>
+<div><img title="Student Account Information Page" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_6.png"/></div>
+<br>
+<h4>Semester Master Schedule Fall 2022</h4>
+<div><img title="Semester Master Schedule Fall 2022" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_7.png"/></div>
+<br>
+<h4>Semester Master Schedule Fall 2022, filtered</h4>
+<div><img title="Semester Master Schedule Fall 2022, filtered" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_8.png"/></div>
+<br>
+<h4>Student Advisor Information</h4>
+<div><img title="Student Advisor Information" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_9.png"/></div>
+<br>
+<h4>Student Transcript</h4>
+<div><img title="Student Transcript" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_10.png"/></div>
+</details>
 
 <div align='left'><h3>Contributors</h3></div>
 
@@ -117,8 +149,8 @@
 <br>
 
 <div align='left'><h3>Technologies</h3></div>
-<div align='left'><h4>Front-End</h4></div>
 
+<div align='left'><h4>Front-End</h4></div>
 <div style="display:float">
     <img src="https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=black&style=bold"/>
     <img src="https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black&style=bold"/>
@@ -128,7 +160,6 @@
 </div>
 
 <h4>Back-End / Database</h4>
-
 <div style="display:float">
     <img src="https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/-MySQL-4479A1?logo=mysql&logoColor=white&style=bold"/>
@@ -141,7 +172,6 @@
 </div>
 
 <h4>Server</h4>
-
 <div style="display:float">
     <img src="https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=black&style=bold"/>
@@ -149,7 +179,6 @@
 </div>
 
 <h4>Hosting</h4>
-
 <div style="display:float">
     <img src="https://img.shields.io/badge/AWS-232F3E?logo=amazon%20aws&logoColor=white&style=bold"/>
 </div>
@@ -166,7 +195,6 @@
 </div>
 
 <h4>IDE's / Platforms</h4>
-
 <div style="display:float">
     <img src="https://img.shields.io/badge/-IntelliJ%20Ultimate-000000?logo=intellij%20idea&logoColor=white&style=bold"/>
     <img src="https://img.shields.io/badge/MySQL%20Workbench-4479A1?logo=mysql&logoColor=white&style=bold"/>
@@ -178,7 +206,6 @@
 <br>
 
 <h3 style="color: ghostwhite">Usage and License Limitations</h3>
-
 <p style="color: indianred"><code>LICENSE WARNING:</code> Please read and understand the included <a href="https://github.com/asteph11/SoftwareEngineeringProject/blob/main/LICENSE.md">GPL License</a> before attempting to use this code.</p>
 <p>This strict copyleft license is in place due to the wholesale cheating that goes on at SUNY College at Old Westbury. Please understand the License before you get yourself into trouble.</p>
 <p><b>Do NOT</b> use any of this project's content <em>(structure /or source code /or libraries /or assets /or etc.)</em>, regardless of external modification, without citing Copyright where such content is used.</p>
