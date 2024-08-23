@@ -63,7 +63,7 @@
 
 <br>
 
-**Demo Logins**
+<h3>Demo Logins</h3>
 > You may use these to test the system. Please respect the represented data. Changes are permanent.
 <table>
     <head><tr><th>User Type</th><th>Email</th><th>Password</th></tr></head>
