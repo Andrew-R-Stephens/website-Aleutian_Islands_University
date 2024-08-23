@@ -74,9 +74,9 @@
 
 <br>
 
+<h3>Sample Screenshots</h3>
 <details closed>
-<summary><h3>Sample 'Guest User' Screenshots</h3></summary>
-<br>
+<summary>Guest User</summary>
 <h4>Home Page</h4>
 <div><img title="Home Page" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_1.png"/></div>
 <br>
@@ -94,8 +94,7 @@
 </details>
 
 <details closed>
-<summary><h3>Sample 'Student User' Screenshots</h3></summary>
-<br>
+<summary>Student User</summary>
 <h4>Student Account Information Page</h4>
 <div><img title="Student Account Information Page" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_6.png"/></div>
 <br>
@@ -111,6 +110,8 @@
 <h4>Student Transcript</h4>
 <div><img title="Student Transcript" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_10.png"/></div>
 </details>
+
+<br>
 
 <div align='left'><h3>Contributors</h3></div>
 
