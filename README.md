@@ -77,37 +77,37 @@
 <h3>Sample Screenshots</h3>
 <details closed>
 <summary>Guest User</summary>
-<h4>Home Page</h4>
+<h5>Home Page</h5>
 <div><img title="Home Page" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_1.png"/></div>
 <br>
-<h4>Course Catalog</h4>
+<h5>Course Catalog</h5>
 <div><img title="Course Catalog" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_2.png"/></div>
 <br>
-<h4>Catalog Department Information</h4>
+<h5>Catalog Department Information</h5>
 <div><img title="Catalog Department Information" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_3.png"/></div>
 <br>
-<h4>Catalog Program Information</h4>
+<h5>Catalog Program Information</h5>
 <div><img title="Catalog Program Information" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_4.png"/></div>
 <br>
-<h4>Login Page</h4>
+<h5>Login Page</h5>
 <div><img title="Login Page" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_5.png"/></div>
 </details>
 
 <details closed>
 <summary>Student User</summary>
-<h4>Student Account Information Page</h4>
+<h5>Student Account Information Page</h5>
 <div><img title="Student Account Information Page" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_6.png"/></div>
 <br>
-<h4>Semester Master Schedule Fall 2022</h4>
+<h5>Semester Master Schedule Fall 2022</h5>
 <div><img title="Semester Master Schedule Fall 2022" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_7.png"/></div>
 <br>
-<h4>Semester Master Schedule Fall 2022, filtered</h4>
+<h5>Semester Master Schedule Fall 2022, filtered</h5>
 <div><img title="Semester Master Schedule Fall 2022, filtered" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_8.png"/></div>
 <br>
-<h4>Student Advisor Information</h4>
+<h5>Student Advisor Information</h5>
 <div><img title="Student Advisor Information" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_9.png"/></div>
 <br>
-<h4>Student Transcript</h4>
+<h5>Student Transcript</h5>
 <div><img title="Student Transcript" height="240" src="https://raw.githubusercontent.com/Andrew-R-Stephens/Andrew-R-Stephens/master/assets/AIU%20Diagrams/aiu_10.png"/></div>
 </details>
 
