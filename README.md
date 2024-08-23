@@ -105,10 +105,14 @@
 <br>
 
 <div align='left'><h5>High-Level Architecture</h4></div>
+<blockquote>TODO</blockquote>
+<!-- TODO -->
 
 <br>
 
 <div align='left'><h5>Low-level Architecture</h4></div>
+<blockquote>TODO</blockquote>
+<!-- TODO -->
 
 <br>
 
